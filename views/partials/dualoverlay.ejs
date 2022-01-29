@@ -1,0 +1,50 @@
+<div id="div-dualoverlay">
+	<div class="overlay">
+		<form class="form-doublefeature" method="POST">
+			<div>
+				<button type="button" name="cross" class="cross" onclick="document.getElementById('div-dualoverlay').style.display = 'none'"><i class="fas fa-times fa-2x"></i>
+				</button>
+			</div>
+			<% if (doubleFeatureEmpty.length !== 0) {%>
+				<h2 class="overlay-title">Add to a Double Feature</h2>
+				<div class="list-doublefeature">
+					<% for (var k = 0; k < doubleFeatureEmpty.length; k++) { %>
+						<div class="individual-doublefeature">
+							<input type="radio" id="emptydoublefeature" name="emptydoublefeature" value="<%= doubleFeatureEmpty[k].id %>" required>
+							<label for="emptydoublefeature"><%= doubleFeatureEmpty[k].title %></label>
+							<!-- <h3 class="title-doublefeature"></h3> --><br>
+						</div>
+					<% } %>
+				</div>
+
+				<div>
+					<button class="btn add-btn" type="submit" >Done</button>
+				</div>
+				<input type="hidden" id="hiddenId" name="hiddenId" value="">
+				<input type="hidden" id="hiddenTitle" name="hiddenTitle" value="">
+				<input type="hidden" id="hiddenPoster" name="hiddenPoster" value="">
+				<input type="hidden" name="formInstance" value="form1" />
+		</form>
+
+			<% } else { %>
+				<h2 class="overlay-title">No empty Double Features</h2><br>
+				<form class="form-doublefeature" method="POST">
+					<h4 style="margin-top: 0px;">Would you like to create a New Double Feature containing the selected movie?</h4>
+					<div>
+						<input type="text" name="title" id="title" placeholder="Title" class="form_title" required/>
+					</div>
+
+					<div>
+						<textarea name="description" id="description" placeholder="Enter a Descrpition Here" class="form_description"></textarea>
+					</div>
+
+					<button class="btn add-btn" type="submit">Create</button>
+
+					<input type="hidden" id="hiddenId" name="hiddenId" value="">
+					<input type="hidden" id="hiddenTitle" name="hiddenTitle" value="">
+					<input type="hidden" id="hiddenPoster" name="hiddenPoster" value="">
+					<input type="hidden" name="formInstance" value="form2" />
+				</form>
+			<% } %>
+	</div>
+</div>

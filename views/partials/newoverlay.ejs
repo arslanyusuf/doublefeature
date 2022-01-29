@@ -1,0 +1,34 @@
+<div id="div-newoverlay">
+	<div class="overlay">
+		<form class="form-doublefeature" method="POST">
+			<div>
+				<button type="button" name="cross" class="cross" onclick="document.getElementById('div-newoverlay').style.display = 'none'"><i class="fas fa-times fa-2x"></i>
+				</button>
+			</div>
+			<% if (false) {%>
+				<input type="hidden" id="hiddenIdAdd" name="hiddenIdAdd" value="">
+				<input type="hidden" id="hiddenTitleAdd" name="hiddenTitleAdd" value="">
+				<input type="hidden" id="hiddenPosterAdd" name="hiddenPosterAdd" value="">
+				<input type="hidden" name="formInstance" value="form1" />
+		</form>
+		<% } else { %>
+			<h2 class="overlay-title">Create a new Double Feature</h2><br>
+			<form class="form-doublefeature" method="POST">
+				<div>
+					<input type="text" name="title" id="title" placeholder="Title" class="form_title" required/>
+				</div>
+
+				<div>
+					<textarea name="description" id="description" placeholder="Enter a Descrpition Here" class="form_description"></textarea>
+				</div>
+
+				<button class="btn add-btn" type="submit">Create</button>
+
+				<input type="hidden" id="hiddenIdCreate" name="hiddenIdCreate" value="">
+				<input type="hidden" id="hiddenTitleCreate" name="hiddenTitleCreate" value="">
+				<input type="hidden" id="hiddenPosterCreate" name="hiddenPosterCreate" value="">
+				<input type="hidden" name="formInstance" value="form2" />
+			</form>
+			<% } %>
+	</div>
+</div>

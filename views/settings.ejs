@@ -1,0 +1,16 @@
+<title>Update your settings - Double Feature</title>
+<%- include('partials/delaccoverlay') %>
+<div class="account-settings">
+	<h2 class="settings-header">Account Settings</h2>
+	<div style="text-align: justify; text-justify: inter-word; margin-bottom: 10px;">
+		<label>Username</label>
+		<input style="width: 20%; height: 5px;" type="text" name="username" disabled="disabled" id="username" value="<%= user.username %>" class="form_title" required/>
+	</div>
+	<div style="text-align: justify; text-justify: inter-word; margin-bottom: 10px;">
+		<label>Email</label>
+		<input style="width: 20%; height: 5px;" type="email" name="email" id="email" value="<%= user.email %>" class="form_title" required/>
+	</div>
+	<div>
+		<button class="delete-acc" onclick="document.getElementById('div-delaccoverlay').style.display = 'block'">Delete Account</button>
+	</div>
+</div>

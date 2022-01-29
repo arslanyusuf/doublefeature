@@ -1,0 +1,40 @@
+<div id="div-addoverlay">
+	<div class="overlay">
+		<form class="form-doublefeature" method="POST">
+			<div>
+				<button type="button" name="cross" class="cross" onclick="document.getElementById('div-addoverlay').style.display = 'none'"><i class="fas fa-times fa-2x"></i>
+				</button>
+			</div>
+			<% if (doubleFeatureEmpty.length !== 0) {%>
+				<h2 class="overlay-title">Add to a Double Feature</h2>
+				<div class="list-doublefeature">
+					<% for (var k = 0; k < doubleFeatureEmpty.length; k++) { %>
+						<div class="individual-doublefeature">
+							<input type="radio" id="emptydoublefeature" name="emptydoublefeature" value="<%= doubleFeatureEmpty[k].id %>" required>
+							<label for="emptydoublefeature"><%= doubleFeatureEmpty[k].title %></label>
+							<!-- <h3 class="title-doublefeature"></h3> --><br>
+						</div>
+					<% } %>
+				</div>
+
+				<div>
+					<button class="btn add-btn" type="submit" >Done</button>
+				</div>
+				<input type="hidden" id="hiddenIdAdd" name="hiddenIdAdd" value="">
+				<input type="hidden" id="hiddenTitleAdd" name="hiddenTitleAdd" value="">
+				<input type="hidden" id="hiddenPosterAdd" name="hiddenPosterAdd" value="">
+				<input type="hidden" name="formInstance" value="form1" />
+		</form>
+
+			<% } else { %>
+				<h2 class="overlay-title">No empty Double Features</h2><br>
+				<form class="form-doublefeature" method="POST">
+					<h4 style="margin-top: 0px;padding-bottom: 10px;">Please create a new Double Feature</h4>
+					<input type="hidden" id="hiddenIdAdd" name="hiddenIdAdd" value="">
+					<input type="hidden" id="hiddenTitleAdd" name="hiddenTitleAdd" value="">
+					<input type="hidden" id="hiddenPosterAdd" name="hiddenPosterAdd" value="">
+					<input type="hidden" name="formInstance" value="form1" />
+				</form>
+			<% } %>
+	</div>
+</div>

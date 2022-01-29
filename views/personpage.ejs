@@ -1,0 +1,163 @@
+<title><%= personData.name %> - Double Feature</title>
+
+<% const punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%()*+,.\/:;<=>?@\[\]^_`{|}~]/g %>
+<div style="display: table; margin: 0 auto; width: 20%;">
+	<div class="profile-frame">
+		<% if(personData.profile_path !== null) { %>
+			<img class="poster" src="<%= 'https://image.tmdb.org/t/p/w200' + personData.profile_path %>" />
+		<% } else { %>
+			<img class="poster" src="/images/unavailable200x300.png"/>
+		<% } %>	
+	</div>
+	<div>
+		<div class="biography">
+			<h2><%= personData.name %></h2>
+			<% if (personData.biography.length > 650 ) { %>
+				<p style="font-family: 'Quicksand', sans-serif; margin-right: 20px;"><%= personData.biography.substring(0,450) %><span id="dots">...</span><span id="more"><%= personData.biography.substring(450, personData.biography.length) %></span></p>
+				<button class="morebtn" onclick="showMore()" id="myBtn">Read more</button>
+			<% } else { %>
+				<p style="font-family: 'Quicksand', sans-serif; margin-right: 20px;"><%= personData.biography %></p>
+			<% } %>
+		</div>
+	</div>
+	<div>
+		<div class="tab">
+			<% for (var i = 0; i < moviesCompleteSorted.length; i++) { %>
+				<% if (moviesCompleteSorted[i].length !== 0) { %>
+					<% if (moviesCompleteSorted[i][0].department) { %>
+						<% if (moviesCompleteSorted[i][0].department === 'Camera') { %>
+							<% if (i === 0) { %>
+								<button class="tablinks active" onclick="openCategory(event, 'Cinematography')"><h3>Cinematography (<%=moviesCompleteSorted[i].length%>)</h3></button>
+							<% } else { %>
+								<button class="tablinks" onclick="openCategory(event, 'Cinematography')"><h3>Cinematography (<%=moviesCompleteSorted[i].length%>)</h3></button>
+							<% } %>
+						<% } else { %>
+							<% if (i === 0) { %>
+								<button class="tablinks active" onclick="openCategory(event, '<%= moviesCompleteSorted[i][0].department %>')"><h3><%= moviesCompleteSorted[i][0].department %> (<%=moviesCompleteSorted[i].length%>)</h3></button>
+							<% } else { %>
+								<button class="tablinks" onclick="openCategory(event, '<%= moviesCompleteSorted[i][0].department %>')"><h3><%= moviesCompleteSorted[i][0].department %> (<%=moviesCompleteSorted[i].length%>)</h3></button>
+							<% } %>
+						<% } %>
+					<% } else { %>
+						<% if (i === 0) { %>
+							<button class="tablinks active" onclick="openCategory(event, 'Acting')"><h3>Acting (<%=moviesCompleteSorted[i].length%>)</h3></button>
+						<% } else { %>
+							<button class="tablinks" onclick="openCategory(event, 'Acting')"><h3>Acting (<%=moviesCompleteSorted[i].length%>)</h3></button>
+						<% } %>
+					<% } %>
+				<% } %>
+			<% } %>
+			<div style="padding-left: 642px;">
+				<div class="dropdown">
+					<% if (sortedBy === 'title') { %>
+						<button class="sortbybtn">Title
+					<% } else if (sortedBy === 'release-newest' || sortedBy === 'release-oldest') { %>
+						<button class="sortbybtn">Release Date
+					<% } else { %>
+						<button class="sortbybtn">Popularity
+					<% } %>
+	                    <i class="fas fa-caret-down"></i>
+	                </button>
+					<div class="sortby-content">
+						<ul style="padding: 0; list-style-type:none; margin-top: 0; margin-bottom: 0;">
+							<li> <a href="/persons/<%= personData.id %>/<%= ((personData.name).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>"><span>Popularity</span></a>
+							</li>
+							<li> <a href="/persons/<%= personData.id %>/<%= ((personData.name).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/title"><span>Title</span></a>
+							</li>
+							<li style="margin-left: -18px;"> <span style="color: black; padding-top: 5px;">Release Date</span>
+								<ul style="list-style-type: none;">
+									<li style="margin-left: -22px;">
+										<a href="/persons/<%= personData.id %>/<%= ((personData.name).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/release-newest"><span style="margin-left:20px;">Newest First</span></a>
+									</li>
+									<li style="margin-left: -22px;">
+										<a href="/persons/<%= personData.id %>/<%= ((personData.name).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/release-oldest"><span style=" margin-left:20px;">Oldest First</span></a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+	                </div>
+				</div>
+			</div>
+		</div>
+		<% for (var i = 0; i < moviesCompleteSorted.length; i++) { %>
+			<% if (moviesCompleteSorted[i].length !== 0) { %>
+				<% if (moviesCompleteSorted[i][0].department) { %>
+					<% if (moviesCompleteSorted[i][0].department === 'Camera') { %>
+						<% if (i === 0) { %>
+							<div id="Cinematography" class="tabcontent" style="display: block;">
+						<% } else { %>
+							<div id="Cinematography" class="tabcontent">
+						<% } %>
+					<% } else { %>
+						<% if (i === 0) { %>
+							<div id="<%= moviesCompleteSorted[i][0].department %>" class="tabcontent" style="display: block;">
+						<% } else { %>	
+							<div id="<%= moviesCompleteSorted[i][0].department %>" class="tabcontent" >
+						<% } %>	
+					<% } %>
+				<% } else { %>
+					<% if (i === 0) { %>
+						<div id="Acting" class="tabcontent" style="display: block;">
+					<% } else { %>
+						<div id="Acting" class="tabcontent">
+					<% } %>	
+				<% } %>
+				<div class="wholeresults">
+				<% for (var j = 0; j < moviesCompleteSorted[i].length; j++) { %>
+					<div class="result">
+						<a class="movielink" href="/movies/<%= moviesCompleteSorted[i][j].id %>/<%= (((moviesCompleteSorted[i][j].title).replace('&', 'and')).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase()%>">
+						<% if(moviesCompleteSorted[i][j].poster_path !== null) { %>
+							<img id class="poster" src="<%= 'https://image.tmdb.org/t/p/w154' + moviesCompleteSorted[i][j].poster_path %>"/>
+						<% } else { %>
+							<img class="poster" src="/images/unavailable154x231.png"/>
+						<% } %>
+						<h5 class="movietitle"><%= moviesCompleteSorted[i][j].title %></h5>
+						</a>
+					</div>
+				<% } %>
+				</div>
+					</div>
+			<% } %>
+		<% } %>
+	</div>
+</div>
+
+<script>
+
+	function showMore() {
+		var dots = document.getElementById("dots");
+		var moreText = document.getElementById("more");
+		var btnText = document.getElementById("myBtn");
+
+		if (dots.style.display === "none") {
+			dots.style.display = "inline";
+			btnText.innerHTML = "Read more";
+			moreText.style.display = "none";
+		} else {
+			dots.style.display = "none";
+			btnText.innerHTML = "Read less";
+			moreText.style.display = "inline";
+		}
+	} 
+
+	function openCategory(evt, category) {
+  		// Declare all variables
+ 		var i, tabcontent, tablinks;
+
+  		// Get all elements with class="tabcontent" and hide them
+  		tabcontent = document.getElementsByClassName("tabcontent");
+  		for (i = 0; i < tabcontent.length; i++) {
+    		tabcontent[i].style.display = "none";
+ 		 }
+
+ 		 // Get all elements with class="tablinks" and remove the class "active"
+  		tablinks = document.getElementsByClassName("tablinks");
+  		for (i = 0; i < tablinks.length; i++) {
+    		tablinks[i].className = tablinks[i].className.replace(" active", "");
+  		}
+
+  		// Show the current tab, and add an "active" class to the button that opened the tab
+ 		document.getElementById(category).style.display = "block";
+  		evt.currentTarget.className += " active";
+	}
+</script>

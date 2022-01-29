@@ -1,0 +1,146 @@
+<title> Search results for <%= searchTerm %> - Double Feature</title>
+
+<%- include('partials/messages') %>
+<h2 class="searchHeader">Search</h2>
+
+<%- include('partials/dualoverlay') %>
+<form class="searchForm" action="/search" method="GET">
+	<div class="form-search">
+		<input type="text" class="query" name="query" id="query" placeholder="Enter a search term" value="<%= searchTerm %>" required><select class="typeSelect" name="type" id="type">
+			<option name="movieType" value="movie" selected>Movie</option>
+			<option name="personType" value="person">Person</option>
+			<option name="doubleType" value="doublefeature">Double Feature</option>
+		</select>
+		<button type="submit" class="search-button">Search</button>
+	</div>
+</form>
+
+<% if(movieData.total_results === 0) { %>
+	<div class="results">
+		<h3>No results were found.</h3>
+	</div>
+
+<% } else { %>
+	<% if(moviePage > movieData.total_pages) { %>
+		<div class="results">
+			<h3>You've gone past the last page of results.</h3>
+			<h3>
+				<a href='/search/movie/<%= searchTerm %>/<%= movieData.total_pages %>' class="previous">
+					<i class="fas fa-arrow-circle-left"></i>
+				</a> Go back to Page <%= movieData.total_pages %> of <%= movieData.total_pages %>
+			</h3>
+		</div>
+	
+	<% } else if(movieData.total_pages === 1) { %>
+		<div class="results">
+			<h3> Showing results 1-<%= movieData.total_results %> of <%= movieData.total_results %></h3>
+			<h3> 
+				<a href='/search/movie/<%= searchTerm %>/<%= movieData.page - 1%>' class="previoushidden">
+					<i class="fas fa-arrow-circle-left"></i>
+				</a> Page <%= movieData.page %> of <%= movieData.total_pages %>
+
+				<a href='/search/movie/<%= searchTerm %>/<%= movieData.page + 1%>' class="nexthidden">
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</h3>
+		</div>
+
+	<% } else { %>
+		<% if(((movieData.total_results) - (movieData.page)*20) >= 0 ) { %> 
+			<div class="results">
+
+				<% if (movieData.page === 1) { %>
+					<h3>Showing results <%= ((movieData.page - 1)*20) + 1 %>-<%= (movieData.page)*20 %> of <%= movieData.total_results %></h3>
+					<h3> 
+						<a href='/search/movie/<%= searchTerm %>/<%= movieData.page - 1%>' class="previoushidden">
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= movieData.page %> of <%= movieData.total_pages %>
+
+						<a href='/search/movie/<%= searchTerm %>/<%= movieData.page + 1%>' class="next">
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+			
+				<% } else { %>
+					<h3>Showing results <%= ((movieData.page - 1)*20) + 1 %>-<%= (movieData.page)*20 %> of <%= movieData.total_results %></h3>
+					<h3>
+						<a href='/search/movie/<%= searchTerm %>/<%= movieData.page - 1%>' class="previous">
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= movieData.page %> of <%= movieData.total_pages %>
+
+						<a href='/search/movie/<%= searchTerm %>/<%= movieData.page + 1%>' class="next">
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+
+				<% } %>
+			</div>
+
+		<% } else { %>
+			<div class="results">
+				<h3> Showing results <%= ((movieData.page - 1)*20) + 1 %>-<%= (movieData.total_results) %> of <%= (movieData.total_results) %></h3>
+					<h3>
+						<a href='/search/movie/<%= searchTerm %>/<%= movieData.page - 1%>' class="previous">
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= movieData.page %> of <%= movieData.total_pages %>
+
+						<a href='/search/movie/<%= searchTerm %>/<%= movieData.page + 1%>' class="nexthidden">
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+			</div>
+
+		<% } %>
+
+	<% } %>
+
+	<div class="whole"> 
+		<% for (var i = 0; i < movieData.results.length; i++) { %>
+		<% const punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%()*+,.\/:;<=>?@\[\]^_`{|}~]/g %>
+			<div class="section">
+
+				<% if (user) { %>
+					<div class="quick-icons" id="quick-icons">
+						<i class="fas fa-plus-circle fa-2x" id="<%= movieData.results[i].id %>|<%= movieData.results[i].title %>|<%= movieData.results[i].poster_path %>" onclick="parseAll(this.id); assign(); document.getElementById('div-dualoverlay').style.display = 'block'"></i>
+					</div>
+				<% } %>
+				<a class="movielink" href="/movies/<%= movieData.results[i].id %>/<%= (((movieData.results[i].title).replace('&', 'and')).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase()%>">
+					
+					<% if(movieData.results[i].poster_path !== null) { %>
+						<img class="movieimg" src="<%= 'https://image.tmdb.org/t/p/w500' + movieData.results[i].poster_path %>"/>
+
+					<% } else { %>
+						<img class="movieimg" src="/images/unavailable500x750.png"/>
+
+					<% } %>	
+			
+					<h5 class="movietitle"> <%= movieData.results[i].title %></h5>
+				</a>
+			</div>
+		<% } %>
+	</div>
+<% } %>
+
+<script>
+	var movieID;
+	var movieTitle;
+	var moviePoster;
+	function parseAll(movieInfo) {
+		var fields = movieInfo.split('|');
+		movieID = fields[0]
+		movieTitle = fields[1];
+		moviePoster = fields[2];
+	}
+
+	function assign(){
+		document.getElementById("hiddenId").value = movieID;
+		document.getElementById("hiddenTitle").value = movieTitle;
+		document.getElementById("hiddenPoster").value = moviePoster;
+	}
+
+	window.onkeyup = function (event) {
+  		if (event.keyCode === 27) {
+    		document.getElementById(div-dualoverlay).style.display="none";
+  		}
+ 	}
+</script>

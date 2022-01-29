@@ -1,0 +1,30 @@
+<title>Sign Up - Double Feature</title>
+
+<div class="user" id="user">
+	<header class="user__header">
+		<a href="/">
+			<img src="/images/logo/vector/default-monochrome.svg" alt="" />
+		</a>
+	</header>
+	<%- include('partials/messages') %>
+	<form class="auth" id="auth" action="/auth/signup" method="POST" >
+		<div class="form__group">
+				<input type="text" name="username" id="username" placeholder="Username" class="form__input" value="<%= typeof username != 'undefined' ? username : '' %>"/>
+		</div>
+
+		<div class="form__group">
+				<input type="email" name="email" id="email" placeholder="Email" class="form__input" value="<%= typeof email != 'undefined' ? email : '' %>"/>
+		</div>
+
+		<div class="form__group">
+				<input type="password" name="password" id="password" placeholder="Password" class="form__input" value="<%= typeof password != 'undefined' ? password : '' %>"/>
+		</div>
+
+		<div class="form__group">
+				<input type="password" name="confpassword" id="confpassword" placeholder="Confirm Password" class="form__input" value="<%= typeof confpassword != 'undefined' ? confpassword : '' %>"/>
+		</div>
+
+		<button class="btn" type="submit" >Sign Up</button>
+	</form>
+	<footer class="user__footer">Already have an account? <a href="/auth/signin">Sign In</a> </footer>
+</div>

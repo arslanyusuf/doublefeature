@@ -1,0 +1,39 @@
+<title> <%= username %>'s profile - Double Feature</title>
+
+<% const punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%()*+,.\/:;<=>?@\[\]^_`{|}~]/g %>
+<%- include('partials/messages') %>
+<h1> <a class="linkme" href="/users/<%= username %>"><%= username %></a>'s Profile</h1>
+
+<a href="/users/<%= username %>/history"><button class="logs-btn">Logs</button></a>
+
+<a href="/users/<%= username %>/likes"><button class="ratings-btn">Likes</button></a>
+
+<a href="/users/<%= username %>/ratings"><button class="likes-btn">Ratings</button></a>
+
+<h3 style="margin-bottom: -28px; margin-left: -960px;"><%= username %>'s Double Features</h3>
+<a href="/users/<%= username %>/all"><button class="more-btn">See All</button></a>
+
+<hr style="color: white;width: 90%;">
+<div class="wholefeatures">
+	<% for (let i = 0; i < doublefeatureList.length; i++) { %>
+		<div class="double">
+			<a href="/users/<%= doublefeatureList[i].username %>/<%= doublefeatureList[i].identifier %>/<%= (((doublefeatureList[i].title).replace('&', 'and')).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase()%>">
+			<% if (doublefeatureList[i].movie_one_poster === null) { %>
+				<img class="movieimg" src="/images/white_background.jpg"/>
+			<% } else if (doublefeatureList[i].movie_one_poster === '') { %>
+				<img class="movieimg" src="/images/unavailable200x300.png">
+			<% } else { %>
+				<img class="movieimg" src="<%= 'https://image.tmdb.org/t/p/w500' + doublefeatureList[i].movie_one_poster %>"/>
+			<% } %>
+			<% if (doublefeatureList[i].movie_two_poster === null) { %>
+				<img class="movieimg" src="/images/white_background.jpg"/>
+			<% } else if (doublefeatureList[i].movie_two_poster === '') { %>
+				<img class="movieimg" src="/images/unavailable200x300.png">
+			<% } else { %>
+				<img class="movieimg" src="<%= 'https://image.tmdb.org/t/p/w500' + doublefeatureList[i].movie_two_poster %>"/>
+			<% } %>
+			<h5 class="featuretitle"> <%= doublefeatureList[i].title %></h5>
+			</a>
+		</div>
+	<% } %>
+</div>

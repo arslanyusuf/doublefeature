@@ -1,0 +1,98 @@
+<div id="div-rateoverlay">
+	<div style="width: 30%;" class="overlay">
+		<form class="form-doublefeature" method="POST">
+			<div>
+				<button type="button" name="cross" class="cross" onclick="document.getElementById('div-rateoverlay').style.display = 'none'"><i class="fas fa-times fa-2x"></i>
+				</button>
+			</div>
+			<div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+				<div style="margin-right: 50px;">
+				<% if (user.watched.includes(doublefeatureInfo._id)) { %>
+					<input checked type="checkbox" name="rate" id="watch" value="watch" onchange="watchchange(watchcolor, this)">
+					<label for="watch"><i class="fas fa-eye fa-3x watched" id="watchcolor"></i></label>
+				<% } else { %>
+					<input type="checkbox" name="rate" id="watch" value="watch" onchange="watchchange(watchcolor, this)">
+					<label for="watch"><i class="fas fa-eye fa-3x notwatched" id="watchcolor"></i></label>
+				<% } %>
+				</div>
+				<div style="margin-left: 50px;">
+				<% if (user.liked.includes(doublefeatureInfo._id)) { %>
+					<input checked type="checkbox" name="rate" id="like" value="like" onchange="likechange(likecolor, this)">
+					<label for="like"><i class="fas fa-heart fa-3x liked" id="likecolor"></i></label>
+				<% } else { %>
+					<input type="checkbox" name="rate" id="like" value="like" onchange="likechange(likecolor, this)">
+					<label for="like"><i class="fas fa-heart fa-3x notliked" id="likecolor"></i></label>
+				<% } %>
+				</div>
+			</div>
+			<div class="rate" style="margin-top: 20px;">
+			<% if (userRating) { %>
+				<% for (var i = 0; i < userRating.rating; i++) { %>
+					<i class="fas fa-star fa-2x star orange"></i>
+				<% } %>
+				<% for (var j = userRating.rating; j < 10; j++) { %>
+					<i class="fas fa-star fa-2x star"></i>
+				<% } %>
+			<% } else { %>
+				<% for (var k = 0; k < 10; k++) { %>
+					<i class="fas fa-star fa-2x star"></i>
+				<% } %>
+			<% } %>
+			</div>
+			<div>
+				<button class="btn add-btn" type="submit">Save Changes</button>
+			</div>
+			<input type="hidden" id="hiddenUserIdRate" name="hiddenUserIdRate" value="">
+			<input type="hidden" id="hiddenIdRate" name="hiddenIdRate" value="">
+			<input type="hidden" id="hiddenRating" name="hiddenRating" value="">
+			<input type="hidden" name="formInstance" value="rateform" />
+		</form>
+	</div>
+</div>
+
+<script>
+	function watchchange(x, _this) {
+		x.style.color = _this.checked ? '#44ab70' : 'white'
+	}
+
+	function likechange(x, _this) {
+		x.style.color = _this.checked ? '#ff3333' : 'white'
+	}
+
+	const stars = document.querySelectorAll('.star');
+
+	for (i = 0; i < stars.length; i++) {
+		stars[i].starValue = i + 1;
+		["click", "mouseover", "mouseout"].forEach(function(e) {
+			stars[i].addEventListener(e, showRating);
+		})
+	}
+
+	function showRating(e) {
+		let type = e.type;
+		let starValue = this.starValue;
+		stars.forEach(function(elem, ind) {
+			if (type === 'click') {
+				if (ind < starValue) {
+					elem.classList.add("orange");
+					document.getElementById("hiddenRating").value = starValue;
+				} else {
+					elem.classList.remove("orange");
+				}
+			}
+
+			if (type === 'mouseover') {
+				if (ind < starValue) {
+					elem.classList.add("yellow");
+				} else {
+					elem.classList.remove("yellow");
+				}
+			}
+
+			if (type === 'mouseout') {
+				elem.classList.remove("yellow");
+			}
+		})
+	}
+
+</script>

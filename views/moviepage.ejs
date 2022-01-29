@@ -1,0 +1,161 @@
+<title> <%= movieData.title %> (<%= (movieData.release_date).substring(0,4) %>) - Double Feature</title>
+
+<% const punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%()*+,.\/:;<=>?@\[\]^_`{|}~]/g %>
+<%- include('partials/addoverlay') %>
+<%- include('partials/newoverlay') %>
+<div class="div-backdrop">
+	<% if(movieData.backdrop_path !== null) { %>
+		<img class="backdrop" src="<%= 'https://image.tmdb.org/t/p/original' + movieData.backdrop_path %>" />
+	<% } else { %>
+		<img class="backdrop" src="/images/unavailable1000x562.png"/>
+	<% } %>
+	<div class="banner">
+		<div style="display: table; margin: auto; margin-top: 0px;">
+		<div class="moviebasicinfo">
+			<h1 class="moviepagetitle"> <%= movieData.title %></h1>
+			<h2 class="bannerinfo"> <%= (movieData.release_date).substring(0,4) %> <span> • </span> <%=movieData.runtime%> mins <span> • </span><% for (var i = 0; i < movieData.spoken_languages.length; i++) { if (i > 0) { %>, 
+				<% } %><%=movieData.spoken_languages[i].english_name%><% } %></h2>
+			<h2 class="moviepagegenre"><% for (var j = 0; j < movieData.genres.length; j++) { if (j > 0) { %>, <% } %><a class="linkme" href="/movies/genre/<%= ((movieData.genres[j].name).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>"><%=movieData.genres[j].name%></a><% } %></h2>
+			<h2 class="moviepagedirector"> Directed by 
+				<% for (var i = 0; i < movieDirector.length; i++) { if (i > 0) { %>, 
+				<% } %>
+				<a class="linkme" href="/persons/<%= movieDirector[i].id %>/<%= ((movieDirector[i].name).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>"><%=movieDirector[i].name%></a><% } %>
+			</h2>
+		</div>
+		</div>
+	</div>
+</div>
+<div style="display: table; margin: 0 auto; margin-top: -350px;">
+	<div class="poster-frame">
+		<% if(movieData.poster_path !== null) { %>
+			<img id class="poster" src="<%= 'https://image.tmdb.org/t/p/w200' + movieData.poster_path %>"/>
+		<% } else { %>
+			<img class="poster" src="/images/unavailable200x300.png"/>
+		<% } %>	
+	</div>
+	<div class="movieinfo">
+		<%- include('partials/messages') %>
+		<h3 class="tagline"><%= movieData.tagline %></h3>
+		<p class="overview"><%= movieData.overview %></p>
+		<hr class="horizontalrule">
+		<h4 class="headingtitle">
+				Main Cast: 
+			<span class="realinfo"><% for (var i = 0; i < movieData.credits.cast.length && i < 10; i++) { if (i > 0) { %>, <% } %>
+				<a class="linkme" href="/persons/<%= movieData.credits.cast[i].id %>/<%= ((movieData.credits.cast[i].name).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>"><%=movieData.credits.cast[i].name%></a><% } %>
+			</span>
+		</h4>
+		<h4 class="headingtitle">
+			<% if (movieDirector.length > 1) { %>
+				Directors:
+			<% } else { %>
+				Director: 
+			<% } %>
+			<span class="realinfo"><% for (var i = 0; i < movieDirector.length; i++) { if (i > 0) { %>, <% } %>
+				<a class="linkme" href="/persons/<%= movieDirector[i].id %>/<%= ((movieDirector[i].name).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>"><%=movieDirector[i].name%></a><% } %>
+			</span>
+		</h4>
+		<h4 class="headingtitle">
+			<% if (movieWriter.length > 1) { %>
+				Writers:
+			<% } else { %>
+				Writer: 
+			<% } %>
+			<span class="realinfo"><% for (var i = 0; i < movieWriter.length; i++) { if (i > 0) { %>, <% } %>
+				<a class="linkme" href="/persons/<%= movieWriter[i].id %>/<%= ((movieWriter[i].name).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>"><%=movieWriter[i].name%></a><% } %>
+			</span>
+		</h4>
+		<h4 class="headingtitle">
+			<% if (movieEditor.length > 1) { %>
+				Editors:
+			<% } else { %>
+				Editor: 
+			<% } %>
+			<span class="realinfo"><% for (var i = 0; i < movieEditor.length; i++) { if (i > 0) { %>, <% } %>
+				<a class="linkme" href="/persons/<%= movieEditor[i].id %>/<%= ((movieEditor[i].name).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>"><%=movieEditor[i].name%></a><% } %>
+			</span>
+		</h4>
+		<h4 class="headingtitle">
+			<% if (movieCinematographer.length > 1) { %>
+				Cinematographers:
+			<% } else { %>
+				Cinematographer: 
+			<% } %>
+			<span class="realinfo"><% for (var i = 0; i < movieCinematographer.length; i++) { if (i > 0) { %>, <% } %>
+				<a class="linkme" href="/persons/<%= movieCinematographer[i].id %>/<%= ((movieCinematographer[i].name).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>"><%=movieCinematographer[i].name%></a><% } %>
+			</span>
+		</h4>
+		<hr class="horizontalrule">
+		<h2 class="popular">Popular Double Features</h2>
+		<div style="display: flex; flex-direction: row; flex-wrap: wrap; margin-left: 25px; width: 550px;">
+			<% for (var i = 0; i < doublefeaturePopular.length; i++) { %>
+				<div class="populardouble">
+					<a href="/users/<%= doublefeaturePopular[i].username %>/<%= doublefeaturePopular[i].identifier %>/<%= (((doublefeaturePopular[i].title).replace('&', 'and')).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase()%>">
+						<% if (doublefeaturePopular[i].movie_one_poster === null) { %>
+							<img class="movieimg" src="/images/white_background.jpg"/>
+						<% } else if (doublefeaturePopular[i].movie_one_poster === '') { %>
+							<img class="movieimg" src="/images/unavailable200x300.png">
+						<% } else { %>
+							<img class="movieimg" src="<%= 'https://image.tmdb.org/t/p/w500' + doublefeaturePopular[i].movie_one_poster %>"/>
+						<% } %>
+						<% if (doublefeaturePopular[i].movie_two_poster === null) { %>
+							<img class="movieimg" src="/images/white_background.jpg"/>
+						<% } else if (doublefeaturePopular[i].movie_two_poster === '') { %>
+							<img class="movieimg" src="/images/unavailable200x300.png">
+						<% } else { %>
+							<img class="movieimg" src="<%= 'https://image.tmdb.org/t/p/w500' + doublefeaturePopular[i].movie_two_poster %>"/>
+						<% } %>
+						<h5 class="featuretitle" style="text-align: center;"> <%= doublefeaturePopular[i].title %></h5>
+					</a>
+				</div>
+			<% } %>
+		</div>
+	</div>
+	<% if (user) { %>
+		<div class="thebox">
+			<div class="quick-icons" id="quick-icons">
+				<i class="fas fa-ticket-alt fa-2x" id="<%= movieData.id %>|<%= movieData.title %>|<%= movieData.poster_path %>" onclick="parseAll(this.id); assignCreate(); document.getElementById('div-newoverlay').style.display = 'block'"></i>
+			</div>
+			<h3 class="boxheader">Create a new Double Feature with this movie</h3>
+			<hr class="seperation">
+			<div class="quick-icons" id="quick-icons">
+				<i class="fas fa-plus-circle fa-2x" id="<%= movieData.id %>|<%= movieData.title %>|<%= movieData.poster_path %>" onclick="parseAll(this.id); assignAdd(); document.getElementById('div-addoverlay').style.display = 'block'"></i>
+			</div>
+			<h3 class="boxheader">Add to an existing Double Feature</h3>
+		</div>
+	<% } else { %>
+		<div class="thebox">
+			<h3><a class="linkme" href="/auth/signin"> Sign In</a> to create Double Features</h3>
+			<h3>or</h3>
+			<h3><a class="linkme" href="/auth/signup"> Sign Up</a> if you don't have an account already</h3>
+		</div>
+	<% } %>
+</div>
+
+<script>
+	var movieID;
+	var movieTitle;
+	var moviePoster;
+	function parseAll(movieInfo) {
+		var fields = movieInfo.split('|');
+		movieID = fields[0]
+		movieTitle = fields[1];
+		moviePoster = fields[2];
+	}
+
+	function assignAdd(){
+		document.getElementById("hiddenIdAdd").value = movieID;
+		document.getElementById("hiddenTitleAdd").value = movieTitle;
+		document.getElementById("hiddenPosterAdd").value = moviePoster;
+	}
+	function assignCreate(){
+		document.getElementById("hiddenIdCreate").value = movieID;
+		document.getElementById("hiddenTitleCreate").value = movieTitle;
+		document.getElementById("hiddenPosterCreate").value = moviePoster;
+	}
+
+	window.onkeyup = function (event) {
+  		if (event.keyCode == 27) {
+    		document.getElementById(div-addoverlay).style.display="none";
+  		}
+ 	}
+</script>

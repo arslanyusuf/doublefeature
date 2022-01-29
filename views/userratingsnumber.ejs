@@ -1,0 +1,129 @@
+<title> <%= username %>'s Double Features - Double Feature</title>
+
+<% const punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%()*+,.\/:;<=>?@\[\]^_`{|}~]/g %>
+<%- include('partials/messages') %>
+<h1> <a class="linkme" href="/users/<%= username %>"><%= username %></a>'s Ratings</h1>
+
+<% if(doublefeatureCount === 0) { %>
+	<div class="results">
+		<h3>No results were found.</h3>
+	</div>
+<% } else { %>
+	<% if(doublefeaturePage > Math.ceil(doublefeatureCount/16)) { %>
+		<div class="results">
+			<h3>You've gone past the last page.</h3>
+			<h3>
+				<a href='/users/<%= username %>/ratings/rated/<%= rating %>/<%= Math.ceil(doublefeatureCount/16) %>' class="previous">
+					<i class="fas fa-arrow-circle-left"></i>
+				</a> Go back to Page <%= Math.ceil(doublefeatureCount/16) %> of <%= Math.ceil(doublefeatureCount/16) %>
+			</h3>
+		</div>
+	<% } else if(Math.ceil(doublefeatureCount/16) === 1) { %>
+		<div class="results">
+			<h3> Showing 1-<%= doublefeatureCount %> of <%= doublefeatureCount %></h3>
+			<h3> 
+				<a href='/users/<%= username %>/ratings/rated/<%= rating %>/<%= doublefeaturePage - 1%>' class="previoushidden">
+					<i class="fas fa-arrow-circle-left"></i>
+				</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
+
+				<a href='/users/<%= username %>/ratings/rated/<%= rating %>/<%= parseInt(doublefeaturePage) + 1%>' class="nexthidden">
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</h3>
+		</div>
+
+	<% } else { %>
+		<% if((doublefeatureCount - (doublefeaturePage)*16) > 0 ) { %> 
+			<div class="results">
+
+				<% if (parseInt(doublefeaturePage) === 1) { %>
+					<h3>Showing <%= ((doublefeaturePage - 1)*16) + 1 %>-<%= (doublefeaturePage)*16 %> of <%= doublefeatureCount %></h3>
+					<h3> 
+						<a href='/users/<%= username %>/ratings/rated/<%= rating %>/<%= doublefeaturePage - 1%>' class="previoushidden">
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
+
+						<a href='/users/<%= username %>/ratings/rated/<%= rating %>/<%= parseInt(doublefeaturePage) + 1%>' class="next">
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+			
+				<% } else { %>
+					<h3>Showing <%= ((doublefeaturePage - 1)*16) + 1 %>-<%= (doublefeaturePage)*16 %> of <%= doublefeatureCount %></h3>
+					<h3>
+						<a href='/users/<%= username %>/ratings/rated/<%= rating %>/<%= doublefeaturePage - 1%>' class="previous">
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
+
+						<a href='/users/<%= username %>/ratings/rated/<%= rating %>/<%= parseInt(doublefeaturePage) + 1%>' class="next">
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+
+				<% } %>
+			</div>
+
+		<% } else { %>
+			<div class="results">
+				<h3> Showing <%= ((doublefeaturePage - 1)*16) + 1 %>-<%= doublefeatureCount %> of <%= doublefeatureCount %></h3>
+					<h3>
+						<a href='/users/<%= username %>/ratings/rated/<%= rating %>/<%= doublefeaturePage - 1%>' class="previous">
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
+
+						<a href='/users/<%= username %>/ratings/rated/<%= rating %>/<%= doublefeaturePage + 1%>' class="nexthidden">
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+			</div>
+
+		<% } %>
+	<% } %>
+<% } %>
+<div style="margin-left: 1200px;" class="dropdown">
+	<button class="sortbybtn"><%= rating %>
+        <i class="fas fa-caret-down"></i>
+    </button>
+    <div class="sortby-content">
+		<ul style="padding: 0; list-style-type:none; margin-top: 0; margin-bottom: 0;">
+			<li><a href="/users/<%= username %>/ratings">All Ratings</a></li>
+			<% for (var i = 10; i >= 1; i--) { %>
+				<li><a href="/users/<%= username %>/ratings/rated/<%= i %>"><%= i %></a></li>
+			<% } %>
+		</ul>
+    </div>
+</div>
+<div class="wholefeatures">
+	<% for (let i = 0; i < doublefeatureList.length; i++) { %>
+		<div class="double">
+			<a href="/users/<%= doublefeatureList[i].username %>/<%= doublefeatureList[i].identifier %>/<%= (((doublefeatureList[i].title).replace('&', 'and')).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase()%>">
+			<% if (doublefeatureList[i].movie_one_poster === null) { %>
+				<img class="movieimg" src="/images/white_background.jpg"/>
+			<% } else if (doublefeatureList[i].movie_one_poster === '') { %>
+				<img class="movieimg" src="/images/unavailable200x300.png">
+			<% } else { %>
+				<img class="movieimg" src="<%= 'https://image.tmdb.org/t/p/w500' + doublefeatureList[i].movie_one_poster %>"/>
+			<% } %>
+			<% if (doublefeatureList[i].movie_two_poster === null) { %>
+				<img class="movieimg" src="/images/white_background.jpg"/>
+			<% } else if (doublefeatureList[i].movie_two_poster === '') { %>
+				<img class="movieimg" src="/images/unavailable200x300.png">
+			<% } else { %>
+				<img class="movieimg" src="<%= 'https://image.tmdb.org/t/p/w500' + doublefeatureList[i].movie_two_poster %>"/>
+			<% } %>
+			<h5 class="featuretitle"> <%= doublefeatureList[i].title %></h5>
+			<span style="color: white;">by <%= doublefeatureList[i].username %></span>
+			<div>
+			<% const newRating = userRatings.find(element => element.doublefeature.toString() === doublefeatureList[i]._id.toString()).rating %>
+			<i style="color: #eb741a;" class="fas fa-star fa-2x"></i>
+				<% if (parseInt(newRating) === 1) { %>
+					<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 25px; bottom: 4px; color: white;"><%= newRating %></span>
+				<% } else if (parseInt(newRating) === 10) { %>
+					<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 30px; bottom: 4px; color: white;"><%= newRating %></span>
+				<% } else { %>
+					<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 27px; bottom: 4px; color: white;"><%= newRating %></span>
+				<% } %>
+			</div>
+		</div>
+	<% } %>
+</div>

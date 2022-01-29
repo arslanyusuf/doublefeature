@@ -1,0 +1,112 @@
+<title>Search results for <%= searchTerm %> - Double Feature</title>
+
+<h2 class="searchHeader">Search</h2>
+<form class="searchForm" action="/search" method="GET">
+	<div class="form-search">
+		<input type="text" class="query" name="query" id="query" placeholder="Enter a search term" value="<%= searchTerm %>" required><select class="typeSelect" name="type" id="type">
+			<option name="movieType" value="movie">Movie</option>
+			<option name="personType" value="person" selected>Person</option>
+			<option name="doubleType" value="doublefeature">Double Feature</option>
+		</select>
+		<button type="submit" class="search-button">Search</button>
+	</div>
+</form>
+
+<% if(personData.total_results === 0) { %>
+	<div class="results">
+		<h3>No results were found.</h3>
+	</div>
+
+<% } else { %>
+	<% if(personPage > personData.total_pages) { %>
+		<div class="results">
+			<h3>You've gone past the last page of results.</h3>
+			<h3>
+				<a href='/search/person/<%= searchTerm %>/<%= personData.total_pages %>' class="previous">
+					<i class="fas fa-arrow-circle-left"></i>
+				</a> Go back to Page <%= personData.total_pages %> of <%= personData.total_pages %>
+			</h3>
+		</div>
+	
+	<% } else if(personData.total_pages === 1) { %>
+		<div class="results">
+			<h3> Showing results 1-<%= personData.total_results %> of <%= personData.total_results %></h3>
+			<h3> 
+				<a href='/search/person/<%= searchTerm %>/<%= personData.page - 1%>' class="previoushidden">
+					<i class="fas fa-arrow-circle-left"></i>
+				</a> Page <%= personData.page %> of <%= personData.total_pages %>
+
+				<a href='/search/person/<%= searchTerm %>/<%= personData.page + 1%>' class="nexthidden">
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</h3>
+		</div>
+
+	<% } else { %>
+		<% if(((personData.total_results) - (personData.page)*20) >= 0 ) { %> 
+			<div class="results">
+
+				<% if (personData.page === 1) { %>
+					<h3>Showing results <%= ((personData.page - 1)*20) + 1 %>-<%= (personData.page)*20 %> of <%= personData.total_results %></h3>
+					<h3> 
+						<a href='/search/person/<%= searchTerm %>/<%= personData.page - 1%>' class="previoushidden">
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= personData.page %> of <%= personData.total_pages %>
+
+						<a href='/search/person/<%= searchTerm %>/<%= personData.page + 1%>' class="next">
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+			
+				<% } else { %>
+					<h3>Showing results <%= ((personData.page - 1)*20) + 1 %>-<%= (personData.page)*20 %> of <%= personData.total_results %></h3>
+					<h3>
+						<a href='/search/person/<%= searchTerm %>/<%= personData.page - 1%>' class="previous">
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= personData.page %> of <%= personData.total_pages %>
+
+						<a href='/search/person/<%= searchTerm %>/<%= personData.page + 1%>' class="next">
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+
+				<% } %>
+			</div>
+
+		<% } else { %>
+			<div class="results">
+				<h3> Showing results <%= ((personData.page - 1)*20) + 1 %>-<%= (personData.total_results) %> of <%= personData.total_results %></h3>
+					<h3>
+						<a href='/search/person/<%= searchTerm %>/<%= personData.page - 1%>' class="previous">
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= personData.page %> of <%= personData.total_pages %>
+
+						<a href='/search/person/<%= searchTerm %>/<%= personData.page + 1%>' class="nexthidden">
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+			</div>
+
+		<% } %>
+
+	<% } %>
+
+	<div class="whole"> 
+		<% for (var i = 0; i < personData.results.length; i++) { %> 
+			<div class="section">
+				<a class="personlink" href="/persons/<%= personData.results[i].id%>/<%= ((personData.results[i].name).replace(/\s+/g, '-')).toLowerCase()%>">
+
+					<% if(personData.results[i].profile_path !== null) { %>
+						<img class="personimg" src="<%= 'https://image.tmdb.org/t/p/w500' + personData.results[i].profile_path %>"/>
+
+					<% } else { %>
+						<img class="personimg" src="/images/unavailable500x750.png"/>
+
+					<% } %>	
+				
+					<h5 class="personname"> <%= personData.results[i].name %></h5>
+				</a>
+			</div>
+		<% } %>
+	</div>
+<% } %>

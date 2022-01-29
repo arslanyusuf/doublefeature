@@ -1,0 +1,23 @@
+<div id="div-editoverlay">
+	<div class="overlay">
+		<form class="form-doublefeature" method="POST">
+			<div>
+				<button type="button" name="cross" class="cross" onclick="document.getElementById('div-editoverlay').style.display = 'none'"><i class="fas fa-times fa-2x"></i>
+				</button>
+			</div>
+			<h2 class="overlay-title">Edit Title & Description below</h2>
+			<div>
+				<input type="text" name="title" id="title" placeholder="Title" class="form_title" value="<%= doublefeatureInfo.title%>" required/>
+			</div>
+
+			<div>
+				<textarea name="description" id="description" placeholder="Enter a Descrpition Here" class="form_description"><%= doublefeatureInfo.description %></textarea>
+			</div>
+			<div>
+				<button class="btn add-btn" type="submit">Save Edits</button>
+			</div>
+			<input type="hidden" id="hiddenIdEdit" name="hiddenIdEdit" value="">
+			<input type="hidden" name="formInstance" value="editform" />
+		</form>
+	</div>
+</div>

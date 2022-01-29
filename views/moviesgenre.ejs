@@ -1,0 +1,203 @@
+<title> <%= genreName %> - Double Feature</title>
+
+<% const punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%()*+,.\/:;<=>?@\[\]^_`{|}~]/g %>
+<%- include('partials/messages') %>
+<% if (genreName === 'Animation') { %>
+<h2 class="searchHeader">Animated Movies</h2>
+<% } else if (genreName === 'Drama') { %>
+<h2 class="searchHeader">Dramatic Movies</h2>
+<% } else if (genreName === 'History') { %>
+<h2 class="searchHeader">Historical Movies</h2>
+<% } else if (genreName === 'Romance') { %>
+<h2 class="searchHeader">Romantic Movies</h2>
+<% } else if (genreName === 'Thriller') { %>
+<h2 class="searchHeader">Thrillers</h2>
+<% } else if (genreName === 'Tv Movie') { %>
+<h2 class="searchHeader">TV Movies</h2>
+<% } else { %>
+<h2 class="searchHeader"><%= genreName %> Movies</h2>
+<% } %>
+
+<%- include('partials/dualoverlay') %>
+
+<% if(moviePage > Math.ceil(totalResults/40)) { %>
+	<div class="results">
+		<h3>You've gone past the last page of results.</h3>
+		<h3>
+			<% if (sortedBy === 'title' || sortedBy === 'release-newest' || sortedBy === 'release-oldest') { %>
+				<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= sortedBy %>/<%= Math.ceil(totalResults/40) %>' class="previous">
+			<% } else { %>
+				<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= Math.ceil(totalResults/40) %>' class="previous">
+			<% } %>
+				<i class="fas fa-arrow-circle-left"></i>
+			</a> Go back to Page <%= Math.ceil(totalResults/40) %> of <%= Math.ceil(totalResults/40) %>
+		</h3>
+	</div>
+
+<% } else { %>
+	<% if(((totalResults) - (parseInt(moviePage))*40) > 0 ) { %> 
+		<div class="results">
+
+			<% if (parseInt(moviePage) === 1) { %>
+				<h3>Showing <%= ((parseInt(moviePage) - 1)*40) + 1 %>-<%= (parseInt(moviePage))*40 %> of <%= totalResults %></h3>
+				<h3>
+					<% if (sortedBy === 'title' || sortedBy === 'release-newest' || sortedBy === 'release-oldest') { %>
+						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= sortedBy %>/<%= parseInt(moviePage) - 1%>' class="previoushidden">
+					<% } else { %>
+						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= parseInt(moviePage) - 1%>' class="previoushidden">
+					<% } %>
+						<i class="fas fa-arrow-circle-left"></i>
+					</a> Page <%= parseInt(moviePage) %> of <%= Math.ceil(totalResults/40) %>
+
+					<% if (sortedBy === 'title' || sortedBy === 'release-newest' || sortedBy === 'release-oldest') { %>
+						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= sortedBy %>/<%= parseInt(moviePage) + 1%>' class="next">
+					<% } else { %>
+						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= parseInt(moviePage) + 1%>' class="next">
+					<% } %>
+						<i class="fas fa-arrow-circle-right"></i>
+					</a>
+				</h3>
+		
+			<% } else { %>
+				<h3>Showing <%= ((parseInt(moviePage) - 1)*40) + 1 %>-<%= (parseInt(moviePage))*40 %> of <%= totalResults %></h3>
+				<h3>
+					<% if (sortedBy === 'title' || sortedBy === 'release-newest' || sortedBy === 'release-oldest') { %>
+						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= sortedBy %>/<%= parseInt(moviePage) - 1%>' class="previous">
+					<% } else { %>
+						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= parseInt(moviePage) - 1%>' class="previous">
+					<% } %>
+						<i class="fas fa-arrow-circle-left"></i>
+					</a> Page <%= parseInt(moviePage) %> of <%= Math.ceil(totalResults/40) %>
+
+					<% if (sortedBy === 'title' || sortedBy === 'release-newest' || sortedBy === 'release-oldest') { %>
+						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= sortedBy %>/<%= parseInt(moviePage) + 1%>' class="next">
+					<% } else { %>
+						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= parseInt(moviePage) + 1%>' class="next">
+					<% } %>
+						<i class="fas fa-arrow-circle-right"></i>
+					</a>
+				</h3>
+
+			<% } %>
+		</div>
+
+	<% } else { %>
+		<div class="results">
+			<h3> Showing <%= ((parseInt(moviePage) - 1)*40) + 1 %>-<%= (totalResults) %> of <%= (totalResults) %></h3>
+				<h3>
+					<% if (sortedBy === 'title' || sortedBy === 'release-newest' || sortedBy === 'release-oldest') { %>
+						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= sortedBy %>/<%= parseInt(moviePage) - 1%>' class="previous">
+					<% } else { %>
+						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= parseInt(moviePage) - 1%>' class="previous">
+					<% } %>
+						<i class="fas fa-arrow-circle-left"></i>
+					</a> Page <%= parseInt(moviePage) %> of <%= Math.ceil(totalResults/40) %>
+
+					<% if (sortedBy === 'title' || sortedBy === 'release-newest' || sortedBy === 'release-oldest') { %>
+						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= sortedBy %>/<%= parseInt(moviePage) + 1%>' class="nexthidden">
+					<% } else { %>
+						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= parseInt(moviePage) + 1%>' class="nexthidden">
+					<% } %>
+						<i class="fas fa-arrow-circle-right"></i>
+					</a>
+				</h3>
+		</div>
+
+	<% } %>
+
+<% } %>
+<div style="display: flex; flex-direction: row;">
+	<div style="margin-left: 78%;" class="dropdown">
+		<button class="sortbybtn">Genre
+	        <i class="fas fa-caret-down"></i>
+	    </button>
+	    <div class="sortby-content">
+			<ul style="padding: 0; list-style-type:none; margin-top: 0; margin-bottom: 0;">
+				<% for (var i = 0; i < genres.length; i++) { %>
+					<li> <a href="/movies/genre/<%= ((genres[i].name).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>"><%= genres[i].name %></a>
+					</li>
+				<% } %>
+			</ul>
+	    </div>
+	</div>
+	<div class="dropdown">
+		<% if(sortedBy === 'title') { %>
+			<button class="sortbybtn">Title
+		<% } else if (sortedBy === 'release-newest') { %>
+			<button class="sortbybtn">Newest First
+		<% } else if (sortedBy === 'release-oldest') { %>
+			<button class="sortbybtn">Oldest First
+		<% } else { %>
+			<button class="sortbybtn">Popularity
+		<% } %>
+	        <i class="fas fa-caret-down"></i>
+	    </button>
+		<div class="sortby-content">
+			<ul style="padding: 0; list-style-type:none; margin-top: 0; margin-bottom: 0;">
+				<li> <a href="/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>">Popularity</a>
+				</li>
+				<li> <a href="/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/title">Title</a>
+				</li>
+				<li style="margin-left: -18px;"> <span style="color: black;padding-top: 5px;">Release Date</span>
+					<ul style="list-style-type: none;">
+						<li style="margin-left: -22px;">
+							<a href="/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/release-newest"><span style="margin-left:20px;">Newest First</span></a>
+						</li>
+						<li style="margin-left: -22px;">
+							<a href="/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/release-oldest"><span style=" margin-left:20px;">Oldest First</span></a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+	    </div> 
+	</div>
+</div>
+<div class="whole"> 
+	<% for (var i = 0; i < movieData.length; i++) { %>
+	<% const punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%()*+,.\/:;<=>?@\[\]^_`{|}~]/g %>
+		<div class="section">
+
+			<% if (user) { %>
+				<div class="quick-icons" id="quick-icons">
+					<i class="fas fa-plus-circle fa-2x" id="<%= movieData[i].id %>|<%= movieData[i].title %>|<%= movieData[i].poster_path %>" onclick="parseAll(this.id); assign(); document.getElementById('div-dualoverlay').style.display = 'block'"></i>
+				</div>
+			<% } %>
+			<a class="movielink" href="/movies/<%= movieData[i].id %>/<%= (((movieData[i].title).replace('&', 'and')).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase()%>">
+				
+				<% if(movieData[i].poster_path !== null) { %>
+					<img class="movieimg" src="<%= 'https://image.tmdb.org/t/p/w500' + movieData[i].poster_path %>"/>
+
+				<% } else { %>
+					<img class="movieimg" src="/images/unavailable500x750.png"/>
+
+				<% } %>	
+		
+				<h5 class="movietitle"> <%= movieData[i].title %></h5>
+			</a>
+		</div>
+	<% } %>
+</div>
+
+<script>
+	var movieID;
+	var movieTitle;
+	var moviePoster;
+	function parseAll(movieInfo) {
+		var fields = movieInfo.split('|');
+		movieID = fields[0]
+		movieTitle = fields[1];
+		moviePoster = fields[2];
+	}
+
+	function assign(){
+		document.getElementById("hiddenId").value = movieID;
+		document.getElementById("hiddenTitle").value = movieTitle;
+		document.getElementById("hiddenPoster").value = moviePoster;
+	}
+
+	window.onkeyup = function (event) {
+  		if (event.keyCode === 27) {
+    		document.getElementById(div-dualoverlay).style.display="none";
+  		}
+ 	}
+</script>

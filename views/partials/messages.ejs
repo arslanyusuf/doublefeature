@@ -1,0 +1,60 @@
+<% if(typeof errors != 'undefined'){ %>
+	<% errors.forEach(function(error) { %>
+		<div class="errorMessage" id="errorMessage" >
+  			<%= error.msg %>
+  			<button type="button" name="cross" class="newcross"  onclick="document.getElementById('errorMessage').style.display='none'">
+  				<i class="fas fa-times"></i>
+  			</button>
+		</div>
+
+	<% }); %>
+
+<% } %>
+
+<% if(success_msg != ''){ %>
+	<div class="successMessage" id="successMessage" >
+  		<%= success_msg %>
+  		<button type="button" name="cross" class="newcross"  onclick="document.getElementById('successMessage').style.display='none'">
+  			<i class="fas fa-times"></i>
+  		</button>
+	</div>
+
+<% } %>
+
+<% if(error_msg != ''){ %>
+	<div class="errorMessage" id="errorMessage" >
+  		<%= error_msg %>
+  		<button type="button" name="cross" class="newcross"  onclick="document.getElementById('errorMessage').style.display='none'">
+  			<i class="fas fa-times"></i>
+  		</button>
+	</div>
+
+<% } %>
+
+<% if(error != ''){ %>
+	<div class="errorMessage" id="errorMessage" >
+  		<%= error %>
+  		<button type="button" name="cross" class="newcross"  onclick="document.getElementById('errorMessage').style.display='none'">
+  			<i class="fas fa-times"></i>
+  		</button>
+	</div>
+<% } %>
+
+<% if(success_create != ''){ %>
+  <div class="successMessage" id="successMessage" >
+      <%= success_create %>
+      <button type="button" name="cross" class="newcross"  onclick="document.getElementById('successMessage').style.display='none'">
+        <i class="fas fa-times"></i>
+      </button>
+  </div>
+
+<% } %>
+
+<% if(fail_create != ''){ %>
+  <div class="errorMessage" id="errorMessage" >
+      <%= fail_create %>
+      <button type="button" name="cross" class="newcross"  onclick="document.getElementById('errorMessage').style.display='none'">
+        <i class="fas fa-times"></i>
+      </button>
+  </div>
+<% } %>

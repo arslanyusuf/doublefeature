@@ -1,0 +1,114 @@
+<title>Search results for <%= searchTerm %> - Double Feature</title>
+
+<% const punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%()*+,.\/:;<=>?@\[\]^_`{|}~]/g %>
+<h2 class="searchHeader">Search</h2>
+<form class="searchForm" action="/search" method="GET">
+	<div class="form-search">
+		<input type="text" class="query" name="query" id="query" placeholder="Enter a search term" value="<%= searchTerm %>" required><select class="typeSelect" name="type" id="type">
+			<option name="movieType" value="movie">Movie</option>
+			<option name="personType" value="person">Person</option>
+			<option name="doubleType" value="doublefeature" selected>Double Feature</option>
+		</select>
+		<button type="submit" class="search-button">Search</button>
+	</div>
+</form>
+
+<% if(doublefeatureData.length === 0) { %>
+	<div class="results">
+		<h3>No results were found.</h3>
+	</div>
+
+<% } else { %>
+	<% if(parseInt(doublefeaturePage) > Math.ceil(doublefeatureData.length/12)) { %>
+		<div class="results">
+			<h3>You've gone past the last page of results.</h3>
+			<h3>
+				<a href='/search/doublefeature/<%= searchTerm %>/<%= Math.ceil(doublefeatureData.length/12) %>' class="previous">
+					<i class="fas fa-arrow-circle-left"></i>
+				</a> Go back to Page <%= Math.ceil(doublefeatureData.length/12) %> of <%= Math.ceil(doublefeatureData.length/12) %>
+			</h3>
+		</div>
+	<% } else if(Math.ceil(doublefeatureData.length/12) === 1) { %>
+		<div class="results">
+			<h3> Showing results 1-<%= doublefeatureData.length %> of <%= doublefeatureData.length %></h3>
+			<h3> 
+				<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) - 1%>' class="previoushidden">
+					<i class="fas fa-arrow-circle-left"></i>
+				</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureData.length/12) %>
+
+				<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) + 1%>' class="nexthidden">
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</h3>
+		</div>
+	<% } else { %>
+		<% if(((doublefeatureData.length/12) - (parseInt(doublefeaturePage))) >= 0 ) { %> 
+			<div class="results">
+
+				<% if (parseInt(doublefeaturePage) == 1) { %>
+					<h3>Showing results <%= ((parseInt(doublefeaturePage) - 1)*12) + 1 %>-<%= (parseInt(doublefeaturePage))*12 %> of <%= doublefeatureData.length %></h3>
+					<h3> 
+						<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) - 1%>' class="previoushidden">
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureData.length/12) %>
+
+						<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) + 1%>' class="next">
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+			
+				<% } else { %>
+					<h3>Showing results <%= ((parseInt(doublefeaturePage) - 1)*12) + 1 %>-<%= (parseInt(doublefeaturePage))*12 %> of <%= doublefeatureData.length %></h3>
+					<h3>
+						<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) - 1%>' class="previous">
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureData.length/12) %>
+
+						<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) + 1%>' class="next">
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+
+				<% } %>
+			</div>
+		<% } else { %>
+			<div class="results">
+				<h3> Showing results <%= ((parseInt(doublefeaturePage) - 1)*12) + 1 %>-<%= (doublefeatureData.length) %> of <%= (doublefeatureData.length) %></h3>
+					<h3>
+						<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) - 1%>' class="previous">
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureData.length/12) %>
+
+						<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) + 1%>' class="nexthidden">
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+			</div>
+		<% } %>
+	<% } %>
+<% } %>
+
+<div class="wholefeatures">
+	<% for (let i = 0 + ((parseInt(doublefeaturePage)-1)*12); i < doublefeatureData.length && i < (parseInt(doublefeaturePage) * 12); i++) { %>
+		<div class="double">
+			<a href="/users/<%= doublefeatureData[i].username %>/<%= doublefeatureData[i].identifier %>/<%= (((doublefeatureData[i].title).replace('&', 'and')).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase()%>">
+				<% if (doublefeatureData[i].movie_one_poster === null) { %>
+					<img class="movieimg" src="/images/white_background.jpg"/>
+				<% } else if (doublefeatureData[i].movie_one_poster === '') { %>
+					<img class="movieimg" src="/images/unavailable200x300.png">
+				<% } else { %>
+					<img class="movieimg" src="<%= 'https://image.tmdb.org/t/p/w500' + doublefeatureData[i].movie_one_poster %>"/>
+				<% } %>
+				<% if (doublefeatureData[i].movie_two_poster === null) { %>
+					<img class="movieimg" src="./images/white_background.jpg"/>
+				<% } else if (doublefeatureData[i].movie_two_poster === '') { %>
+					<img class="movieimg" src="/images/unavailable200x300.png">
+				<% } else { %>
+					<img class="movieimg" src="<%= 'https://image.tmdb.org/t/p/w500' + doublefeatureData[i].movie_two_poster %>"/>
+				<% } %>
+				<h5 class="featuretitle"> <%= doublefeatureData[i].title %></h5>
+				<span style="color: white;">by <%= doublefeatureData[i].username %></span>
+			</a>
+		</div>
+	<% } %>
+</div>

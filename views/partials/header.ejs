@@ -1,0 +1,49 @@
+<nav class="nav">
+    <div class="nav-wrapper">
+        <ul id="navbar">
+            <li>
+                <a class ="navbar-logo" href="/">
+                    <div class="logo-image">
+                        <img src="/images/logo/vector/default-monochrome.svg" class="img-fluid">
+                    </div>
+                </a>
+             </li>
+
+            <form class="mag-glass" action="/search" method="GET">
+                <input type="search" name="query" placeholder="Search..." required >
+                <select class="options" name="type" id="type">
+            <option name="movieType" value="movie">Movie</option>
+            <option name="personType" value="person">Person</option>
+            <option name="doubleType" value="doublefeature">Double Feature</option>
+        </select>
+            </form>
+
+        <% if (!user) { %>
+            <li style="float: right"class="link">
+                    <a href="/auth/signin">Sign In</a>
+            </li>
+
+            <li style="float: right"class="link">
+                <a href="/auth/signup">Create Account</a>
+            </li>
+
+        <% } else { %>
+            <div style="float: right" class="dropdown">
+                <button class="dropbtn"> <%= user.username %>
+                    <i class="fas fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="/">Home</a>
+                    <a href="/users/<%= user.username %>">Profile</a>
+                    <a href="/settings">Settings</a>
+                    <a href="/auth/signout">Sign Out</a>
+                </div>
+            </div>
+
+        <% } %>
+            <li style="float: right"class="link"><a href="/features/popular">Features</a></li>
+
+            <li style="float: right"class="link"><a href="/movies/popular">Movies</a></li>
+        </ul>
+    </div>
+</nav>

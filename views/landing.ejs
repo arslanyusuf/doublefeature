@@ -1,0 +1,17 @@
+<title>Double Feature</title>
+
+<img src="/images/logo/vector/default-monochrome.svg" style="width: 500px; margin-top: 50px;">
+<hr style="border: solid 1px white; width: 500px;margin-top: 20px;">
+<h4 style="font-family: 'Open Sans'">A place for movie enthusiasts to share their favourite movie pairings.</h4>
+<% if (!user) { %>
+	<div>
+		<a href="/features/popular"><button class="landing-btn">Browse Popular Double Features</button></a>
+	</div>
+		<h4 style="font-family: 'Open Sans'; margin-bottom: 1.28px;">or</h4>
+	<div>
+		<a href="/auth/signup"><button class="landing-btn">Join Double Feature for Free</button></a>
+	</div>
+<% } else { %>
+	<a href="/features/popular/week"><button class="landing-btn">Double Features Popular This Week</button></a>
+<% } %>
+<h4></h4>

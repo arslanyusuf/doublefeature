@@ -1,0 +1,17 @@
+<div id="div-delcomoverlay">
+	<div class="overlay">
+		<form class="form-doublefeature" method="POST">
+			<div>
+				<button type="button" name="cross" class="cross" onclick="document.getElementById('div-delcomoverlay').style.display = 'none'"><i class="fas fa-times fa-2x"></i>
+				</button>
+			</div>
+			<h2 class="overlay-title">Are you sure you want to delete your comment?</h2>
+			<div>
+				<button class="btn add-btn" type="submit">Delete</button>
+			</div>
+			<input type="hidden" id="hiddenCommentIdDelete" name="hiddenCommentIdDelete" value="">
+			<input type="hidden" id="hiddendfIdDelete" name="hiddendfIdDelete" value="">
+			<input type="hidden" name="formInstance" value="delcomform" />
+		</form>
+	</div>
+</div>

@@ -1,0 +1,162 @@
+<% if(sortedBy !== '') { %>
+	<title>Popular Double Features (<%= sortedBy.charAt(0).toUpperCase() + sortedBy.slice(1) %>) - Double Features</title>
+<% } else { %>
+	<title>Popular Double Features - Double Features</title>
+<% } %>
+
+<h2 class="searchHeader">Popular Double Features</h2>
+
+<% const punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%()*+,.\/:;<=>?@\[\]^_`{|}~]/g %>
+
+<% if(doublefeatureCount === 0) { %>
+	<div class="results">
+		<h3>No results were found.</h3>
+	</div>
+<% } else { %>
+	<% if(doublefeaturePage > Math.ceil(doublefeatureCount/16)) { %>
+		<div class="results">
+			<h3>You've gone past the last page.</h3>
+			<h3>
+				<% if (sortedBy !== '') { %>
+					<a href='/features/popular/<%= sortedBy %>/<%= Math.ceil(doublefeatureCount/16) %>' class="previous">
+				<% } else { %>
+					<a href='/features/popular/<%= Math.ceil(doublefeatureCount/16) %>' class="previous">
+				<% } %>
+					<i class="fas fa-arrow-circle-left"></i>
+				</a> Go back to Page <%= Math.ceil(doublefeatureCount/16) %> of <%= Math.ceil(doublefeatureCount/16) %>
+			</h3>
+		</div>
+	<% } else if(Math.ceil(doublefeatureCount/16) === 1) { %>
+		<div class="results">
+			<h3> Showing 1-<%= doublefeatureCount %> of <%= doublefeatureCount %></h3>
+			<h3>
+				<% if (sortedBy !== '') { %>
+					<a href='/features/popular/<%= sortedBy %>/<%= doublefeaturePage - 1%>' class="previoushidden">
+				<% } else { %>
+					<a href='/features/popular/<%= doublefeaturePage - 1%>' class="previoushidden">
+				<% } %>
+					<i class="fas fa-arrow-circle-left"></i>
+				</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
+
+				<% if (sortedBy !== '') { %>
+					<a href='/features/popular/<%= sortedBy %>/<%= parseInt(doublefeaturePage) + 1%>' class="nexthidden">
+				<% } else { %>
+					<a href='/features/popular/<%= parseInt(doublefeaturePage) + 1%>' class="nexthidden">
+				<% } %>
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</h3>
+		</div>
+
+	<% } else { %>
+		<% if((doublefeatureCount - (doublefeaturePage)*16) > 0 ) { %> 
+			<div class="results">
+
+				<% if (parseInt(doublefeaturePage) === 1) { %>
+					<h3>Showing <%= ((doublefeaturePage - 1)*16) + 1 %>-<%= (doublefeaturePage)*16 %> of <%= doublefeatureCount %></h3>
+					<h3> 
+						<% if (sortedBy !== '') { %>
+							<a href='/features/popular/<%= sortedBy %>/<%= doublefeaturePage - 1%>' class="previoushidden">
+						<% } else { %>
+							<a href='/features/popular/<%= doublefeaturePage - 1%>' class="previoushidden">
+						<% } %>
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
+						<% if (sortedBy !== '') { %>
+							<a href='/features/popular/<%= sortedBy %>/<%= parseInt(doublefeaturePage) + 1%>' class="next">
+						<% } else { %>
+							<a href='/features/popular/<%= parseInt(doublefeaturePage) + 1%>' class="next">
+						<% } %>
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+			
+				<% } else { %>
+					<h3>Showing <%= ((doublefeaturePage - 1)*16) + 1 %>-<%= (doublefeaturePage)*16 %> of <%= doublefeatureCount %></h3>
+					<h3>
+						<% if (sortedBy !== '') { %>
+							<a href='/features/popular/<%= sortedBy %>/<%= doublefeaturePage - 1%>' class="previous">
+						<% } else { %>
+							<a href='/features/popular/<%= doublefeaturePage - 1%>' class="previous">
+						<% } %>
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
+
+						<% if (sortedBy !== '') { %>
+							<a href='/features/popular/<%= sortedBy %>/<%= parseInt(doublefeaturePage) + 1%>' class="next">
+						<% } else { %>
+							<a href='/features/popular/<%= parseInt(doublefeaturePage) + 1%>' class="next">
+						<% } %>
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+
+				<% } %>
+			</div>
+
+		<% } else { %>
+			<div class="results">
+				<h3> Showing <%= ((doublefeaturePage - 1)*16) + 1 %>-<%= doublefeatureCount %> of <%= doublefeatureCount %></h3>
+					<h3>
+						<% if (sortedBy !== '') { %>
+							<a href='/features/popular/<%= sortedBy %>/<%= doublefeaturePage - 1%>' class="previous">
+						<% } else { %>
+							<a href='/features/popular/<%= doublefeaturePage - 1%>' class="previous">
+						<% } %>
+							<i class="fas fa-arrow-circle-left"></i>
+						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
+
+						<% if (sortedBy !== '') { %>
+							<a href='/features/popular/<%= sortedBy %>/<%= doublefeaturePage + 1%>' class="nexthidden">
+						<% } else { %>
+							<a href='/features/popular/<%= doublefeaturePage + 1%>' class="nexthidden">
+						<% } %>
+							<i class="fas fa-arrow-circle-right"></i>
+						</a>
+					</h3>
+			</div>
+
+		<% } %>
+	<% } %>
+<% } %>
+<div style="margin-left: 89%;" class="dropdown">
+	<% if(sortedBy !== '') { %>
+		<button class="sortbybtn">This <%= sortedBy.charAt(0).toUpperCase() + sortedBy.slice(1) %>
+	<% } else { %>
+		<button class="sortbybtn">All Time
+	<% } %>
+        	<i class="fas fa-caret-down"></i>
+    	</button>
+    <div class="sortby-content">
+		<ul style="padding: 0; list-style-type:none; margin-top: 0; margin-bottom: 0;">
+			<li><a href="/features/popular">All Time</a></li>
+			<li><a href="/features/popular/year">This Year</a></li>
+			<li><a href="/features/popular/month">This Month</a></li>
+			<li><a href="/features/popular/week">This Week</a></li>
+		</ul>
+    </div>
+</div>
+<div class="wholefeatures">
+	<% for (let i = 0; i < doublefeatureData.length; i++) { %>
+		<div class="double">
+			<a href="/users/<%= doublefeatureData[i].username %>/<%= doublefeatureData[i].identifier %>/<%= (((doublefeatureData[i].title).replace('&', 'and')).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase()%>">
+			<% if (doublefeatureData[i].movie_one_poster === null) { %>
+				<img class="movieimg" src="/images/white_background.jpg"/>
+			<% } else if (doublefeatureData[i].movie_one_poster === '') { %>
+				<img class="movieimg" src="/images/unavailable200x300.png">
+			<% } else { %>
+				<img class="movieimg" src="<%= 'https://image.tmdb.org/t/p/w500' + doublefeatureData[i].movie_one_poster %>"/>
+			<% } %>
+			<% if (doublefeatureData[i].movie_two_poster === null) { %>
+				<img class="movieimg" src="/images/white_background.jpg"/>
+			<% } else if (doublefeatureData[i].movie_two_poster === '') { %>
+				<img class="movieimg" src="/images/unavailable200x300.png">
+			<% } else { %>
+				<img class="movieimg" src="<%= 'https://image.tmdb.org/t/p/w500' + doublefeatureData[i].movie_two_poster %>"/>
+			<% } %>
+			<h5 class="featuretitle"> <%= doublefeatureData[i].title %></h5>
+			<span style="color: white;">by <%= doublefeatureData[i].username %></span>
+			</a>
+		</div>
+	<% } %>
+</div>

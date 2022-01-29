@@ -1,0 +1,272 @@
+<title><%= doublefeatureInfo.title %>, a Double Feature by <%= doublefeatureInfo.username %> - Double Feature</title>
+
+<% const punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%()*+,.\/:;<=>?@\[\]^_`{|}~]/g %>
+<% if (user) { %>
+<%- include('partials/editoverlay') %>
+<%- include('partials/swapoverlay') %>
+<%- include('partials/deloverlay') %>
+<%- include('partials/rateoverlay') %>
+<%- include('partials/delcomoverlay') %>
+<% } %>
+
+<div class="doublefeature-container">
+	<div class="doublefeature-content">
+		<div>
+			<% if (doublefeatureInfo.movie_one_id) { %>
+				<a class="movielink" href="/movies/<%= doublefeatureInfo.movie_one_id %>/<%= (((doublefeatureInfo.movie_one_title).replace('&', 'and')).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase()%>">
+			<% } %>
+					<% if (doublefeatureInfo.movie_one_poster === null) { %>
+						<img class="poster" src="/images/white_background200x300.jpg"/>
+					<% } else if (doublefeatureInfo.movie_one_poster === '') { %>
+						<img class="poster" src="/images/unavailable200x300.png"/>
+					<% } else { %>
+						<img class="poster" src="<%= 'https://image.tmdb.org/t/p/w200' + doublefeatureInfo.movie_one_poster %>"/>
+					<% } %>
+				</a>
+		</div>
+		<div class="doublefeature-display">
+			<%- include('partials/messages') %>
+			<h1 style="margin-bottom: 0px;"><%= doublefeatureInfo.title %></h1><span style="font-size: 20px;"> by <a class="linkme" style="text-decoration: underline;" href="/users/<%= doublefeatureInfo.username%>"><%= doublefeatureInfo.username %></a></span>
+			<p><%= doublefeatureInfo.description %></p>
+			<h2>
+				<% if (!movieOne.runtime && !movieTwo.runtime) { %>
+					0
+				<% } else if (!movieTwo.runtime) { %>
+					<%= parseInt(movieOne.runtime) %>
+				<% } else if (!movieOne.runtime) { %>
+					<%= parseInt(movieTwo.runtime) %>
+				<% } else { %>
+					<%= parseInt(movieOne.runtime) + parseInt(movieTwo.runtime) %>
+				<% } %> mins
+			</h2>
+		</div>
+		<div>
+			<% if (doublefeatureInfo.movie_two_id) { %>
+				<a class="movielink" href="/movies/<%= doublefeatureInfo.movie_two_id %>/<%= (((doublefeatureInfo.movie_two_title).replace('&', 'and')).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase()%>">
+			<% } %>
+					<% if (doublefeatureInfo.movie_two_poster === null) { %>
+						<img class="poster" src="/images/white_background200x300.jpg"/>
+					<% } else if (doublefeatureInfo.movie_two_poster === '') { %>
+						<img class="poster" src="/images/unavailable200x300.png"/>
+					<% } else { %>
+						<img class="poster" src="<%= 'https://image.tmdb.org/t/p/w200' + doublefeatureInfo.movie_two_poster %>"/>
+					<% } %>
+				</a>
+		</div>
+		<% if (user) { %>
+			<% if (user.username === username) { %>
+				<div>
+					<div class="thepanel">
+						<div>
+							<i class="fas fa-pencil-alt fa-2x" id="<%= doublefeatureInfo._id %>" onclick="parseAll(this.id); assignEdit(); document.getElementById('div-editoverlay').style.display = 'block'"></i>
+							<h4 style="margin: 5px;">Edit Title & Description</h4>
+						</div>
+						<hr class="seperation">
+						<div>
+							<i class="fas fa-exchange-alt fa-2x" id="<%= doublefeatureInfo._id %>|<%= doublefeatureInfo.movie_one_id %>|<%= doublefeatureInfo.movie_one_title %>|<%= doublefeatureInfo.movie_one_poster %>|<%= doublefeatureInfo.movie_two_id %>|<%= doublefeatureInfo.movie_two_title %>|<%= doublefeatureInfo.movie_two_poster %>" onclick="parseAll(this.id); assignSwap(); document.getElementById('div-swapoverlay').style.display = 'block'"></i>
+							<h4 style="margin: 5px;">Swap Movies' Order</h4>
+						</div>
+						<hr class="seperation">
+						<div>
+							<i class="fas fa-trash-alt fa-2x" id="<%= doublefeatureInfo._id %>" onclick="parseAll(this.id); assignDelete(); document.getElementById('div-deloverlay').style.display = 'block'"></i>
+							<h4 style="margin: 5px;">Delete Double Feature</h4>
+						</div>
+					</div>
+					<div style="margin-top: 10px;">
+						<span><i style="color: #44ab70;" class="fas fa-eye"> </i> <%= Math.abs(doublefeatureInfo.watch_count) > 999 ? Math.sign(doublefeatureInfo.watch_count)*((Math.abs(doublefeatureInfo.watch_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.watch_count)*Math.abs(doublefeatureInfo.watch_count) %></span> • 
+						<span><i style="color: #ff3333;" class="fas fa-heart"> </i> <%= Math.abs(doublefeatureInfo.like_count) > 999 ? Math.sign(doublefeatureInfo.like_count)*((Math.abs(doublefeatureInfo.like_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.like_count)*Math.abs(doublefeatureInfo.like_count) %></span>
+						<% if (doublefeatureInfo.rating_weighted === 0) { %>
+							<h4 style="width: 190px; margin-left: 20px;">Not Yet Rated</h4>
+						<% } else { %>
+							<div style="display: flex; flex-direction: row; margin-left: 80px;">
+								<i style="color: #eb741a; margin-left: 14px;" class="fas fa-star fa-3x"></i>
+								<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 37px; top: 13px;"><%= doublefeatureInfo.rating_weighted.toFixed(1) %></span>
+							</div>
+						<% } %> 
+					</div>
+				</div>
+			<% } else { %>
+				<div>
+					<div class="thepanel">
+						<div class="first-row">
+							<div class="row-items">
+								<% if (user.watched.includes(doublefeatureInfo._id)) { %>
+									<i style="color: #44ab70;" class="fas fa-eye fa-2x"></i>
+									<h4 style="margin: 5px;">Watched</h4>
+								<% } else { %>
+									<i class="fas fa-eye fa-2x"></i>
+									<h4 style="margin: 5px;">Watch</h4>
+								<% } %>
+							</div>
+							<div class="row-items">
+								<% if (user.liked.includes(doublefeatureInfo._id)) { %>
+									<i style="color: #ff3333;" class="fas fa-heart fa-2x"></i>
+									<h4 style="margin: 5px;">Liked</h4>
+								<% } else { %>
+									<i class="fas fa-heart fa-2x"></i>
+									<h4 style="margin: 5px;">Like</h4>
+								<% } %>
+							</div>
+						</div>
+						<hr class="seperation">
+						<div>
+							<% if (user.rated.includes(doublefeatureInfo._id)) { %>
+								<% if (userRating) { %>
+									<i style="color: #eb741a; margin-left: 14px;" class="fas fa-star fa-2x"></i>
+									<% if (parseInt(userRating.rating) === 1) { %>
+										<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 25px; bottom: 4px;"><%= userRating.rating %></span>
+									<% } else if (parseInt(userRating.rating) === 10) { %>
+										<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 30px; bottom: 4px;"><%= userRating.rating %></span>
+									<% } else { %>
+										<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 27px; bottom: 4px;"><%= userRating.rating %></span>
+									<% } %>
+								<% } else { %>
+									<i style="color: #eb741a; margin-left: 14px;" class="fas fa-star fa-2x"></i>
+								<% } %>
+								<h4 style="margin: 4px;">Rated</h4>
+							<% } else { %>
+								<i class="fas fa-star fa-2x"></i>
+								<h4 style="margin: 5px;">Rate</h4>
+							<% } %>
+						</div>
+						<hr class="seperation">
+						<div>
+							<% if (user.rated.includes(doublefeatureInfo._id) || user.liked.includes(doublefeatureInfo._id) || user.watched.includes(doublefeatureInfo._id)) { %>
+								<i class="fas fa-film fa-2x logged" id="<%= doublefeatureInfo._id %>|<%= user._id %>" onclick="parseUser(this.id); assignRate(); document.getElementById('div-rateoverlay').style.display = 'block'"></i>
+								<h4 style="margin: 5px;">Edit your Log</h4>
+							<% } else { %>
+								<i class="fas fa-film fa-2x notlogged" id="<%= doublefeatureInfo._id %>|<%= user._id %>" onclick="parseUser(this.id); assignRate(); document.getElementById('div-rateoverlay').style.display = 'block'"></i>
+								<h4 style="margin: 5px;">Log this Double Feature</h4>
+							<% } %>
+						</div>
+					</div>
+					<div style="margin-top: 10px;">
+						<span><i style="color: #44ab70;" class="fas fa-eye"> </i> <%= Math.abs(doublefeatureInfo.watch_count) > 999 ? Math.sign(doublefeatureInfo.watch_count)*((Math.abs(doublefeatureInfo.watch_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.watch_count)*Math.abs(doublefeatureInfo.watch_count) %></span> • 
+						<span><i style="color: #ff3333;" class="fas fa-heart"> </i> <%= Math.abs(doublefeatureInfo.like_count) > 999 ? Math.sign(doublefeatureInfo.like_count)*((Math.abs(doublefeatureInfo.like_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.like_count)*Math.abs(doublefeatureInfo.like_count) %></span>
+						 <% if (doublefeatureInfo.rating_weighted === 0) { %>
+							<h4 style="width: 190px; margin-left: 20px;">Be the first to rate this Double Feature</h4>
+						<% } else { %>
+							<div style="display: flex; flex-direction: row; margin-left: 80px;">
+								<i style="color: #eb741a; margin-left: 14px;" class="fas fa-star fa-3x"></i>
+								<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 37px; top: 13px;"><%= doublefeatureInfo.rating_weighted.toFixed(1) %></span>
+							</div>
+						<% } %> 
+					</div>
+				</div>
+			<% } %>
+		<% } else {%>
+			<div>
+				<div class="thepanel">
+					<h3 style="margin-top: 10px"><a class="linkme" href="/auth/signin"> Sign In</a> to like, rate or comment</h3>
+					<h3>or</h3>
+					<h3><a class="linkme" href="/auth/signup"> Sign Up</a> if you don't have an account already</h3>
+				</div>
+				<div style="margin-top: 10px;">
+					<span><i style="color: #44ab70;" class="fas fa-eye"> </i> <%= Math.abs(doublefeatureInfo.watch_count) > 999 ? Math.sign(doublefeatureInfo.watch_count)*((Math.abs(doublefeatureInfo.watch_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.watch_count)*Math.abs(doublefeatureInfo.watch_count) %></span> • 
+					<span><i style="color: #ff3333;" class="fas fa-heart"> </i> <%= Math.abs(doublefeatureInfo.like_count) > 999 ? Math.sign(doublefeatureInfo.like_count)*((Math.abs(doublefeatureInfo.like_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.like_count)*Math.abs(doublefeatureInfo.like_count) %></span>
+					<% if (doublefeatureInfo.rating_weighted === 0) { %>
+						<h4 style="width: 190px; margin-left: 20px;">Be the first to rate this Double Feature</h4>
+					<% } else { %>
+						<div style="display: flex; flex-direction: row; margin-left: 80px;">
+							<i style="color: #eb741a; margin-left: 14px;" class="fas fa-star fa-3x"></i>
+							<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 37px; top: 13px;"><%= doublefeatureInfo.rating_weighted.toFixed(1) %></span>
+						</div>
+					<% } %> 
+				</div>
+			</div>
+		<% } %>
+	</div>
+	<hr style="color: white;">
+	<% if (user) { %>
+	<div class="comment-section">
+		<form class="add-comment" method="POST">
+			<div class="commenting"><h2 style="padding: 10px;">Commenting as <%= user.username %></h2></div>
+			<textarea name="comments" id="comments" class="form-comment" placeholder="Post a comment..."></textarea>
+			<div>
+				<button style="width: 1160px; margin-top: 10px;" class="btn add-btn" type="submit">Submit</button>
+			</div>
+			<input type="hidden" id="hiddenIdComment" name="hiddenIdComment" value="<%= doublefeatureInfo._id %>">
+			<input type="hidden" name="formInstance" value="commentform" />
+		</form>
+	</div>
+	<hr style="color: white; margin-top: 20px;">
+	<% } %>
+	<% for (var i = 0; i < doublefeatureComments.length; i++) { %>
+		<div style="background-color: white; width: 1160px;">
+			<div class="commenting">
+				<h2 style="padding: 10px;">Comment by 
+					<a class="linkme" href="/users/<%= doublefeatureComments[i].username %>"><%= doublefeatureComments[i].username %></a>
+					<% if (user.username === doublefeatureComments[i].username) { %>
+				<button class="comment-btn" id="<%= doublefeatureInfo._id %>|<%= doublefeatureComments[i]._id %>" onclick="parseComment(this.id); assignComment(); document.getElementById('div-delcomoverlay').style.display = 'block'">Delete</button>
+				<% } %>
+				</h2>
+			</div>
+			<p class="comment-comment"><%= doublefeatureComments[i].comment %></p>
+		</div>
+	<% } %>
+</div>
+
+<script>
+	var userID;
+	var doublefeatureID;
+	var movieOneID;
+	var movieOneTitle;
+	var movieOnePoster;
+	var movieTwoID;
+	var movieTwoTitle;
+	var movieTwoPoster;
+	var username;
+	var commentID;
+
+	function parseAll(info) {
+		var fields = info.split('|');
+		doublefeatureID = fields[0]
+		movieOneID = fields[1];
+		movieOneTitle = fields[2];
+		movieOnePoster = fields[3];
+		movieTwoID = fields[4];
+		movieTwoTitle = fields[5];
+		movieTwoPoster = fields[6];
+	}
+
+	function parseUser(info) {
+		var section = info.split('|');
+		doublefeatureID = section[0];
+		userID = section[1];
+	}
+
+	function parseComment(info) {
+		var section = info.split('|');
+		doublefeatureID = section[0];
+		commentID = section[1];
+	}
+
+	function assignEdit() {
+		document.getElementById("hiddenIdEdit").value = doublefeatureID;
+	}
+
+	function assignSwap() {
+		document.getElementById("hiddenIdSwap").value = doublefeatureID;
+		document.getElementById("hiddenMovieOneIdSwap").value = movieOneID;
+		document.getElementById("hiddenMovieOneTitleSwap").value = movieOneTitle;
+		document.getElementById("hiddenMovieOnePosterSwap").value = movieOnePoster;
+		document.getElementById("hiddenMovieTwoIdSwap").value = movieTwoID;
+		document.getElementById("hiddenMovieTwoTitleSwap").value = movieTwoTitle;
+		document.getElementById("hiddenMovieTwoPosterSwap").value = movieTwoPoster;
+	}
+
+	function assignDelete() {
+		document.getElementById("hiddenIdDelete").value = doublefeatureID;
+	}
+
+	function assignRate() {
+		document.getElementById("hiddenIdRate").value = doublefeatureID;
+		document.getElementById("hiddenUserIdRate").value = userID;
+	}
+
+	function assignComment() {
+		document.getElementById("hiddenCommentIdDelete").value = commentID;
+		document.getElementById("hiddendfIdDelete").value = doublefeatureID;
+	}
+
+</script>
