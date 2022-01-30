@@ -47,14 +47,12 @@ router.get('/:username', (req, res) => {
 			function(error, doublefeatureList) {
 				if (error) {
 					console.error(error);
-					console.log(doublefeatureList);
 					res.render('users', {
 						'user': user,
 						'username': username,
 						'doublefeatureList': doublefeatureList
 					})
 				} else {
-					console.log(doublefeatureList);
 					res.render('users', {
 						'user': user,
 						'username': username,
