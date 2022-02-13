@@ -2,40 +2,40 @@
 	<div style="width: 30%;" class="overlay">
 		<form class="form-doublefeature" method="POST">
 			<div>
-				<button type="button" name="cross" class="cross" onclick="document.getElementById('div-rateoverlay').style.display = 'none'"><i class="fas fa-times fa-2x"></i>
+				<button type="button" name="cross" class="cross" onclick="document.getElementById('div-rateoverlay').style.display = 'none'"><i class="fa-solid fa-xmark fa-2x"></i>
 				</button>
 			</div>
 			<div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
 				<div style="margin-right: 50px;">
 				<% if (user.watched.includes(doublefeatureInfo._id)) { %>
 					<input checked type="checkbox" name="rate" id="watch" value="watch" onchange="watchchange(watchcolor, this)">
-					<label for="watch"><i class="fas fa-eye fa-3x watched" id="watchcolor"></i></label>
+					<label for="watch"><i class="fa-solid fa-eye fa-3x watched" id="watchcolor"></i></label>
 				<% } else { %>
 					<input type="checkbox" name="rate" id="watch" value="watch" onchange="watchchange(watchcolor, this)">
-					<label for="watch"><i class="fas fa-eye fa-3x notwatched" id="watchcolor"></i></label>
+					<label for="watch"><i class="fa-solid fa-eye fa-3x notwatched" id="watchcolor"></i></label>
 				<% } %>
 				</div>
 				<div style="margin-left: 50px;">
 				<% if (user.liked.includes(doublefeatureInfo._id)) { %>
 					<input checked type="checkbox" name="rate" id="like" value="like" onchange="likechange(likecolor, this)">
-					<label for="like"><i class="fas fa-heart fa-3x liked" id="likecolor"></i></label>
+					<label for="like"><i class="fa-solid fa-heart fa-3x liked" id="likecolor"></i></label>
 				<% } else { %>
 					<input type="checkbox" name="rate" id="like" value="like" onchange="likechange(likecolor, this)">
-					<label for="like"><i class="fas fa-heart fa-3x notliked" id="likecolor"></i></label>
+					<label for="like"><i class="fa-solid fa-heart fa-3x notliked" id="likecolor"></i></label>
 				<% } %>
 				</div>
 			</div>
 			<div class="rate" style="margin-top: 20px;">
 			<% if (userRating) { %>
 				<% for (var i = 0; i < userRating.rating; i++) { %>
-					<i class="fas fa-star fa-2x star orange"></i>
+					<i class="fa-solid fa-star fa-2x star orange"></i>
 				<% } %>
 				<% for (var j = userRating.rating; j < 10; j++) { %>
-					<i class="fas fa-star fa-2x star"></i>
+					<i class="fa-solid fa-star fa-2x star"></i>
 				<% } %>
 			<% } else { %>
 				<% for (var k = 0; k < 10; k++) { %>
-					<i class="fas fa-star fa-2x star"></i>
+					<i class="fa-solid fa-star fa-2x star"></i>
 				<% } %>
 			<% } %>
 			</div>

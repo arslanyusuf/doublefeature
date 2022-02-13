@@ -58,28 +58,28 @@
 				<div>
 					<div class="thepanel">
 						<div>
-							<i class="fas fa-pencil-alt fa-2x" id="<%= doublefeatureInfo._id %>" onclick="parseAll(this.id); assignEdit(); document.getElementById('div-editoverlay').style.display = 'block'"></i>
+							<i class="fa-solid fa-pencil fa-2x" id="<%= doublefeatureInfo._id %>" onclick="parseAll(this.id); assignEdit(); document.getElementById('div-editoverlay').style.display = 'block'"></i>
 							<h4 style="margin: 5px;">Edit Title & Description</h4>
 						</div>
 						<hr class="seperation">
 						<div>
-							<i class="fas fa-exchange-alt fa-2x" id="<%= doublefeatureInfo._id %>|<%= doublefeatureInfo.movie_one_id %>|<%= doublefeatureInfo.movie_one_title %>|<%= doublefeatureInfo.movie_one_poster %>|<%= doublefeatureInfo.movie_two_id %>|<%= doublefeatureInfo.movie_two_title %>|<%= doublefeatureInfo.movie_two_poster %>" onclick="parseAll(this.id); assignSwap(); document.getElementById('div-swapoverlay').style.display = 'block'"></i>
+							<i class="fa-solid fa-arrow-right-arrow-left fa-2x" id="<%= doublefeatureInfo._id %>|<%= doublefeatureInfo.movie_one_id %>|<%= doublefeatureInfo.movie_one_title %>|<%= doublefeatureInfo.movie_one_poster %>|<%= doublefeatureInfo.movie_two_id %>|<%= doublefeatureInfo.movie_two_title %>|<%= doublefeatureInfo.movie_two_poster %>" onclick="parseAll(this.id); assignSwap(); document.getElementById('div-swapoverlay').style.display = 'block'"></i>
 							<h4 style="margin: 5px;">Swap Movies' Order</h4>
 						</div>
 						<hr class="seperation">
 						<div>
-							<i class="fas fa-trash-alt fa-2x" id="<%= doublefeatureInfo._id %>" onclick="parseAll(this.id); assignDelete(); document.getElementById('div-deloverlay').style.display = 'block'"></i>
+							<i class="fa-solid fa-trash-can fa-2x" id="<%= doublefeatureInfo._id %>" onclick="parseAll(this.id); assignDelete(); document.getElementById('div-deloverlay').style.display = 'block'"></i>
 							<h4 style="margin: 5px;">Delete Double Feature</h4>
 						</div>
 					</div>
 					<div style="margin-top: 10px;">
-						<span><i style="color: #44ab70;" class="fas fa-eye"> </i> <%= Math.abs(doublefeatureInfo.watch_count) > 999 ? Math.sign(doublefeatureInfo.watch_count)*((Math.abs(doublefeatureInfo.watch_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.watch_count)*Math.abs(doublefeatureInfo.watch_count) %></span> • 
-						<span><i style="color: #ff3333;" class="fas fa-heart"> </i> <%= Math.abs(doublefeatureInfo.like_count) > 999 ? Math.sign(doublefeatureInfo.like_count)*((Math.abs(doublefeatureInfo.like_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.like_count)*Math.abs(doublefeatureInfo.like_count) %></span>
+						<span><i style="color: #44ab70;" class="fa-solid fa-eye"> </i> <%= Math.abs(doublefeatureInfo.watch_count) > 999 ? Math.sign(doublefeatureInfo.watch_count)*((Math.abs(doublefeatureInfo.watch_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.watch_count)*Math.abs(doublefeatureInfo.watch_count) %></span> • 
+						<span><i style="color: #ff3333;" class="fa-solid fa-heart"> </i> <%= Math.abs(doublefeatureInfo.like_count) > 999 ? Math.sign(doublefeatureInfo.like_count)*((Math.abs(doublefeatureInfo.like_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.like_count)*Math.abs(doublefeatureInfo.like_count) %></span>
 						<% if (doublefeatureInfo.rating_weighted === 0) { %>
 							<h4 style="width: 190px; margin-left: 20px;">Not Yet Rated</h4>
 						<% } else { %>
 							<div style="display: flex; flex-direction: row; margin-left: 80px;">
-								<i style="color: #eb741a; margin-left: 14px;" class="fas fa-star fa-3x"></i>
+								<i style="color: #eb741a; margin-left: 14px;" class="fa-solid fa-star fa-3x"></i>
 								<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 37px; top: 13px;"><%= doublefeatureInfo.rating_weighted.toFixed(1) %></span>
 							</div>
 						<% } %> 
@@ -91,19 +91,19 @@
 						<div class="first-row">
 							<div class="row-items">
 								<% if (user.watched.includes(doublefeatureInfo._id)) { %>
-									<i style="color: #44ab70;" class="fas fa-eye fa-2x"></i>
+									<i style="color: #44ab70;" class="fa-solid fa-eye fa-2x"></i>
 									<h4 style="margin: 5px;">Watched</h4>
 								<% } else { %>
-									<i class="fas fa-eye fa-2x"></i>
+									<i class="fa-solid fa-eye fa-2x"></i>
 									<h4 style="margin: 5px;">Watch</h4>
 								<% } %>
 							</div>
 							<div class="row-items">
 								<% if (user.liked.includes(doublefeatureInfo._id)) { %>
-									<i style="color: #ff3333;" class="fas fa-heart fa-2x"></i>
+									<i style="color: #ff3333;" class="fa-solid fa-heart fa-2x"></i>
 									<h4 style="margin: 5px;">Liked</h4>
 								<% } else { %>
-									<i class="fas fa-heart fa-2x"></i>
+									<i class="fa-solid fa-heart fa-2x"></i>
 									<h4 style="margin: 5px;">Like</h4>
 								<% } %>
 							</div>
@@ -112,7 +112,7 @@
 						<div>
 							<% if (user.rated.includes(doublefeatureInfo._id)) { %>
 								<% if (userRating) { %>
-									<i style="color: #eb741a; margin-left: 14px;" class="fas fa-star fa-2x"></i>
+									<i style="color: #eb741a; margin-left: 14px;" class="fa-solid fa-star fa-2x"></i>
 									<% if (parseInt(userRating.rating) === 1) { %>
 										<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 25px; bottom: 4px;"><%= userRating.rating %></span>
 									<% } else if (parseInt(userRating.rating) === 10) { %>
@@ -121,33 +121,33 @@
 										<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 27px; bottom: 4px;"><%= userRating.rating %></span>
 									<% } %>
 								<% } else { %>
-									<i style="color: #eb741a; margin-left: 14px;" class="fas fa-star fa-2x"></i>
+									<i style="color: #eb741a; margin-left: 14px;" class="fa-solid fa-star fa-2x"></i>
 								<% } %>
 								<h4 style="margin: 4px;">Rated</h4>
 							<% } else { %>
-								<i class="fas fa-star fa-2x"></i>
+								<i class="fa-solid fa-star fa-2x"></i>
 								<h4 style="margin: 5px;">Rate</h4>
 							<% } %>
 						</div>
 						<hr class="seperation">
 						<div>
 							<% if (user.rated.includes(doublefeatureInfo._id) || user.liked.includes(doublefeatureInfo._id) || user.watched.includes(doublefeatureInfo._id)) { %>
-								<i class="fas fa-film fa-2x logged" id="<%= doublefeatureInfo._id %>|<%= user._id %>" onclick="parseUser(this.id); assignRate(); document.getElementById('div-rateoverlay').style.display = 'block'"></i>
+								<i class="fa-solid fa-film fa-2x logged" id="<%= doublefeatureInfo._id %>|<%= user._id %>" onclick="parseUser(this.id); assignRate(); document.getElementById('div-rateoverlay').style.display = 'block'"></i>
 								<h4 style="margin: 5px;">Edit your Log</h4>
 							<% } else { %>
-								<i class="fas fa-film fa-2x notlogged" id="<%= doublefeatureInfo._id %>|<%= user._id %>" onclick="parseUser(this.id); assignRate(); document.getElementById('div-rateoverlay').style.display = 'block'"></i>
+								<i class="fa-solid fa-film fa-2x notlogged" id="<%= doublefeatureInfo._id %>|<%= user._id %>" onclick="parseUser(this.id); assignRate(); document.getElementById('div-rateoverlay').style.display = 'block'"></i>
 								<h4 style="margin: 5px;">Log this Double Feature</h4>
 							<% } %>
 						</div>
 					</div>
 					<div style="margin-top: 10px;">
-						<span><i style="color: #44ab70;" class="fas fa-eye"> </i> <%= Math.abs(doublefeatureInfo.watch_count) > 999 ? Math.sign(doublefeatureInfo.watch_count)*((Math.abs(doublefeatureInfo.watch_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.watch_count)*Math.abs(doublefeatureInfo.watch_count) %></span> • 
-						<span><i style="color: #ff3333;" class="fas fa-heart"> </i> <%= Math.abs(doublefeatureInfo.like_count) > 999 ? Math.sign(doublefeatureInfo.like_count)*((Math.abs(doublefeatureInfo.like_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.like_count)*Math.abs(doublefeatureInfo.like_count) %></span>
+						<span><i style="color: #44ab70;" class="fa-solid fa-eye"> </i> <%= Math.abs(doublefeatureInfo.watch_count) > 999 ? Math.sign(doublefeatureInfo.watch_count)*((Math.abs(doublefeatureInfo.watch_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.watch_count)*Math.abs(doublefeatureInfo.watch_count) %></span> • 
+						<span><i style="color: #ff3333;" class="fa-solid fa-heart"> </i> <%= Math.abs(doublefeatureInfo.like_count) > 999 ? Math.sign(doublefeatureInfo.like_count)*((Math.abs(doublefeatureInfo.like_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.like_count)*Math.abs(doublefeatureInfo.like_count) %></span>
 						 <% if (doublefeatureInfo.rating_weighted === 0) { %>
 							<h4 style="width: 190px; margin-left: 20px;">Be the first to rate this Double Feature</h4>
 						<% } else { %>
 							<div style="display: flex; flex-direction: row; margin-left: 80px;">
-								<i style="color: #eb741a; margin-left: 14px;" class="fas fa-star fa-3x"></i>
+								<i style="color: #eb741a; margin-left: 14px;" class="fa-solid fa-star fa-3x"></i>
 								<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 37px; top: 13px;"><%= doublefeatureInfo.rating_weighted.toFixed(1) %></span>
 							</div>
 						<% } %> 
@@ -162,13 +162,13 @@
 					<h3><a class="linkme" href="/auth/signup"> Sign Up</a> if you don't have an account already</h3>
 				</div>
 				<div style="margin-top: 10px;">
-					<span><i style="color: #44ab70;" class="fas fa-eye"> </i> <%= Math.abs(doublefeatureInfo.watch_count) > 999 ? Math.sign(doublefeatureInfo.watch_count)*((Math.abs(doublefeatureInfo.watch_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.watch_count)*Math.abs(doublefeatureInfo.watch_count) %></span> • 
-					<span><i style="color: #ff3333;" class="fas fa-heart"> </i> <%= Math.abs(doublefeatureInfo.like_count) > 999 ? Math.sign(doublefeatureInfo.like_count)*((Math.abs(doublefeatureInfo.like_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.like_count)*Math.abs(doublefeatureInfo.like_count) %></span>
+					<span><i style="color: #44ab70;" class="fa-solid fa-eye"> </i> <%= Math.abs(doublefeatureInfo.watch_count) > 999 ? Math.sign(doublefeatureInfo.watch_count)*((Math.abs(doublefeatureInfo.watch_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.watch_count)*Math.abs(doublefeatureInfo.watch_count) %></span> • 
+					<span><i style="color: #ff3333;" class="fa-solid fa-heart"> </i> <%= Math.abs(doublefeatureInfo.like_count) > 999 ? Math.sign(doublefeatureInfo.like_count)*((Math.abs(doublefeatureInfo.like_count)/1000).toFixed(1)) + 'k' : Math.sign(doublefeatureInfo.like_count)*Math.abs(doublefeatureInfo.like_count) %></span>
 					<% if (doublefeatureInfo.rating_weighted === 0) { %>
 						<h4 style="width: 190px; margin-left: 20px;">Be the first to rate this Double Feature</h4>
 					<% } else { %>
 						<div style="display: flex; flex-direction: row; margin-left: 80px;">
-							<i style="color: #eb741a; margin-left: 14px;" class="fas fa-star fa-3x"></i>
+							<i style="color: #eb741a; margin-left: 14px;" class="fa-solid fa-star fa-3x"></i>
 							<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 37px; top: 13px;"><%= doublefeatureInfo.rating_weighted.toFixed(1) %></span>
 						</div>
 					<% } %> 

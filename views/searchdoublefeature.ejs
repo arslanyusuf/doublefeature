@@ -24,7 +24,7 @@
 			<h3>You've gone past the last page of results.</h3>
 			<h3>
 				<a href='/search/doublefeature/<%= searchTerm %>/<%= Math.ceil(doublefeatureData.length/12) %>' class="previous">
-					<i class="fas fa-arrow-circle-left"></i>
+					<i class="fa-solid fa-circle-arrow-left"></i>
 				</a> Go back to Page <%= Math.ceil(doublefeatureData.length/12) %> of <%= Math.ceil(doublefeatureData.length/12) %>
 			</h3>
 		</div>
@@ -33,11 +33,11 @@
 			<h3> Showing results 1-<%= doublefeatureData.length %> of <%= doublefeatureData.length %></h3>
 			<h3> 
 				<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) - 1%>' class="previoushidden">
-					<i class="fas fa-arrow-circle-left"></i>
+					<i class="fa-solid fa-circle-arrow-left"></i>
 				</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureData.length/12) %>
 
 				<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) + 1%>' class="nexthidden">
-					<i class="fas fa-arrow-circle-right"></i>
+					<i class="fa-solid fa-circle-arrow-right"></i>
 				</a>
 			</h3>
 		</div>
@@ -49,11 +49,11 @@
 					<h3>Showing results <%= ((parseInt(doublefeaturePage) - 1)*12) + 1 %>-<%= (parseInt(doublefeaturePage))*12 %> of <%= doublefeatureData.length %></h3>
 					<h3> 
 						<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) - 1%>' class="previoushidden">
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureData.length/12) %>
 
 						<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) + 1%>' class="next">
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 			
@@ -61,11 +61,11 @@
 					<h3>Showing results <%= ((parseInt(doublefeaturePage) - 1)*12) + 1 %>-<%= (parseInt(doublefeaturePage))*12 %> of <%= doublefeatureData.length %></h3>
 					<h3>
 						<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) - 1%>' class="previous">
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureData.length/12) %>
 
 						<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) + 1%>' class="next">
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 
@@ -76,11 +76,11 @@
 				<h3> Showing results <%= ((parseInt(doublefeaturePage) - 1)*12) + 1 %>-<%= (doublefeatureData.length) %> of <%= (doublefeatureData.length) %></h3>
 					<h3>
 						<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) - 1%>' class="previous">
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureData.length/12) %>
 
 						<a href='/search/doublefeature/<%= searchTerm %>/<%= parseInt(doublefeaturePage) + 1%>' class="nexthidden">
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 			</div>

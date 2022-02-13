@@ -108,7 +108,6 @@ router.get(paths.slice(2, paths.length), (req, res) => {
     const genre = genres.find(g => g.name === genreName);
 	let movieData = [];
 	let sortBy;
-	console.log(splitter);
 	switch (sortedBy) {
 		case 'title':
 			sortBy = 'original_title.asc';
@@ -221,9 +220,9 @@ router.get('/:id/:title', (req, res) => {
 		DoubleFeature.find({
 			$or: [ { movie_one_id: movieID }, { movie_two_id: movieID } ]
 			},
-		function(err, doublefeaturePopular) {
-			if (err) {
-				console.log(err);
+		function(error, doublefeaturePopular) {
+			if (error) {
+				console.error(error);
 			} else {
 				if (user) {
 					DoubleFeature.find({ 
@@ -232,8 +231,8 @@ router.get('/:id/:title', (req, res) => {
 						{ $and: [ { movie_two_id: null }, { user: user } ] }
 						]},
 					function(err, doubleFeatureEmpty) {
-						if (err) {
-							console.log(err);
+						if (error) {
+							console.error(error);
 						} else {
 							res.render('moviepage', {
 								'user': user,
@@ -264,7 +263,7 @@ router.get('/:id/:title', (req, res) => {
 		}).sort( { rating_weighted: -1 } ).limit(4);
 	})
 	.catch(error => {
-		console.log(error);
+		console.error(error);
 	});
 });
 

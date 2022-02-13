@@ -22,7 +22,7 @@
 				<% } else { %>
 					<a href='/features/popular/<%= Math.ceil(doublefeatureCount/16) %>' class="previous">
 				<% } %>
-					<i class="fas fa-arrow-circle-left"></i>
+					<i class="fa-solid fa-circle-arrow-left"></i>
 				</a> Go back to Page <%= Math.ceil(doublefeatureCount/16) %> of <%= Math.ceil(doublefeatureCount/16) %>
 			</h3>
 		</div>
@@ -35,7 +35,7 @@
 				<% } else { %>
 					<a href='/features/popular/<%= doublefeaturePage - 1%>' class="previoushidden">
 				<% } %>
-					<i class="fas fa-arrow-circle-left"></i>
+					<i class="fa-solid fa-circle-arrow-left"></i>
 				</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
 
 				<% if (sortedBy !== '') { %>
@@ -43,7 +43,7 @@
 				<% } else { %>
 					<a href='/features/popular/<%= parseInt(doublefeaturePage) + 1%>' class="nexthidden">
 				<% } %>
-					<i class="fas fa-arrow-circle-right"></i>
+					<i class="fa-solid fa-circle-arrow-right"></i>
 				</a>
 			</h3>
 		</div>
@@ -60,14 +60,14 @@
 						<% } else { %>
 							<a href='/features/popular/<%= doublefeaturePage - 1%>' class="previoushidden">
 						<% } %>
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
 						<% if (sortedBy !== '') { %>
 							<a href='/features/popular/<%= sortedBy %>/<%= parseInt(doublefeaturePage) + 1%>' class="next">
 						<% } else { %>
 							<a href='/features/popular/<%= parseInt(doublefeaturePage) + 1%>' class="next">
 						<% } %>
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 			
@@ -79,7 +79,7 @@
 						<% } else { %>
 							<a href='/features/popular/<%= doublefeaturePage - 1%>' class="previous">
 						<% } %>
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
 
 						<% if (sortedBy !== '') { %>
@@ -87,7 +87,7 @@
 						<% } else { %>
 							<a href='/features/popular/<%= parseInt(doublefeaturePage) + 1%>' class="next">
 						<% } %>
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 
@@ -103,7 +103,7 @@
 						<% } else { %>
 							<a href='/features/popular/<%= doublefeaturePage - 1%>' class="previous">
 						<% } %>
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
 
 						<% if (sortedBy !== '') { %>
@@ -111,7 +111,7 @@
 						<% } else { %>
 							<a href='/features/popular/<%= doublefeaturePage + 1%>' class="nexthidden">
 						<% } %>
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 			</div>
@@ -125,7 +125,7 @@
 	<% } else { %>
 		<button class="sortbybtn">All Time
 	<% } %>
-        	<i class="fas fa-caret-down"></i>
+        	<i class="fa-solid fa-caret-down"></i>
     	</button>
     <div class="sortby-content">
 		<ul style="padding: 0; list-style-type:none; margin-top: 0; margin-bottom: 0;">

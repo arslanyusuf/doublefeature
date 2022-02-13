@@ -23,7 +23,7 @@
 			<h3>You've gone past the last page of results.</h3>
 			<h3>
 				<a href='/search/person/<%= searchTerm %>/<%= personData.total_pages %>' class="previous">
-					<i class="fas fa-arrow-circle-left"></i>
+					<i class="fa-solid fa-circle-arrow-left"></i>
 				</a> Go back to Page <%= personData.total_pages %> of <%= personData.total_pages %>
 			</h3>
 		</div>
@@ -33,11 +33,11 @@
 			<h3> Showing results 1-<%= personData.total_results %> of <%= personData.total_results %></h3>
 			<h3> 
 				<a href='/search/person/<%= searchTerm %>/<%= personData.page - 1%>' class="previoushidden">
-					<i class="fas fa-arrow-circle-left"></i>
+					<i class="fa-solid fa-circle-arrow-left"></i>
 				</a> Page <%= personData.page %> of <%= personData.total_pages %>
 
 				<a href='/search/person/<%= searchTerm %>/<%= personData.page + 1%>' class="nexthidden">
-					<i class="fas fa-arrow-circle-right"></i>
+					<i class="fa-solid fa-circle-arrow-right"></i>
 				</a>
 			</h3>
 		</div>
@@ -50,11 +50,11 @@
 					<h3>Showing results <%= ((personData.page - 1)*20) + 1 %>-<%= (personData.page)*20 %> of <%= personData.total_results %></h3>
 					<h3> 
 						<a href='/search/person/<%= searchTerm %>/<%= personData.page - 1%>' class="previoushidden">
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= personData.page %> of <%= personData.total_pages %>
 
 						<a href='/search/person/<%= searchTerm %>/<%= personData.page + 1%>' class="next">
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 			
@@ -62,11 +62,11 @@
 					<h3>Showing results <%= ((personData.page - 1)*20) + 1 %>-<%= (personData.page)*20 %> of <%= personData.total_results %></h3>
 					<h3>
 						<a href='/search/person/<%= searchTerm %>/<%= personData.page - 1%>' class="previous">
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= personData.page %> of <%= personData.total_pages %>
 
 						<a href='/search/person/<%= searchTerm %>/<%= personData.page + 1%>' class="next">
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 
@@ -78,11 +78,11 @@
 				<h3> Showing results <%= ((personData.page - 1)*20) + 1 %>-<%= (personData.total_results) %> of <%= personData.total_results %></h3>
 					<h3>
 						<a href='/search/person/<%= searchTerm %>/<%= personData.page - 1%>' class="previous">
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= personData.page %> of <%= personData.total_pages %>
 
 						<a href='/search/person/<%= searchTerm %>/<%= personData.page + 1%>' class="nexthidden">
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 			</div>

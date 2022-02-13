@@ -29,7 +29,7 @@
 			<% } else { %>
 				<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= Math.ceil(totalResults/40) %>' class="previous">
 			<% } %>
-				<i class="fas fa-arrow-circle-left"></i>
+				<i class="fa-solid fa-circle-arrow-left"></i>
 			</a> Go back to Page <%= Math.ceil(totalResults/40) %> of <%= Math.ceil(totalResults/40) %>
 		</h3>
 	</div>
@@ -46,7 +46,7 @@
 					<% } else { %>
 						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= parseInt(moviePage) - 1%>' class="previoushidden">
 					<% } %>
-						<i class="fas fa-arrow-circle-left"></i>
+						<i class="fa-solid fa-circle-arrow-left"></i>
 					</a> Page <%= parseInt(moviePage) %> of <%= Math.ceil(totalResults/40) %>
 
 					<% if (sortedBy === 'title' || sortedBy === 'release-newest' || sortedBy === 'release-oldest') { %>
@@ -54,7 +54,7 @@
 					<% } else { %>
 						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= parseInt(moviePage) + 1%>' class="next">
 					<% } %>
-						<i class="fas fa-arrow-circle-right"></i>
+						<i class="fa-solid fa-circle-arrow-right"></i>
 					</a>
 				</h3>
 		
@@ -66,7 +66,7 @@
 					<% } else { %>
 						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= parseInt(moviePage) - 1%>' class="previous">
 					<% } %>
-						<i class="fas fa-arrow-circle-left"></i>
+						<i class="fa-solid fa-circle-arrow-left"></i>
 					</a> Page <%= parseInt(moviePage) %> of <%= Math.ceil(totalResults/40) %>
 
 					<% if (sortedBy === 'title' || sortedBy === 'release-newest' || sortedBy === 'release-oldest') { %>
@@ -74,7 +74,7 @@
 					<% } else { %>
 						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= parseInt(moviePage) + 1%>' class="next">
 					<% } %>
-						<i class="fas fa-arrow-circle-right"></i>
+						<i class="fa-solid fa-circle-arrow-right"></i>
 					</a>
 				</h3>
 
@@ -90,7 +90,7 @@
 					<% } else { %>
 						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= parseInt(moviePage) - 1%>' class="previous">
 					<% } %>
-						<i class="fas fa-arrow-circle-left"></i>
+						<i class="fa-solid fa-circle-arrow-left"></i>
 					</a> Page <%= parseInt(moviePage) %> of <%= Math.ceil(totalResults/40) %>
 
 					<% if (sortedBy === 'title' || sortedBy === 'release-newest' || sortedBy === 'release-oldest') { %>
@@ -98,7 +98,7 @@
 					<% } else { %>
 						<a href='/movies/genre/<%= ((genreName).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase() %>/<%= parseInt(moviePage) + 1%>' class="nexthidden">
 					<% } %>
-						<i class="fas fa-arrow-circle-right"></i>
+						<i class="fa-solid fa-circle-arrow-right"></i>
 					</a>
 				</h3>
 		</div>
@@ -109,7 +109,7 @@
 <div style="display: flex; flex-direction: row;">
 	<div style="margin-left: 78%;" class="dropdown">
 		<button class="sortbybtn">Genre
-	        <i class="fas fa-caret-down"></i>
+	        <i class="fa-solid fa-caret-down"></i>
 	    </button>
 	    <div class="sortby-content">
 			<ul style="padding: 0; list-style-type:none; margin-top: 0; margin-bottom: 0;">
@@ -130,7 +130,7 @@
 		<% } else { %>
 			<button class="sortbybtn">Popularity
 		<% } %>
-	        <i class="fas fa-caret-down"></i>
+	        <i class="fa-solid fa-caret-down"></i>
 	    </button>
 		<div class="sortby-content">
 			<ul style="padding: 0; list-style-type:none; margin-top: 0; margin-bottom: 0;">
@@ -159,7 +159,7 @@
 
 			<% if (user) { %>
 				<div class="quick-icons" id="quick-icons">
-					<i class="fas fa-plus-circle fa-2x" id="<%= movieData[i].id %>|<%= movieData[i].title %>|<%= movieData[i].poster_path %>" onclick="parseAll(this.id); assign(); document.getElementById('div-dualoverlay').style.display = 'block'"></i>
+					<i class="fa-solid fa-circle-plus fa-2x" id="<%= movieData[i].id %>|<%= movieData[i].title %>|<%= movieData[i].poster_path %>" onclick="parseAll(this.id); assign(); document.getElementById('div-dualoverlay').style.display = 'block'"></i>
 				</div>
 			<% } %>
 			<a class="movielink" href="/movies/<%= movieData[i].id %>/<%= (((movieData[i].title).replace('&', 'and')).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase()%>">

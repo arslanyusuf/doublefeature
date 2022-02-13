@@ -32,7 +32,6 @@ const paths = [ '/:username/all',
 // @description     User page
 // @route           GET /user/username
 router.get('/:username', (req, res) => {
-	const user = req.user;
 	const username = req.params.username;
 	User.find({
 		username: username
@@ -48,13 +47,13 @@ router.get('/:username', (req, res) => {
 				if (error) {
 					console.error(error);
 					res.render('users', {
-						'user': user,
+						'user': req.user,
 						'username': username,
 						'doublefeatureList': doublefeatureList
 					})
 				} else {
 					res.render('users', {
-						'user': user,
+						'user': req.user,
 						'username': username,
 						'doublefeatureList': doublefeatureList
 					});
@@ -92,7 +91,7 @@ router.get(paths.slice(0,2), (req, res) => {
 							if (error) {
 								console.error(error);
 								res.render('userall', {
-									'user': user,
+									'user': req.user,
 									'username': username,
 									'doublefeatureCount': doublefeatureCount,
 									'doublefeatureList': doublefeatureList,
@@ -100,7 +99,7 @@ router.get(paths.slice(0,2), (req, res) => {
 								})
 							} else {
 								res.render('userall', {
-									'user': user,
+									'user': req.user,
 									'username': username,
 									'doublefeatureCount': doublefeatureCount,
 									'doublefeatureList': doublefeatureList,
@@ -118,7 +117,6 @@ router.get(paths.slice(0,2), (req, res) => {
 // @description     User Logged And Liked Double Features
 // @route           GET /user/username/history & /user/username/likes
 router.get(paths.slice(2, 6), (req, res) => {
-	const user = req.user;
 	const username = req.params.username;
 	const doublefeaturePage = (req.params.page) ? req.params.page : 1;
 	const splitter = req.originalUrl.split('/');
@@ -156,7 +154,7 @@ router.get(paths.slice(2, 6), (req, res) => {
 							if (error) {
 								console.error(error);
 								res.render(renderPage, {
-									'user': user,
+									'user': req.user,
 									'username': username,
 									'doublefeatureCount': doublefeatureCount,
 									'doublefeatureList': doublefeatureList,
@@ -164,7 +162,7 @@ router.get(paths.slice(2, 6), (req, res) => {
 								})
 							} else {
 								res.render(renderPage, {
-									'user': user,
+									'user': req.user,
 									'username': username,
 									'doublefeatureCount': doublefeatureCount,
 									'doublefeatureList': doublefeatureList,
@@ -182,7 +180,6 @@ router.get(paths.slice(2, 6), (req, res) => {
 // @description     User Rated Double Features
 // @route           GET /user/username/ratings
 router.get(paths.slice(6, 8), (req, res) => {
-	const user = req.user;
 	const username = req.params.username;
 	const doublefeaturePage = (req.params.page) ? req.params.page : 1;
 	User.find({
@@ -214,7 +211,7 @@ router.get(paths.slice(6, 8), (req, res) => {
 									if (error) {
 										console.error(error);
 										res.render('userratings', {
-											'user': user,
+											'user': req.user,
 											'username': username,
 											'doublefeatureCount': doublefeatureCount,
 											'doublefeatureList': doublefeatureList,
@@ -223,7 +220,7 @@ router.get(paths.slice(6, 8), (req, res) => {
 										})
 									} else {
 										res.render('userratings', {
-											'user': user,
+											'user': req.user,
 											'username': username,
 											'doublefeatureCount': doublefeatureCount,
 											'doublefeatureList': doublefeatureList,
@@ -244,7 +241,6 @@ router.get(paths.slice(6, 8), (req, res) => {
 // @description     User <Rating> Double Features
 // @route           GET /user/username/ratings/rated/rating
 router.get(paths.slice(8, paths.length), (req, res) => {
-	const user = req.user;
 	const username = req.params.username;
 	const doublefeaturePage = (req.params.page) ? req.params.page : 1;
 	const rating = req.params.rating;
@@ -281,7 +277,7 @@ router.get(paths.slice(8, paths.length), (req, res) => {
 									if (error) {
 										console.error(error);
 										res.render('userratingsnumber', {
-											'user': user,
+											'user': req.user,
 											'username': username,
 											'doublefeatureCount': doublefeatureCount,
 											'doublefeatureList': doublefeatureList,
@@ -291,7 +287,7 @@ router.get(paths.slice(8, paths.length), (req, res) => {
 										})
 									} else {
 										res.render('userratingsnumber', {
-											'user': user,
+											'user': req.user,
 											'username': username,
 											'doublefeatureCount': doublefeatureCount,
 											'doublefeatureList': doublefeatureList,

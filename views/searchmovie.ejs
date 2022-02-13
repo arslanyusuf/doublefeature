@@ -26,7 +26,7 @@
 			<h3>You've gone past the last page of results.</h3>
 			<h3>
 				<a href='/search/movie/<%= searchTerm %>/<%= movieData.total_pages %>' class="previous">
-					<i class="fas fa-arrow-circle-left"></i>
+					<i class="fa-solid fa-circle-arrow-left"></i>
 				</a> Go back to Page <%= movieData.total_pages %> of <%= movieData.total_pages %>
 			</h3>
 		</div>
@@ -36,11 +36,11 @@
 			<h3> Showing results 1-<%= movieData.total_results %> of <%= movieData.total_results %></h3>
 			<h3> 
 				<a href='/search/movie/<%= searchTerm %>/<%= movieData.page - 1%>' class="previoushidden">
-					<i class="fas fa-arrow-circle-left"></i>
+					<i class="fa-solid fa-circle-arrow-left"></i>
 				</a> Page <%= movieData.page %> of <%= movieData.total_pages %>
 
 				<a href='/search/movie/<%= searchTerm %>/<%= movieData.page + 1%>' class="nexthidden">
-					<i class="fas fa-arrow-circle-right"></i>
+					<i class="fa-solid fa-circle-arrow-right"></i>
 				</a>
 			</h3>
 		</div>
@@ -53,11 +53,11 @@
 					<h3>Showing results <%= ((movieData.page - 1)*20) + 1 %>-<%= (movieData.page)*20 %> of <%= movieData.total_results %></h3>
 					<h3> 
 						<a href='/search/movie/<%= searchTerm %>/<%= movieData.page - 1%>' class="previoushidden">
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= movieData.page %> of <%= movieData.total_pages %>
 
 						<a href='/search/movie/<%= searchTerm %>/<%= movieData.page + 1%>' class="next">
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 			
@@ -65,11 +65,11 @@
 					<h3>Showing results <%= ((movieData.page - 1)*20) + 1 %>-<%= (movieData.page)*20 %> of <%= movieData.total_results %></h3>
 					<h3>
 						<a href='/search/movie/<%= searchTerm %>/<%= movieData.page - 1%>' class="previous">
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= movieData.page %> of <%= movieData.total_pages %>
 
 						<a href='/search/movie/<%= searchTerm %>/<%= movieData.page + 1%>' class="next">
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 
@@ -81,11 +81,11 @@
 				<h3> Showing results <%= ((movieData.page - 1)*20) + 1 %>-<%= (movieData.total_results) %> of <%= (movieData.total_results) %></h3>
 					<h3>
 						<a href='/search/movie/<%= searchTerm %>/<%= movieData.page - 1%>' class="previous">
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= movieData.page %> of <%= movieData.total_pages %>
 
 						<a href='/search/movie/<%= searchTerm %>/<%= movieData.page + 1%>' class="nexthidden">
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 			</div>
@@ -101,7 +101,7 @@
 
 				<% if (user) { %>
 					<div class="quick-icons" id="quick-icons">
-						<i class="fas fa-plus-circle fa-2x" id="<%= movieData.results[i].id %>|<%= movieData.results[i].title %>|<%= movieData.results[i].poster_path %>" onclick="parseAll(this.id); assign(); document.getElementById('div-dualoverlay').style.display = 'block'"></i>
+						<i class="fa-solid fa-circle-plus fa-2x" id="<%= movieData.results[i].id %>|<%= movieData.results[i].title %>|<%= movieData.results[i].poster_path %>" onclick="parseAll(this.id); assign(); document.getElementById('div-dualoverlay').style.display = 'block'"></i>
 					</div>
 				<% } %>
 				<a class="movielink" href="/movies/<%= movieData.results[i].id %>/<%= (((movieData.results[i].title).replace('&', 'and')).replace(/\s+/g, '-')).replace(punctuation, '').toLowerCase()%>">

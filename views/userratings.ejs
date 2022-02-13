@@ -14,7 +14,7 @@
 			<h3>You've gone past the last page.</h3>
 			<h3>
 				<a href='/users/<%= username %>/ratings/<%= Math.ceil(doublefeatureCount/16) %>' class="previous">
-					<i class="fas fa-arrow-circle-left"></i>
+					<i class="fa-solid fa-circle-arrow-left"></i>
 				</a> Go back to Page <%= Math.ceil(doublefeatureCount/16) %> of <%= Math.ceil(doublefeatureCount/16) %>
 			</h3>
 		</div>
@@ -23,11 +23,11 @@
 			<h3> Showing 1-<%= doublefeatureCount %> of <%= doublefeatureCount %></h3>
 			<h3> 
 				<a href='/users/<%= username %>/ratings/<%= doublefeaturePage - 1%>' class="previoushidden">
-					<i class="fas fa-arrow-circle-left"></i>
+					<i class="fa-solid fa-circle-arrow-left"></i>
 				</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
 
 				<a href='/users/<%= username %>/ratings/<%= parseInt(doublefeaturePage) + 1%>' class="nexthidden">
-					<i class="fas fa-arrow-circle-right"></i>
+					<i class="fa-solid fa-circle-arrow-right"></i>
 				</a>
 			</h3>
 		</div>
@@ -40,11 +40,11 @@
 					<h3>Showing <%= ((doublefeaturePage - 1)*16) + 1 %>-<%= (doublefeaturePage)*16 %> of <%= doublefeatureCount %></h3>
 					<h3> 
 						<a href='/users/<%= username %>/ratings/<%= doublefeaturePage - 1%>' class="previoushidden">
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
 
 						<a href='/users/<%= username %>/ratings/<%= parseInt(doublefeaturePage) + 1%>' class="next">
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 			
@@ -52,11 +52,11 @@
 					<h3>Showing <%= ((doublefeaturePage - 1)*16) + 1 %>-<%= (doublefeaturePage)*16 %> of <%= doublefeatureCount %></h3>
 					<h3>
 						<a href='/users/<%= username %>/ratings/<%= doublefeaturePage - 1%>' class="previous">
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
 
 						<a href='/users/<%= username %>/ratings/<%= parseInt(doublefeaturePage) + 1%>' class="next">
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 
@@ -68,11 +68,11 @@
 				<h3> Showing <%= ((doublefeaturePage - 1)*16) + 1 %>-<%= doublefeatureCount %> of <%= doublefeatureCount %></h3>
 					<h3>
 						<a href='/users/<%= username %>/ratings/<%= doublefeaturePage - 1%>' class="previous">
-							<i class="fas fa-arrow-circle-left"></i>
+							<i class="fa-solid fa-circle-arrow-left"></i>
 						</a> Page <%= parseInt(doublefeaturePage) %> of <%= Math.ceil(doublefeatureCount/16) %>
 
 						<a href='/users/<%= username %>/ratings/<%= doublefeaturePage + 1%>' class="nexthidden">
-							<i class="fas fa-arrow-circle-right"></i>
+							<i class="fa-solid fa-circle-arrow-right"></i>
 						</a>
 					</h3>
 			</div>
@@ -82,7 +82,7 @@
 <% } %>
 <div style="margin-left: 1200px;" class="dropdown">
 	<button class="sortbybtn">Rating
-        <i class="fas fa-caret-down"></i>
+        <i class="fa-solid fa-caret-down"></i>
     </button>
     <div class="sortby-content">
 		<ul style="padding: 0; list-style-type:none; margin-top: 0; margin-bottom: 0;">
@@ -115,7 +115,7 @@
 			<span style="color: white;">by <%= doublefeatureList[i].username %></span>
 			<div>
 			<% const newRating = userRatings.find(element => element.doublefeature.toString() === doublefeatureList[i]._id.toString()).rating %>
-			<i style="color: #eb741a;" class="fas fa-star fa-2x"></i>
+			<i style="color: #eb741a;" class="fa-solid fa-star fa-2x"></i>
 				<% if (parseInt(newRating) === 1) { %>
 					<span style="font-family: 'Quicksand'; font-size: 18px; position: relative; z-index: 10; right: 25px; bottom: 4px; color: white;"><%= newRating %></span>
 				<% } else if (parseInt(newRating) === 10) { %>

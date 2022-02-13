@@ -301,7 +301,7 @@ input[type=search]:focus {
 }
 
 /* (X) color */
-.cross i.fa-times, .newcross i.fa-times {
+.cross i.fa-xmark, .newcross i.fa-xmark {
 	visibility: visible;
 	color: #333333;
 }
@@ -492,8 +492,8 @@ input[type=search]:focus {
 	visibility: hidden;
 }
 
-.fa-arrow-circle-right:hover,
-.fa-arrow-circle-left:hover {
+.fa-circle-arrow-right:hover,
+.fa-circle-arrow-left:hover {
 	color: #ebcb1b;
 }
 
@@ -576,13 +576,24 @@ input[type=search]:focus {
 	border-radius: 4px 4px 0px 0px;
 }
 
-.fa-plus-circle, .fa-ticket-alt, .fa-pencil-alt, .fa-exchange-alt, .fa-trash-alt, .fa-film {
+.fa-circle-plus {
+	cursor: pointer;
+	color: #3a5c94;
+	padding-bottom: 5px;
+}
+
+.fa-circle-plus:hover {
+	color: white;
+	padding-bottom: 5px;
+}
+
+.fa-ticket, .fa-pencil, .fa-arrow-right-arrow-left, .fa-trash-can, .fa-film {
 	cursor: pointer;
 	color: #3a5c94;
 	padding-top: 1px;
 }
 
-.fa-plus-circle:hover, .fa-ticket-alt:hover, .fa-pencil-alt:hover, .fa-exchange-alt:hover, .fa-trash-alt:hover, .fa-film:hover {
+.fa-ticket:hover, .fa-pencil:hover, .fa-arrow-right-arrow-left:hover, .fa-trash-can:hover, .fa-film:hover {
 	color: white;
 	padding-top: 1px;
 }
