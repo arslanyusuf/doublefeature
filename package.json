@@ -22,6 +22,7 @@
     "express": "^4.17.2",
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.17.2",
+    "image-downloader": "^4.3.0",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
     "mongo": "^0.1.0",
@@ -31,10 +32,12 @@
     "morgan": "^1.10.0",
     "nodemailer": "^6.7.2",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "twitter-api-v2": "^1.12.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "prettier": "^2.7.1"
   }
 }

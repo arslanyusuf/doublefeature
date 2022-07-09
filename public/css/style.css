@@ -1,25 +1,31 @@
 /* Francois One & Josefin Sans | Contrasting Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Francois+One|Josefin+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Francois+One|Josefin+Sans&display=swap");
 
 /* Quicksand & Nunito | Contrasting Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Nunito|Quicksand');
+@import url("https://fonts.googleapis.com/css2?family=Nunito|Quicksand");
 
 /* Cabin & Open Sans | Contrasting Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Cabin|Open+Sans');
+@import url("https://fonts.googleapis.com/css2?family=Cabin|Open+Sans");
 
 /* Font for everything else */
-html, body {
+html,
+body {
 	margin: 0;
 	padding: 0;
 	color: white;
-	font-family: 'Open Sans', sans-serif;
+	font-family: "Open Sans", sans-serif;
 	background: #3a5c94;
 	height: 100%;
 }
 
 /* Font for Headings */
-h1, h2, h3, h4, h5, h6 {
-	font-family: 'Cabin', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Cabin", sans-serif;
 	color: white;
 }
 
@@ -48,7 +54,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Navbar logo size */
-.logo-image{
+.logo-image {
 	width: 150px;
 }
 
@@ -74,11 +80,13 @@ li :hover {
 }
 
 /* Search box dimensions */
-input[type=search] {
+input[type="search"] {
 	-webkit-appearance: textfield;
 	-webkit-box-sizing: content-box;
 
-	background: #ededed url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+	background: #ededed
+		url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png)
+		no-repeat 9px center;
 	background-color: #fff;
 	border: solid 1px #ccc;
 	padding: 9px 10px 9px 32px;
@@ -88,23 +96,23 @@ input[type=search] {
 	-moz-border-radius: 10em 0 0 10em;
 	border-radius: 10em 0 0 10em;
 
-	-webkit-transition: all .5s;
-	-moz-transition: all .5s;
-	transition: all .5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s;
 }
 
 /* Expand search field on click */
-input[type=search]:focus {
+input[type="search"]:focus {
 	width: 200px;
 	background-color: #fff;
 	border: solid 1px #ccc;
 
-	-webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
-	-moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
-	box-shadow: 0 0 5px rgba(109,207,246,.5);
+	-webkit-box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+	-moz-box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+	box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
 }
 
-.options { 
+.options {
 	position: relative;
 	margin-right: 20px;
 	margin-left: -4px;
@@ -115,7 +123,7 @@ input[type=search]:focus {
 	-moz-border-radius: 0 10em 10em 0;
 	border-radius: 0 10em 10em 0;
 	appearance: none;
-  	cursor: pointer;
+	cursor: pointer;
 }
 
 /* Dropdown container */
@@ -145,7 +153,7 @@ input[type=search]:focus {
 	background-color: #333;
 	right: 0;
 	min-width: 130px;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 	z-index: 1;
 	display: none;
 	position: absolute;
@@ -301,7 +309,8 @@ input[type=search]:focus {
 }
 
 /* (X) color */
-.cross i.fa-xmark, .newcross i.fa-xmark {
+.cross i.fa-xmark,
+.newcross i.fa-xmark {
 	visibility: visible;
 	color: #333333;
 }
@@ -385,17 +394,25 @@ input[type=search]:focus {
 
 /* Sign up form animations */
 @keyframes NO {
-	from, to {
+	from,
+	to {
 		-webkit-transform: translate3d(0, 0, 0);
 		transform: translate3d(0, 0, 0);
 	}
 
-	10%, 30%, 50%, 70%, 90% {
+	10%,
+	30%,
+	50%,
+	70%,
+	90% {
 		-webkit-transform: translate3d(-10px, 0, 0);
 		transform: translate3d(-10px, 0, 0);
 	}
 
-	20%, 40%, 60%, 80% {
+	20%,
+	40%,
+	60%,
+	80% {
 		-webkit-transform: translate3d(10px, 0, 0);
 		transform: translate3d(10px, 0, 0);
 	}
@@ -403,27 +420,27 @@ input[type=search]:focus {
 
 @keyframes arrive {
 	0% {
-			opacity: 0;
-			transform: translate3d(0, 50px, 0);
+		opacity: 0;
+		transform: translate3d(0, 50px, 0);
 	}
 
 	100% {
-			opacity: 1;
-			transform: translate3d(0, 0, 0);
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
 	}
 }
 
 @keyframes move {
 	0% {
-			background-position: 0 0
+		background-position: 0 0;
 	}
 
 	50% {
-			background-position: 100% 0
+		background-position: 100% 0;
 	}
 
 	100% {
-			background-position: 0 0
+		background-position: 0 0;
 	}
 }
 
@@ -460,9 +477,9 @@ input[type=search]:focus {
 	height: 32px;
 	border-style: hidden;
 	width: 150px;
-  	-webkit-appearance: none;
-  	appearance: none;
-  	cursor: pointer;
+	-webkit-appearance: none;
+	appearance: none;
+	cursor: pointer;
 }
 
 /* Search Button */
@@ -482,12 +499,14 @@ input[type=search]:focus {
 }
 
 /* Next/ Previous Page Arrows */
-.next, .previous {
+.next,
+.previous {
 	color: white;
 	visibility: visible;
 }
 
-.nexthidden, .previoushidden {
+.nexthidden,
+.previoushidden {
 	color: white;
 	visibility: hidden;
 }
@@ -561,7 +580,9 @@ input[type=search]:focus {
 	background: #ebcb1b;
 }
 
-.section:hover, .double:hover, .populardouble:hover {
+.section:hover,
+.double:hover,
+.populardouble:hover {
 	cursor: pointer;
 	border-radius: 5px;
 	border-top: 5px solid;
@@ -587,13 +608,21 @@ input[type=search]:focus {
 	padding-bottom: 5px;
 }
 
-.fa-ticket, .fa-pencil, .fa-arrow-right-arrow-left, .fa-trash-can, .fa-film {
+.fa-ticket,
+.fa-pencil,
+.fa-arrow-right-arrow-left,
+.fa-trash-can,
+.fa-film {
 	cursor: pointer;
 	color: #3a5c94;
 	padding-top: 1px;
 }
 
-.fa-ticket:hover, .fa-pencil:hover, .fa-arrow-right-arrow-left:hover, .fa-trash-can:hover, .fa-film:hover {
+.fa-ticket:hover,
+.fa-pencil:hover,
+.fa-arrow-right-arrow-left:hover,
+.fa-trash-can:hover,
+.fa-film:hover {
 	color: white;
 	padding-top: 1px;
 }
@@ -610,46 +639,62 @@ input[type=search]:focus {
 	color: orange;
 }
 
-.liked, .notliked:hover {
+.liked,
+.notliked:hover {
 	color: #ff3333;
 	cursor: pointer;
 	padding-top: 1px;
 }
 
-.watched, .notwatched:hover {
+.watched,
+.notwatched:hover {
 	color: #44ab70;
 	cursor: pointer;
 	padding-top: 1px;
 }
 
-.logged, .notlogged:hover {
+.logged,
+.notlogged:hover {
 	color: #bb2aeb;
 	cursor: pointer;
 	padding-top: 1px;
 }
 
-.notliked, .notwatched, .notlogged, .liked:hover, .watched:hover {
+.notliked,
+.notwatched,
+.notlogged,
+.liked:hover,
+.watched:hover {
 	color: white;
 	cursor: pointer;
 	padding-top: 1px;
 }
 
-#watch, #like {
+#watch,
+#like {
 	display: none;
 }
 
 /* Overlay */
-#div-dualoverlay, #div-addoverlay, #div-newoverlay, #div-editoverlay, #div-swapoverlay, #div-deloverlay, #div-rateoverlay, #div-delcomoverlay, #div-delaccoverlay {
+#div-dualoverlay,
+#div-addoverlay,
+#div-newoverlay,
+#div-editoverlay,
+#div-swapoverlay,
+#div-deloverlay,
+#div-rateoverlay,
+#div-delcomoverlay,
+#div-delaccoverlay {
 	position: fixed;
-	display: none; 
-	width: 100%; 
+	display: none;
+	width: 100%;
 	height: 100%;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
 	z-index: 2;
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Add to Double Feature Form */
@@ -696,7 +741,7 @@ input[type=search]:focus {
 }
 
 .form_title {
-	font-family: 'Cabin', sans-serif;
+	font-family: "Cabin", sans-serif;
 	font-size: 14px;
 	display: block;
 	width: 88%;
@@ -706,7 +751,7 @@ input[type=search]:focus {
 }
 
 .form_description {
-	font-family: 'Cabin', sans-serif;
+	font-family: "Cabin", sans-serif;
 	font-size: 14px;
 	resize: none;
 	display: block;
@@ -717,16 +762,18 @@ input[type=search]:focus {
 }
 
 /* Poster Path Dimensions */
-.movieimg, .personimg {
+.movieimg,
+.personimg {
 	border-radius: 4px 4px 4px 4px;
 	height: 170px;
 }
 
 /* Title Dimensions */
-.movietitle, .personname {
+.movietitle,
+.personname {
 	margin: auto;
 	overflow: hidden;
-  	text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 
 /* Double Feature Title Dimensions */
@@ -734,7 +781,7 @@ input[type=search]:focus {
 	font-size: 20px;
 	margin: auto;
 	overflow: hidden;
-  	text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 
 .account-settings {
@@ -743,12 +790,13 @@ input[type=search]:focus {
 	width: 70%;
 }
 
-@media(max-width: 600px) {
+@media (max-width: 600px) {
 	.footer .inner_footer {
 		width: 90%;
 	}
 
-	.inner_footer .logo_container, .inner_footer .footer_third {
+	.inner_footer .logo_container,
+	.inner_footer .footer_third {
 		width: 100%;
 		margin-bottom: 30px;
 	}
@@ -759,7 +807,7 @@ input[type=search]:focus {
 }
 
 .buzz {
-	background-image: url('../../../images/errors_everywhere.jpg');
+	background-image: url("../../../images/errors_everywhere.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 }
@@ -798,25 +846,26 @@ input[type=search]:focus {
 /* Info on Banner */
 .moviebasicinfo {
 	text-align: justify;
-  	text-justify: inter-word;
-  	margin-top: 0;
-  	margin-left: 225px;
-  	width: 800px;
+	text-justify: inter-word;
+	margin-top: 0;
+	margin-left: 225px;
+	width: 800px;
 }
 
 .moviepagetitle {
 	margin-bottom: 0px;
 }
 
-.bannerinfo, .moviepagegenre {
-	font-family: 'Open Sans', sans-serif;
+.bannerinfo,
+.moviepagegenre {
+	font-family: "Open Sans", sans-serif;
 	font-weight: 100;
 	margin-bottom: 0px;
 	margin-top: 4px;
 }
 
 .moviepagedirector {
-	font-family: 'Open Sans', sans-serif;
+	font-family: "Open Sans", sans-serif;
 	font-weight: 100;
 	margin-bottom: 5px;
 	position: absolute;
@@ -846,8 +895,8 @@ input[type=search]:focus {
 .movieinfo {
 	margin-left: 230px;
 	text-align: justify;
-  	text-justify: inter-word;
-  	float: left;
+	text-justify: inter-word;
+	float: left;
 }
 
 .horizontalrule {
@@ -857,18 +906,19 @@ input[type=search]:focus {
 	margin-left: 0px;
 }
 
-.tagline, .overview {
+.tagline,
+.overview {
 	width: 550px;
-	font-family: 'Quicksand', sans-serif;
+	font-family: "Quicksand", sans-serif;
 }
 
 .headingtitle {
-	font-family: 'Francois One';
+	font-family: "Francois One";
 	width: 550px;
 }
 
 .realinfo {
-	font-family: 'Quicksand', sans-serif;
+	font-family: "Quicksand", sans-serif;
 	font-weight: 100;
 	width: 550px;
 }
@@ -948,7 +998,7 @@ input[type=search]:focus {
 /* Style the buttons that are used to open the tab content */
 .tablinks {
 	color: white;
-	font-family: 'Open Sans', sans-serif;
+	font-family: "Open Sans", sans-serif;
 	font-weight: 200;
 	background-color: inherit;
 	float: left;
@@ -960,12 +1010,12 @@ input[type=search]:focus {
 
 /* Change background color of buttons on hover */
 .tab button:hover {
- 	background-color: #ebcb1b;
+	background-color: #ebcb1b;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
- 	background-color: #ebcb1b;
+	background-color: #ebcb1b;
 }
 
 /* Dropdown button dimensions for movie sort*/
@@ -985,7 +1035,7 @@ input[type=search]:focus {
 .sortby-content {
 	background-color: white;
 	min-width: 143px;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 	z-index: 1;
 	display: none;
 	position: absolute;
@@ -1071,7 +1121,7 @@ input[type=search]:focus {
 }
 
 .form-comment {
-	font-family: 'Cabin', sans-serif;
+	font-family: "Cabin", sans-serif;
 	font-size: 14px;
 	resize: none;
 	display: block;
@@ -1111,7 +1161,7 @@ input[type=search]:focus {
 
 /* Sign up form button dimensions */
 .landing-btn {
-	font-family: 'Cabin';
+	font-family: "Cabin";
 	cursor: pointer;
 	margin-top: 20px;
 	width: 500px;
@@ -1119,7 +1169,7 @@ input[type=search]:focus {
 	-webkit-appearance: none;
 	outline: 0;
 	border: 0;
-	border-radius: 	5px;
+	border-radius: 5px;
 	font-size: 25px;
 	color: white;
 	background: #ebcb1b;
@@ -1141,7 +1191,9 @@ input[type=search]:focus {
 	transition: 0.3s;
 }
 
-.logs-btn, .likes-btn, .ratings-btn {
+.logs-btn,
+.likes-btn,
+.ratings-btn {
 	cursor: pointer;
 	-webkit-appearance: none;
 	outline: 0;
@@ -1167,4 +1219,19 @@ input[type=search]:focus {
 	color: white;
 	background: #ff3333;
 	transition: 0.3s;
+}
+
+.tweet-btn {
+	display: block;
+	padding: 10px;
+	margin: auto;
+	-webkit-appearance: none;
+	outline: 0;
+	border: 0;
+	font-size: 16px;
+	color: white;
+	background: #ebcb1b;
+	transition: 0.3s;
+	border-radius: 5px;
+	cursor: pointer;
 }
