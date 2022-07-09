@@ -39,6 +39,17 @@
 					<%= parseInt(movieOne.runtime) + parseInt(movieTwo.runtime) %>
 				<% } %> mins
 			</h2>
+			<% if (user && user.username === "arsy" && username === "arsy") { %>
+			<form class="form-doublefeature"  method="POST">
+				<div>
+					<button class="tweet-btn" type="submit">Generate Tweet</button>
+				</div>
+				<input type="hidden" name="hiddenDoubleFeatureTitle" value="<%= doublefeatureInfo.title %>">
+				<input type="hidden" name="hiddenMovieOnePoster" value="<%= doublefeatureInfo.movie_one_poster %>">
+				<input type="hidden" id="hiddenMovieTwoPoster" name="hiddenMovieTwoPoster" value="<%= doublefeatureInfo.movie_two_poster %>">
+				<input type="hidden" name="formInstance" value="tweetForm" />
+			</form>
+			<% } %>
 		</div>
 		<div>
 			<% if (doublefeatureInfo.movie_two_id) { %>
