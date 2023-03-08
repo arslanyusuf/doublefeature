@@ -1,2 +1,31 @@
-<app-header></app-header>
-<app-footer></app-footer>
+<section class="bg-blue">
+  <div class="container px-6 py-16 mx-auto text-center">
+    <div class="max-w-lg mx-auto">
+      <img class="" src="/assets/images/default-monochrome.svg" alt="">
+
+      <p class="max-w-3xl mx-auto mt-6 text-xl text-center text-white md:text-xl">
+        A place for movie enthusiasts to share their favourite movie pairings.
+      </p>
+
+      <div class="flex flex-col mt-8 space-y-3 sm:-mx-2 sm:flex-col sm:justify-center sm:space-y-0">
+        <a *ngIf="!user" routerLink="/features/popular">
+          <button class="px-20 py-5 mb-8 justify-center font-medium text-xl tracking-wide text-white transition-colors duration-300 transform bg-yellow rounded-lg">
+            Browse Popular Double Features
+          </button>
+        </a>
+
+        <a *ngIf="!user" routerLink="/auth/signup">
+          <button class="px-20 py-5 mb-8 justify-center font-medium text-xl tracking-wide text-white transition-colors duration-300 transform bg-yellow rounded-lg">
+            Join Double Feature
+          </button>
+        </a>
+
+        <a *ngIf="!user" routerLink="/features/popular/week">
+          <button class="px-16 py-5 mb-8 justify-center font-medium text-xl tracking-wide text-white transition-colors duration-300 transform bg-yellow rounded-lg">
+            Double Features Popular This Week
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
