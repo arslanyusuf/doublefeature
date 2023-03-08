@@ -9,8 +9,8 @@
         <p class="font-semibold text-gray-800 dark:text-white">Quick Link</p>
 
         <div class="flex flex-col items-start mt-5 space-y-2">
-          <a routerLink="/" class="text-white transition-colors duration-300 hover:underline">Home</a>
-          <a routerLink="/about/me" class="text-white transition-colors duration-300 hover:underline">About Me</a>
+          <a [routerLink]="['/']" routerLinkActive="router-link-active"  class="text-white transition-colors duration-300 hover:underline">Home</a>
+          <a [routerLink]="['/about']" routerLinkActive="router-link-active"  class="text-white transition-colors duration-300 hover:underline">About Me</a>
           <a href="https://paypal.me/mynameisarsy" target="_blank" rel="noopener noreferrer"class="text-white transition-colors duration-300 hover:underline">Donate</a>
         </div>
       </div>
@@ -27,7 +27,7 @@
     <hr class="my-6 border-white md:my-8">
 
     <div class="flex items-center justify-between">
-      <a routerLink="/">
+      <a [routerLink]="['/']" routerLinkActive="router-link-active" >
         <img class="w-auto h-7" src="/assets/images/default-monochrome-white.svg" alt="">
       </a>
 

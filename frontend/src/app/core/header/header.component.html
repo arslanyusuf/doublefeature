@@ -1,7 +1,7 @@
 <nav class="relative bg-grey shadow">
   <div class="container px-6 py-3 mx-auto md:flex">
     <div class="flex items-center justify-between">
-      <a routerLink="/">
+      <a [routerLink]="['/']" routerLinkActive="active" >
           <img class="w-auto h-6 sm:h-7" src="/assets/images/default-monochrome.svg" alt="">
       </a>
     </div>
@@ -17,16 +17,16 @@
 
     <div class="absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-grey md:mt-0 md:p-0 md:top-0 md:relative md:opacity-100 md:translate-x-0 md:flex md:items-center md:justify-end">
       <div class="flex flex-col flex-end px-2 -mx-4 md:flex-row md:mx-10 md:py-0">
-        <a routerLink="/movies/popular" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
+        <a [routerLink]="['/movies/popular']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
           Movies
         </a>
-        <a routerLink="/features/popular" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
+        <a [routerLink]="['/features/popular']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
           Features
         </a>
-        <a *ngIf="!user" routerLink="/auth/signup" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
+        <a *ngIf="!user" [routerLink]="['/auth/signup']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
           Create Account
         </a>
-        <a *ngIf="!user" routerLink="/auth/signin" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
+        <a *ngIf="!user" [routerLink]="['/auth/signin']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
           Sign In
         </a>
         <div *ngIf="user" clickOutside (clickOutside)="clickedOutside()" class="relative inline-block">
@@ -37,13 +37,13 @@
             </svg>
           </button>
           <div *ngIf="isMenuOpen" class="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-grey rounded-md shadow-xl">
-            <a routerLink="/users/{{username}}" class="block px-4 py-3 text-white capitalize transition-colors duration-300 transform hover:bg-yellow hover:text-grey">
+            <a [routerLink]="['/users/{{username}}']" class="block px-4 py-3 text-white capitalize transition-colors duration-300 transform hover:bg-yellow hover:text-grey">
               View Profile
             </a>
-            <a routerLink="/settings" class="block px-4 py-3 text-white capitalize transition-colors duration-300 transform hover:bg-yellow hover:text-grey">
+            <a [routerLink]="['/settings']" routerLinkActive="active" class="block px-4 py-3 text-white capitalize transition-colors duration-300 transform hover:bg-yellow hover:text-grey">
               Settings
             </a>
-            <a routerLink="/auth/signout" class="block px-4 py-3 text-white capitalize transition-colors duration-300 transform hover:bg-yellow hover:text-grey">
+            <a [routerLink]="['/auth/signout']" routerLinkActive="active" class="block px-4 py-3 text-white capitalize transition-colors duration-300 transform hover:bg-yellow hover:text-grey">
               Sign Out
             </a>
           </div>

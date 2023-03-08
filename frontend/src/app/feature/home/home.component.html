@@ -8,19 +8,19 @@
       </p>
 
       <div class="flex flex-col mt-8 space-y-3 sm:-mx-2 sm:flex-col sm:justify-center sm:space-y-0">
-        <a *ngIf="!user" routerLink="/features/popular">
+        <a *ngIf="!user" [routerLink]="['/features/popular']" routerLinkActive="active">
           <button class="px-20 py-5 mb-8 justify-center font-semibold text-xl tracking-wide text-white transition-colors duration-300 transform bg-yellow rounded-lg">
             Browse Popular Double Features
           </button>
         </a>
 
-        <a *ngIf="!user" routerLink="/auth/signup">
+        <a *ngIf="!user" [routerLink]="['/auth/signup']" routerLinkActive="active">
           <button class="px-[110px] py-5 mb-8 justify-center font-semibold text-xl tracking-wide text-white transition-colors duration-300 transform bg-yellow rounded-lg">
             Join Double Feature Today
           </button>
         </a>
 
-        <a *ngIf="!user" routerLink="/features/popular/week">
+        <a *ngIf="user" [routerLink]="['/features/popular/week']" routerLinkActive="active">
           <button class="px-[66px] py-5 mb-8 justify-center font-semibold text-xl tracking-wide text-white transition-colors duration-300 transform bg-yellow rounded-lg">
             Double Features Popular This Week
           </button>
