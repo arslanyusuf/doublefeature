@@ -5,7 +5,7 @@ import { HomeComponent } from './feature/home/home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'about', component: AboutComponent },
+  { path: 'about', component: AboutComponent, title: 'About - Double Feature' },
 ];
 
 @NgModule({
