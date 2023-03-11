@@ -1,0 +1,42 @@
+<section class="bg-blue h-screen">
+  <div class="flex justify-center mx-auto">
+    <img class="w-auto h-auto sm:h-8 mt-20 mb-12" src="/assets/images/default-monochrome.svg" alt="">
+  </div>
+  <div class="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
+    <div class="px-6 py-4">
+
+      <h3 class="mt-3 text-xl font-medium text-center text-grey">Create Account</h3>
+
+      <form action="/auth/sign-up" method="POST">
+        <div class="w-full mt-4">
+          <input name="username" id="username" class="block w-full px-4 py-2 mt-2 text-black placeholder-gray-500 bg-white border rounded-lg focus:border-blue focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue" type="text" placeholder="Username" aria-label="Username"/>
+        </div>
+
+        <div class="w-full mt-4">
+          <input name="email" id="email" class="block w-full px-4 py-2 mt-2 text-black placeholder-gray-500 bg-white border rounded-lg focus:border-blue focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue" type="email" placeholder="Email" aria-label="Email"/>
+        </div>
+
+        <div class="w-full mt-4">
+          <input name="password" id="password" class="block w-full px-4 py-2 mt-2 text-black placeholder-gray-500 bg-white border rounded-lg focus:border-blue focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue" type="password" placeholder="Password" aria-label="Password"/>
+        </div>
+
+        <div class="w-full mt-4">
+          <input name="password" id="password" class="block w-full px-4 py-2 mt-2 text-black placeholder-gray-500 bg-white border rounded-lg focus:border-blue focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue" type="password" placeholder="Confirm Password" aria-label="Confirm Password"/>
+        </div>
+
+        <div class="flex items-center justify-center mt-4">
+
+          <button type="submit" class="px-10 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-yellow rounded-lg">
+              Sign Up
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="flex items-center justify-center py-4 text-center">
+      <span class="text-sm text-gray-600 dark:text-gray-200">Already have an account?</span>
+
+      <a [routerLink]="['/auth/sign-in']" routerLinkActive="active" class="mx-2 text-sm font-bold text-blue hover:underline">Sign In</a>
+    </div>
+  </div>
+</section>

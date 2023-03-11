@@ -23,10 +23,10 @@
         <a [routerLink]="['/features/popular']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
           Features
         </a>
-        <a *ngIf="!user" [routerLink]="['/auth/signup']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
+        <a *ngIf="!user" [routerLink]="['/auth/sign-up']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
           Create Account
         </a>
-        <a *ngIf="!user" [routerLink]="['/auth/signin']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
+        <a *ngIf="!user" [routerLink]="['/auth/sign-in']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
           Sign In
         </a>
         <div *ngIf="user" clickOutside (clickOutside)="clickedOutside()" class="relative inline-block">
