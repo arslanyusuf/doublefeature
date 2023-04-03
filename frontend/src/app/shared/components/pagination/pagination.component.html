@@ -1,0 +1,19 @@
+<div class="bg-blue">
+  <div class="container flex flex-col items-center px-6 py-5 mx-auto space-y-6 sm:flex-row sm:justify-between sm:space-y-0 ">
+      <div class="-mx-2">
+        <a [routerLink]="['', routerLinkBase, page - 1]" routerLinkActive="active" class="inline-flex items-center justify-center px-4 py-1 mx-2 text-white transition-colors duration-300 transform bg-yellow rounded-lg {{next}}">
+          Previous
+        </a>
+
+        <span class="font-medium text-white">Page {{page}} of {{totalPages}}</span>
+
+        <a [routerLink]="['', routerLinkBase, page + 1]" routerLinkActive="active" class="inline-flex items-center justify-center px-4 py-1 mx-2 text-white transition-colors duration-300 transform bg-yellow rounded-lg {{previous}}">
+            Next
+        </a>
+      </div>
+
+      <div class="text-white">
+        <span class="font-medium text-white">{{(page - 1)*limit + 1}} - {{page*limit}}</span> of {{max}}
+      </div>
+  </div>
+</div>

@@ -5,6 +5,8 @@ import { HomeComponent } from './feature/home/home.component';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { AuthComponent } from './auth/auth.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { MoviesComponent } from './feature/movies/movies.component';
+import { PopularComponent } from './feature/movies/popular/popular.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +24,17 @@ const routes: Routes = [
         path: 'sign-up',
         component: SignUpComponent,
         title: 'Sign Up - Double Feature',
+      },
+    ],
+  },
+  {
+    path: 'movies',
+    component: MoviesComponent,
+    children: [
+      {
+        path: 'popular/:page',
+        component: PopularComponent,
+        title: 'Popular Movies - Double Feature',
       },
     ],
   },
