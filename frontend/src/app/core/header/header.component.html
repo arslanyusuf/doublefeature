@@ -1,0 +1,54 @@
+<nav class="relative bg-grey shadow">
+  <div class="container px-6 py-3 mx-auto md:flex">
+    <div class="flex items-center justify-between">
+      <a [routerLink]="['/']" routerLinkActive="active" >
+          <img class="w-auto h-6 sm:h-7" src="/assets/images/default-monochrome.svg" alt="">
+      </a>
+    </div>
+
+    <form class="relative flex flex-row mt-4 md:mt-0 md:mx-10" action="/search" method="GET">
+      <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+          <svg class="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+              <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+      </span>
+      <input type="search" name="query" class="w-full py-2 pl-10 pr-4 text-gray-700 bg-white border rounded-lg focus:border-blue focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue" placeholder="Search" required>
+    </form>
+
+    <div class="absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-grey md:mt-0 md:p-0 md:top-0 md:relative md:opacity-100 md:translate-x-0 md:flex md:items-center md:justify-end">
+      <div class="flex flex-col flex-end px-2 -mx-4 md:flex-row md:mx-10 md:py-0">
+        <a [routerLink]="['/movies/popular/1']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
+          Movies
+        </a>
+        <a [routerLink]="['/features/popular']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
+          Features
+        </a>
+        <a *ngIf="!user" [routerLink]="['/auth/sign-up']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
+          Create Account
+        </a>
+        <a *ngIf="!user" [routerLink]="['/auth/sign-in']" routerLinkActive="active" class="px-2.5 py-2 text-white transition-colors duration-300 transform rounded-lg hover:text-yellow md:mx-2">
+          Sign In
+        </a>
+        <div *ngIf="user" clickOutside (clickOutside)="clickedOutside()" class="relative inline-block">
+          <button (click)="toggleMenu()" class="relative z-10 flex items-center p-2 text-white bg-grey hover:text-yellow md:mx-2">
+            <span class="mx-1">{{ username }}</span>
+            <svg class="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z" fill="currentColor"></path>
+            </svg>
+          </button>
+          <div *ngIf="isMenuOpen" class="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-grey rounded-md shadow-xl">
+            <a [routerLink]="['/users/{{username}}']" class="block px-4 py-3 text-white capitalize transition-colors duration-300 transform hover:bg-yellow hover:text-grey">
+              View Profile
+            </a>
+            <a [routerLink]="['/settings']" routerLinkActive="active" class="block px-4 py-3 text-white capitalize transition-colors duration-300 transform hover:bg-yellow hover:text-grey">
+              Settings
+            </a>
+            <a [routerLink]="['/auth/signout']" routerLinkActive="active" class="block px-4 py-3 text-white capitalize transition-colors duration-300 transform hover:bg-yellow hover:text-grey">
+              Sign Out
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

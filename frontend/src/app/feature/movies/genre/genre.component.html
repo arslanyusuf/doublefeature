@@ -1,0 +1,11 @@
+<section class="bg-blue h-screen flex flex-col items-center">
+  <div class="container flex flex-col items-center px-4 py-4 mx-auto text-center">
+    <h2 class="text-2xl font-bold tracking-tight text-white xl:text-3xl mt-12 mb-12">
+      {{genre}}
+    </h2>
+    <div class="flex flex-wrap items-center justify-center">
+      <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+    </div>
+    <app-pagination class="w-full mt-10" [routerLinkBase]="routerLinkBase" [limit]="limit" [max]="max"></app-pagination>
+  </div>
+</section>
