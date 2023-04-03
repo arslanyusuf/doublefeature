@@ -7,6 +7,7 @@ import { AuthComponent } from './auth/auth.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { MoviesComponent } from './feature/movies/movies.component';
 import { PopularComponent } from './feature/movies/popular/popular.component';
+import { GenreComponent } from './feature/movies/genre/genre.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -35,6 +36,11 @@ const routes: Routes = [
         path: 'popular/:page',
         component: PopularComponent,
         title: 'Popular Movies - Double Feature',
+      },
+      {
+        path: 'genre/:genre/:page',
+        component: GenreComponent,
+        title: 'Genres - Double Feature',
       },
     ],
   },
