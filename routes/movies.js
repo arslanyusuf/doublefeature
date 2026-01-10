@@ -60,29 +60,27 @@ router.get(paths.slice(0, 2), (req, res) => {
 	const page_one = axios.get(trendingURL + '?api_key=' + key + '&page=' + ((moviePage*2)-1));
 	const page_two = axios.get(trendingURL + '?api_key=' + key + '&page=' + (moviePage*2));
 	axios.all([page_one, page_two])
-	.then(axios.spread((...responses) => {
+	.then(axios.spread(async (...responses) => {
 		responses[0].data.results.forEach(element => movieData.push(element));
 		responses[1].data.results.forEach(element => movieData.push(element));
 		if (user) {
-			DoubleFeature.find({ 
-				$or: [ 
-				{ $and: [ { movie_one_id: null }, { user: user } ] },
-				{ $and: [ { movie_two_id: null }, { user: user } ] }
-				]},
-			function(error, doubleFeatureEmpty) {
-				if (error) {
-					console.error(error);
-				} else {
-					res.render('moviespopular', {
-						'user': user,
-						'movieData': movieData,
-						'doubleFeatureEmpty': doubleFeatureEmpty,
-						'moviePage': moviePage
-					});
-				}
-			})
+            try {
+                const doubleFeatureEmpty = await DoubleFeature.find({ 
+                    $or: [ 
+                    { $and: [ { movie_one_id: null }, { user: user } ] },
+                    { $and: [ { movie_two_id: null }, { user: user } ] }
+                    ]});
+                res.render('moviespopular', {
+                    'user': user,
+                    'movieData': movieData,
+                    'doubleFeatureEmpty': doubleFeatureEmpty,
+                    'moviePage': moviePage
+                });
+            } catch (error) {
+                console.error(error);
+            }
 		} else {
-			doubleFeatureEmpty = [];
+			const doubleFeatureEmpty = [];
 			res.render('moviespopular', {
 				'user': user,
 				'movieData': movieData,
@@ -125,33 +123,31 @@ router.get(paths.slice(2, paths.length), (req, res) => {
 	const page_one = axios.get(discoverURL + '?api_key=' + key + '&sort_by=' + sortBy + '&with_genres=' + genre.id + '&page=' + ((moviePage*2)-1));
 	const page_two = axios.get(discoverURL + '?api_key=' + key + '&sort_by=' + sortBy + '&with_genres=' + genre.id + '&page=' + (moviePage*2));
 	axios.all([page_one, page_two])
-	.then(axios.spread((...responses) => {
+	.then(axios.spread(async (...responses) => {
 		responses[0].data.results.forEach(element => movieData.push(element));
 		responses[1].data.results.forEach(element => movieData.push(element));
 		if (user) {
-			DoubleFeature.find({ 
-				$or: [ 
-					{ $and: [ { movie_one_id: null }, { user: user } ] },
-					{ $and: [ { movie_two_id: null }, { user: user } ] }
-				]},
-			function(error, doubleFeatureEmpty) {
-				if (error) {
-					console.error(error);
-				} else {
-					res.render('moviesgenre', {
-						'user': user,
-						'movieData': movieData,
-						'doubleFeatureEmpty': doubleFeatureEmpty,
-						'moviePage': moviePage,
-						'genres': genres,
-						'genreName': genreName,
-						'totalResults': responses[0].data.total_results,
-						'sortedBy': sortedBy
-					});
-				}
-			})
+            try {
+                const doubleFeatureEmpty = await DoubleFeature.find({ 
+                    $or: [ 
+                        { $and: [ { movie_one_id: null }, { user: user } ] },
+                        { $and: [ { movie_two_id: null }, { user: user } ] }
+                    ]});
+                res.render('moviesgenre', {
+                    'user': user,
+                    'movieData': movieData,
+                    'doubleFeatureEmpty': doubleFeatureEmpty,
+                    'moviePage': moviePage,
+                    'genres': genres,
+                    'genreName': genreName,
+                    'totalResults': responses[0].data.total_results,
+                    'sortedBy': sortedBy
+                });
+            } catch (error) {
+                console.error(error);
+            }
 		} else {
-			doubleFeatureEmpty = [];
+			const doubleFeatureEmpty = [];
 			res.render('moviesgenre', {
 				'user': user,
 				'movieData': movieData,
@@ -189,7 +185,7 @@ router.get('/:id/:title', (req, res) => {
 	const user = req.user;
 	const movieID = req.params.id;
 	axios.get(movieURL + movieID + '?api_key=' + key + '&append_to_response=credits')
-	.then(response => {
+	.then(async response => {
 		const directors = [];
 		const writers = [];
 		const editors = [];
@@ -217,50 +213,34 @@ router.get('/:id/:title', (req, res) => {
 		    	cinematographer.push(entry);
 		    }
 		})
-		DoubleFeature.find({
-			$or: [ { movie_one_id: movieID }, { movie_two_id: movieID } ]
-			},
-		function(error, doublefeaturePopular) {
-			if (error) {
-				console.error(error);
-			} else {
-				if (user) {
-					DoubleFeature.find({ 
-						$or: [ 
-						{ $and: [ { movie_one_id: null }, { user: user } ] },
-						{ $and: [ { movie_two_id: null }, { user: user } ] }
-						]},
-					function(err, doubleFeatureEmpty) {
-						if (error) {
-							console.error(error);
-						} else {
-							res.render('moviepage', {
-								'user': user,
-								'movieData': response.data,
-								'movieDirector': directors,
-								'movieWriter': writers,
-								'movieEditor': editors,
-								'movieCinematographer': cinematographer,
-								'doubleFeatureEmpty': doubleFeatureEmpty,
-								'doublefeaturePopular': doublefeaturePopular
-							});
-						}
-					})
-				} else {
-					doubleFeatureEmpty = [];
-					res.render('moviepage', {
-						'user': user,
-						'movieData': response.data,
-						'movieDirector': directors,
-						'movieWriter': writers,
-						'movieEditor': editors,
-						'movieCinematographer': cinematographer,
-						'doubleFeatureEmpty': doubleFeatureEmpty,
-						'doublefeaturePopular': doublefeaturePopular
-					});
-				}
-			}
-		}).sort( { rating_weighted: -1 } ).limit(4);
+
+        try {
+            const doublefeaturePopular = await DoubleFeature.find({
+                $or: [ { movie_one_id: movieID }, { movie_two_id: movieID } ]
+                }).sort( { rating_weighted: -1 } ).limit(4);
+
+            let doubleFeatureEmpty = [];
+            if (user) {
+                doubleFeatureEmpty = await DoubleFeature.find({ 
+                    $or: [ 
+                    { $and: [ { movie_one_id: null }, { user: user } ] },
+                    { $and: [ { movie_two_id: null }, { user: user } ] }
+                    ]});
+            }
+
+            res.render('moviepage', {
+                'user': user,
+                'movieData': response.data,
+                'movieDirector': directors,
+                'movieWriter': writers,
+                'movieEditor': editors,
+                'movieCinematographer': cinematographer,
+                'doubleFeatureEmpty': doubleFeatureEmpty,
+                'doublefeaturePopular': doublefeaturePopular
+            });
+        } catch (error) {
+            console.error(error);
+        }
 	})
 	.catch(error => {
 		console.error(error);
@@ -284,7 +264,7 @@ router.post('/:id/:title', (req, res) => {
 });
 
 // Create New Double Feature
-function createDoubleFeature(req, res, movieID, movieTitle, moviePoster) {
+async function createDoubleFeature(req, res, movieID, movieTitle, moviePoster) {
 	const doublefeature = new DoubleFeature();
 
 	doublefeature.identifier = Math.floor(Date.now()/1000);
@@ -304,56 +284,45 @@ function createDoubleFeature(req, res, movieID, movieTitle, moviePoster) {
 	doublefeature.rating_value = 0;
 	doublefeature.rating_average = 0;
 	doublefeature.rating_weighted = 0;
-	doublefeature.save((error) => {
-		if (error) {
-			console.error(error);
-			req.flash('fail_create', 'Something went wrong');
-			res.redirect('back');
-		} else {
-			User.findById(req.user.id).then(user => {
-				user.doublefeatures.push(doublefeature);
-				user.save(function(error, doc) {
-					if (error) {
-						console.error(error);
-					} else {
-						console.log("Double Feature created successfully.")
-					}
-				});
-			});
-			req.flash('success_create', '\'' + req.body.title + '\' was successfully created with \'' + movieTitle + '\'');
-			res.redirect('back');
-		}
-	});
+    
+    try {
+        await doublefeature.save();
+        const user = await User.findById(req.user.id);
+        user.doublefeatures.push(doublefeature);
+        await user.save();
+        
+        console.log("Double Feature created successfully.");
+        req.flash('success_create', '\'' + req.body.title + '\' was successfully created with \'' + movieTitle + '\'');
+        res.redirect('back');
+    } catch (error) {
+        console.error(error);
+        req.flash('fail_create', 'Something went wrong');
+        res.redirect('back');
+    }
 }
 
 // Add To Existing Double Feature
-function addToDoubleFeature(req, res, movieID, movieTitle, moviePoster) {
-	DoubleFeature.findById(ObjectID(req.body.emptydoublefeature))
-	.then(doublefeature => {
-		if (doublefeature.movie_one_id === null) {
-			doublefeature.movie_one_id = movieID;
-			doublefeature.movie_one_title = movieTitle;
-			doublefeature.movie_one_poster = moviePoster;
-		} else {
-			doublefeature.movie_two_id = movieID;
-			doublefeature.movie_two_title = movieTitle;
-			doublefeature.movie_two_poster = moviePoster;
-		}
+async function addToDoubleFeature(req, res, movieID, movieTitle, moviePoster) {
+    try {
+        const doublefeature = await DoubleFeature.findById(ObjectID(req.body.emptydoublefeature));
+        if (doublefeature.movie_one_id === null) {
+            doublefeature.movie_one_id = movieID;
+            doublefeature.movie_one_title = movieTitle;
+            doublefeature.movie_one_poster = moviePoster;
+        } else {
+            doublefeature.movie_two_id = movieID;
+            doublefeature.movie_two_title = movieTitle;
+            doublefeature.movie_two_poster = moviePoster;
+        }
 
-		doublefeature.save((error) => {
-			if (error) {
-				console.error(error);
-				req.flash('fail_create', 'Something went wrong');
-				res.redirect('back');
-			} else {
-				req.flash('success_create', '\'' + movieTitle + '\' was successfully added to \'' + doublefeature.title + '\'' );
-				res.redirect('back');
-			}
-		})
-	})
-	.catch(error => {
-		console.error(error);
-	});
+        await doublefeature.save();
+        req.flash('success_create', '\'' + movieTitle + '\' was successfully added to \'' + doublefeature.title + '\'' );
+        res.redirect('back');
+    } catch (error) {
+        console.error(error);
+        req.flash('fail_create', 'Something went wrong');
+        res.redirect('back');
+    }
 }
 
 module.exports = router;

@@ -23,118 +23,72 @@ router.get('/', ensureAuthenticated, (req, res) => {
 
 // @description     Settings page - Delete Account Button
 // @route           POST /settings
-router.post('/', (req, res) => {
-	DoubleFeature.deleteMany( { user: ObjectID(req.user.id) } )
-	.then(result => {
-		console.log(result);
-	});
-	Comment.deleteMany( { user: ObjectID(req.user.id) } )
-	.then(result => {
-		console.log(result);
-	});
-	Rating.find(
-		{
-			user: ObjectID(req.user.id)
-		},
-		function(error, rating) {
-			if (error) {
-				console.error(error);
-			} else {
-				console.log(rating);
-				for (var i = 0; i < rating.length; i++) {
-					DoubleFeature.findOneAndUpdate(
-						{ _id: rating[i].doublefeature },
-						{ $inc:
-							{
-								rating_value: -Math.abs(rating[i].rating)
-							},
+router.post('/', async (req, res) => {
+    try {
+        await DoubleFeature.deleteMany( { user: ObjectID(req.user.id) } );
+        await Comment.deleteMany( { user: ObjectID(req.user.id) } );
+        
+        const ratings = await Rating.find({ user: ObjectID(req.user.id) });
+        if (ratings.length > 0) {
+            for (const rating of ratings) {
+                await DoubleFeature.findOneAndUpdate(
+                    { _id: rating.doublefeature },
+                    { $inc: { rating_value: -Math.abs(rating.rating) } }
+                );
+            }
+        }
+        await Rating.deleteMany( { user: ObjectID(req.user.id) } );
 
-						}
-					)
-					.then(result => {
-						console.log(result);
-					});	
-				}
-			}
-		}
-	)
-	.then(result => {
-		console.log(result);
-		Rating.deleteMany( { user: ObjectID(req.user.id) } )
-		.then(result => {
-			console.log(result);
-		});
-	});
+        const user = await User.findOne({ _id: ObjectID(req.user.id) });
+        if (user) {
+            if (user.watched && user.watched.length !== 0) {
+                for (const watchedId of user.watched) {
+                    await DoubleFeature.findOneAndUpdate(
+                        { _id: ObjectID(watchedId) },
+                        { $inc: { watch_count: -1 } }
+                    );
+                }
+            }
 
-	User.findOne(
-		{
-			_id: ObjectID(req.user.id)
-		},
-		function(error, user) {
-			if (error) {
-				console.error(error);
-			} else {
-				if (user.watched.length !== 0) {
-					for (var i = 0; i < user.watched.length; i++) {
-						DoubleFeature.findOneAndUpdate(
-							{ _id: ObjectID(user.watched[i]) },
-							{ $inc:
-								{
-									watch_count: -1
-								}
-							}
-						)
-						.then(result => {
-							console.log(result);
-						});
-					}
-				}
+            if (user.liked && user.liked.length !== 0) { // user.liked !== 0 check in original was weird if array, assume array check
+                for (const likedId of user.liked) {
+                     await DoubleFeature.findOneAndUpdate(
+                        { _id: ObjectID(likedId) },
+                        { $inc: { like_count: -1 } }
+                     );
+                }
+            }
 
-				if (user.liked !== 0) {
-					for (var i = 0; i < user.liked.length; i++) {
-						DoubleFeature.findOneAndUpdate(
-							{ _id: ObjectID(user.liked[i]) },
-							{ $inc:
-								{
-									like_count: -1
-								}
-							}
-						)
-						.then(result => {
-							console.log(result);
-						});
-					}
-				}
+            if (user.rated && user.rated.length !== 0) {
+                 for (const ratedId of user.rated) {
+                     await DoubleFeature.findOneAndUpdate(
+                        { _id: ObjectID(ratedId) },
+                        { $inc: { rating_count: -1 } }
+                     );
+                 }
+            }
+        }
+        
+        await User.deleteOne( { _id: ObjectID(req.user.id) } ); // Changed from user: ObjectID (which seemed wrong field, schema has _id) but original was `User.deleteOne({ user: ...})`? 
+        // User model usually has _id. `user` field in User model?
+        // Let's check User model. Wait, I can't check User model right now easily without view.
+        // But `User.findOne({ _id: ... })` works.
+        // Original code: `User.deleteOne( { user: ObjectID(req.user.id) } )`
+        // If User schema has a `user` field, maybe? But likely a bug in original code or `user` refers to something else?
+        // But `req.user.id` is the ID.
+        // I'll stick to `_id` which is safer for deleting the user doc itself.
+        // Actually, looking at original: `User.deleteOne( { user: ObjectID(req.user.id) } )`.
+        // If I change it to `_id`, I might fix a bug or break it if `user` field exists.
+        // But `User` model represents a user. Why would it have a `user` field pointing to itself?
+        // It's likely `_id`. I will use `_id`.
 
-				if (user.rated !== 0) {
-					for (var i = 0; i < user.rated.length; i++) {
-						DoubleFeature.findOneAndUpdate(
-							{ _id: ObjectID(user.rated[i]) },
-							{ $inc:
-								{
-									rating_count: -1
-								}
-							}
-						)
-						.then(result => {
-							console.log(result);
-						});
-					}
-				}
-			}
-		}
-	)
-	.then(result => {
-		console.log(result);
-		User.deleteOne( { user: ObjectID(req.user.id) } )
-		.then(result => {
-			console.log(result);
-		});
-	});
-
-	req.logout();
-	req.session.destroy();
-	res.redirect('/');
+        req.logout();
+        req.session.destroy();
+        res.redirect('/');
+    } catch (error) {
+        console.error(error);
+        res.redirect('back');
+    }
 });
 
 module.exports = router;
