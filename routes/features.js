@@ -1,12 +1,9 @@
-const axios = require('axios');
 const express = require('express');
-const sanitize = require('mongo-sanitize');
 
 // Instance of Router
 const router = express.Router();
 
 // Models
-const User = require('../models/User');
 const DoubleFeature = require('../models/DoubleFeature');
 
 // Paths
@@ -22,7 +19,7 @@ const paths = [ '/popular',
 
 // @description     Popular Double Features of This Year, Month, Week
 // @route           GET /features/popular/year
-router.get(paths.slice(2, paths.length), (req, res) => {
+router.get(paths.slice(2, paths.length), async (req, res) => {
 	const user = req.user;
 	const doublefeaturePage = (req.params.page) ? req.params.page : 1;
 	const splitter = req.originalUrl.split('/');
@@ -39,69 +36,51 @@ router.get(paths.slice(2, paths.length), (req, res) => {
 			days = 7;
 			break;
 	}
-	DoubleFeature.countDocuments(
-		{
-			createdAt: { $gte: new Date(new Date() - days * 60 * 60 * 24 * 1000) }
-		},
-		function (error, count) {
-			if (error) {
-				console.error(error);
-			} else {
-				const doublefeatureCount = count;
-				DoubleFeature.find( 
-					{
-						createdAt: { $gte: new Date(new Date() - days * 60 * 60 * 24 * 1000) }
-					},
-					function(error, doublefeatureData) {
-						if (error) {
-							console.error(error);
-						} else {
-							res.render('features', {
-								'user': user,
-								'doublefeatureData': doublefeatureData,
-								'doublefeatureCount': doublefeatureCount,
-								'doublefeaturePage': doublefeaturePage,
-								'sortedBy': sortedBy
-							});
-						}
-					}
-				).sort( { rating_weighted: -1 } ).skip((doublefeaturePage - 1) * 16).limit(16);
-			}
-		}
-	);
+
+	try {
+		const query = { createdAt: { $gte: new Date(new Date() - days * 60 * 60 * 24 * 1000) } };
+		const count = await DoubleFeature.countDocuments(query);
+		const doublefeatureData = await DoubleFeature.find(query)
+			.sort( { rating_weighted: -1 } )
+			.skip((doublefeaturePage - 1) * 16)
+			.limit(16);
+
+		res.render('features', {
+			'user': user,
+			'doublefeatureData': doublefeatureData,
+			'doublefeatureCount': count,
+			'doublefeaturePage': doublefeaturePage,
+			'sortedBy': sortedBy
+		});
+	} catch (error) {
+		console.error(error);
+	}
 });
 
 // @description     Popular Double Features of All Time Page
 // @route           GET /features/popular
-router.get(paths.slice(0, 2), (req, res) => {
+router.get(paths.slice(0, 2), async (req, res) => {
 	const user = req.user;
 	const doublefeaturePage = (req.params.page) ? req.params.page : 1;
 	const sortedBy = '';
-	DoubleFeature.countDocuments(function (error, count) {
-		if (error) {
-			console.error(error);
-		} else {
-			const doublefeatureCount = count;
-			DoubleFeature.find( 
-				{
-					$query: {}
-				},
-				function(error, doublefeatureData) {
-					if (error) {
-						console.error(error);
-					} else {
-						res.render('features', {
-							'user': user,
-							'doublefeatureData': doublefeatureData,
-							'doublefeatureCount': doublefeatureCount,
-							'doublefeaturePage': doublefeaturePage,
-							'sortedBy': sortedBy
-						});
-					}
-				}
-			).sort( { rating_weighted: -1 } ).skip((doublefeaturePage - 1) * 16).limit(16);
-		}
-	});
+
+	try {
+		const count = await DoubleFeature.countDocuments();
+		const doublefeatureData = await DoubleFeature.find({})
+			.sort( { rating_weighted: -1 } )
+			.skip((doublefeaturePage - 1) * 16)
+			.limit(16);
+
+		res.render('features', {
+			'user': user,
+			'doublefeatureData': doublefeatureData,
+			'doublefeatureCount': count,
+			'doublefeaturePage': doublefeaturePage,
+			'sortedBy': sortedBy
+		});
+	} catch (error) {
+		console.error(error);
+	}
 });
 
 module.exports = router;
