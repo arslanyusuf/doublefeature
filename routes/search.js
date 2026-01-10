@@ -22,7 +22,7 @@ function escapeRegex(text) {
 
 // @description     Search page
 // @route           GET /search
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
 	const user = req.user;
 	const searchTerm = sanitize(req.query.query);
 	const searchType = sanitize(req.query.type);
@@ -42,49 +42,45 @@ router.get('/', (req, res) => {
 
 	} else if (searchType === 'doublefeature') {
 		const regex = new RegExp(escapeRegex(searchTerm), 'gi');
-		DoubleFeature.find({ 
-			$or: [
-				{ title: regex },
-				{ movie_one_title: regex },
-				{ movie_two_title: regex }
-			]},
-			function(error, doublefeatureData) {
-			if (error) {
-				console.error(error);
-			} else {
-				res.render('searchdoublefeature', {
-					'user': user,
-					'doublefeatureData': doublefeatureData,
-					'searchTerm': searchTerm,
-					'doublefeaturePage': 1
-				});
-			}
-		})
+        try {
+            const doublefeatureData = await DoubleFeature.find({ 
+                $or: [
+                    { title: regex },
+                    { movie_one_title: regex },
+                    { movie_two_title: regex }
+                ]});
+            res.render('searchdoublefeature', {
+                'user': user,
+                'doublefeatureData': doublefeatureData,
+                'searchTerm': searchTerm,
+                'doublefeaturePage': 1
+            });
+        } catch (error) {
+            console.error(error);
+        }
 
 	} else {
 		axios.get(movieSearch + 'api_key=' + key + '&include_adult=false&query=' + searchTerm)
-		.then(response => {
+		.then(async response => { // Mark callback as async
 			if (user) {
-				DoubleFeature.find({ 
-					$or: [ 
-						{ $and: [ { movie_one_id: null }, { user: user } ] },
-						{ $and: [ { movie_two_id: null }, { user: user } ] }
-					]},
-				function(error, doubleFeatureEmpty) {
-					if (error) {
-						console.error(error);
-					} else {
-						res.render('searchmovie', {
-							'user': user,
-							'movieData': response.data,
-							'searchTerm': searchTerm,
-							'doubleFeatureEmpty': doubleFeatureEmpty,
-							'moviePage': 1
-						});
-					}
-				})
+                try {
+                    const doubleFeatureEmpty = await DoubleFeature.find({ 
+                        $or: [ 
+                            { $and: [ { movie_one_id: null }, { user: user } ] },
+                            { $and: [ { movie_two_id: null }, { user: user } ] }
+                        ]});
+                    res.render('searchmovie', {
+                        'user': user,
+                        'movieData': response.data,
+                        'searchTerm': searchTerm,
+                        'doubleFeatureEmpty': doubleFeatureEmpty,
+                        'moviePage': 1
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
 			} else {
-				doubleFeatureEmpty = [];
+				const doubleFeatureEmpty = [];
 				res.render('searchmovie', {
 					'user': user,
 					'movieData': response.data,
@@ -102,37 +98,31 @@ router.get('/', (req, res) => {
 
 // @description     Search Page - Add Movie to Double Feature Button & Create New Empty Double Feature Button 
 // @route           POST /search
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
 	const movieId = parseInt(req.body.hiddenId, 10);
 	const movieTitle = req.body.hiddenTitle;
 	const moviePoster = req.body.hiddenPoster;
 	if (req.body.formInstance === 'form1') {
-		DoubleFeature.findById(ObjectID(req.body.emptydoublefeature))
-		.then(doublefeature => {
-			if (doublefeature.movie_one_id === null) {
-				doublefeature.movie_one_id = movieId;
-				doublefeature.movie_one_title = movieTitle;
-				doublefeature.movie_one_poster = moviePoster;
-			} else {
-				doublefeature.movie_two_id = movieId;
-				doublefeature.movie_two_title = movieTitle;
-				doublefeature.movie_two_poster = moviePoster;
-			}
+        try {
+            const doublefeature = await DoubleFeature.findById(ObjectID(req.body.emptydoublefeature));
+            if (doublefeature.movie_one_id === null) {
+                doublefeature.movie_one_id = movieId;
+                doublefeature.movie_one_title = movieTitle;
+                doublefeature.movie_one_poster = moviePoster;
+            } else {
+                doublefeature.movie_two_id = movieId;
+                doublefeature.movie_two_title = movieTitle;
+                doublefeature.movie_two_poster = moviePoster;
+            }
 
-			doublefeature.save((error) => {
-				if (error) {
-					console.error(error);
-					req.flash('fail_create', 'Something went wrong');
-					res.redirect('back');
-				} else {
-					req.flash('success_create', '\'' + movieTitle + '\' was successfully added to \'' + doublefeature.title + '\'' );
-					res.redirect('back');
-				}
-			})
-		})
-		.catch(error => {
-			console.error(error);
-		});
+            await doublefeature.save();
+            req.flash('success_create', '\'' + movieTitle + '\' was successfully added to \'' + doublefeature.title + '\'' );
+            res.redirect('back');
+        } catch (error) {
+            console.error(error);
+            req.flash('fail_create', 'Something went wrong');
+            res.redirect('back');
+        }
 
 	} else if (req.body.formInstance === 'form2') {
 		const doublefeature = new DoubleFeature();
@@ -154,22 +144,20 @@ router.post('/', (req, res) => {
 		doublefeature.rating_value = 0;
 		doublefeature.rating_average = 0;
 		doublefeature.rating_weighted = 0;
-		doublefeature.save((error) => {
-			if (error) {
-				console.error(error);
-				req.flash('fail_create', 'Something went wrong');
-				res.redirect('back');
-			} else {
-				User.findById(req.user.id).then(user => {
-					user.doublefeatures.push(doublefeature);
-					user.save((error) => {
-						console.error(error);
-					});
-				});
-				req.flash('success_create', '\'' + req.body.title + '\' was successfully created with \'' + movieTitle + '\'');
-				res.redirect('back');
-			}
-		});
+        
+        try {
+            await doublefeature.save();
+            const user = await User.findById(req.user.id);
+            user.doublefeatures.push(doublefeature);
+            await user.save();
+            
+            req.flash('success_create', '\'' + req.body.title + '\' was successfully created with \'' + movieTitle + '\'');
+            res.redirect('back');
+        } catch (error) {
+            console.error(error);
+            req.flash('fail_create', 'Something went wrong');
+            res.redirect('back');
+        }
 	}
 });
 
@@ -180,28 +168,26 @@ router.get('/movie/:searchTerm/:page', (req, res) => {
 	const searchTerm = sanitize(req.params.searchTerm);
 	const moviePage = req.params.page;
 	axios.get(movieSearch + 'api_key=' + key +'&query=' + searchTerm + '&page=' + moviePage)
-	.then(response => {
+	.then(async response => {
 		if (user) {
-			DoubleFeature.find({ 
-				$or: [ 
-					{ $and: [ { movie_one_id: null }, { user: user } ] },
-					{ $and: [ { movie_two_id: null }, { user: user } ] }
-				]},
-			function(error, doubleFeatureEmpty) {
-				if (error) {
-					console.error(error);
-				} else {
-					res.render('searchmovie', {
-						'user': user,
-						'movieData': response.data,
-						'searchTerm': searchTerm,
-						'doubleFeatureEmpty': doubleFeatureEmpty,
-						'moviePage': moviePage
-					});
-				}
-			})
+            try {
+                const doubleFeatureEmpty = await DoubleFeature.find({ 
+                    $or: [ 
+                        { $and: [ { movie_one_id: null }, { user: user } ] },
+                        { $and: [ { movie_two_id: null }, { user: user } ] }
+                    ]});
+                res.render('searchmovie', {
+                    'user': user,
+                    'movieData': response.data,
+                    'searchTerm': searchTerm,
+                    'doubleFeatureEmpty': doubleFeatureEmpty,
+                    'moviePage': moviePage
+                });
+            } catch (error) {
+                console.error(error);
+            }
 		} else {
-			doubleFeatureEmpty = [];
+			const doubleFeatureEmpty = [];
 			res.render('searchmovie', {
 				'user': user,
 				'movieData': response.data,
@@ -221,37 +207,32 @@ router.get('/movie/:searchTerm/:page', (req, res) => {
 
 // @description     Movie Results Page - Add Movie to Double Feature Button & Create New Empty Double Feature Button 
 // @route           POST /search/movie/query/page
-router.post('/movie/:searchTerm/:page', (req, res) => {
+router.post('/movie/:searchTerm/:page', async (req, res) => {
 	const movieId = parseInt(req.body.hiddenId, 10);
 	const movieTitle = req.body.hiddenTitle;
 	const moviePoster = req.body.hiddenPoster;
 	if (req.body.formInstance === 'form1') {
-		DoubleFeature.findById(ObjectID(req.body.emptydoublefeature))
-		.then(doublefeature => {
-			if (doublefeature.movie_one_id === null) {
-				doublefeature.movie_one_id = movieId;
-				doublefeature.movie_one_title = movieTitle;
-				doublefeature.movie_one_poster = moviePoster;
-			} else {
-				doublefeature.movie_two_id = movieId;
-				doublefeature.movie_two_title = movieTitle;
-				doublefeature.movie_two_poster = moviePoster;
-			}
+        try {
+            const doublefeature = await DoubleFeature.findById(ObjectID(req.body.emptydoublefeature));
+            if (doublefeature.movie_one_id === null) {
+                doublefeature.movie_one_id = movieId;
+                doublefeature.movie_one_title = movieTitle;
+                doublefeature.movie_one_poster = moviePoster;
+            } else {
+                doublefeature.movie_two_id = movieId;
+                doublefeature.movie_two_title = movieTitle;
+                doublefeature.movie_two_poster = moviePoster;
+            }
 
-			doublefeature.save((error) => {
-				if (error) {
-					console.error(error);
-					req.flash('fail_create', 'Something went wrong');
-					res.redirect('back');
-				} else {
-					req.flash('success_create', '\'' + movieTitle + '\' was successfully added to \'' + doublefeature.title + '\'' );
-					res.redirect('back');
-				}
-			})
-		})
-		.catch(error => {
-			console.error(error);
-		});
+            await doublefeature.save();
+            req.flash('success_create', '\'' + movieTitle + '\' was successfully added to \'' + doublefeature.title + '\'' );
+            res.redirect('back');
+        } catch (error) {
+             console.error(error);
+             req.flash('fail_create', 'Something went wrong');
+             res.redirect('back');
+        }
+
 	} else if (req.body.formInstance === 'form2') {
 		const doublefeature = new DoubleFeature();
 
@@ -272,22 +253,20 @@ router.post('/movie/:searchTerm/:page', (req, res) => {
 		doublefeature.rating_value = 0;
 		doublefeature.rating_average = 0;
 		doublefeature.rating_weighted = 0;
-		doublefeature.save((error) => {
-			if (error) {
-				console.error(error);
-				req.flash('fail_create', 'Something went wrong');
-				res.redirect('back');
-			} else {
-				User.findById(req.user.id).then(user => {
-					user.doublefeatures.push(doublefeature);
-					user.save((error) => {
-						console.error(error);
-					});
-				});
-				req.flash('success_create', '\'' + req.body.title + '\' was successfully created with \'' + movieTitle + '\'');
-				res.redirect('back');
-			}
-		});
+        
+        try {
+            await doublefeature.save();
+            const user = await User.findById(req.user.id);
+            user.doublefeatures.push(doublefeature);
+            await user.save();
+            
+            req.flash('success_create', '\'' + req.body.title + '\' was successfully created with \'' + movieTitle + '\'');
+            res.redirect('back');
+        } catch (error) {
+            console.error(error);
+            req.flash('fail_create', 'Something went wrong');
+            res.redirect('back');
+        }
 	}
 });
 
@@ -315,29 +294,27 @@ router.get('/person/:searchTerm/:page', (req, res) => {
 
 // @description     Double Feature Results Page
 // @route           GET /search/doublefeature/query/page
-router.get('/doublefeature/:searchTerm/:page', (req, res) => {
+router.get('/doublefeature/:searchTerm/:page', async (req, res) => {
 	const user = req.user;
 	const searchTerm = sanitize(req.params.searchTerm);
 	const doublefeaturePage = req.params.page;
 	const regex = new RegExp(escapeRegex(searchTerm), 'gi');
-	DoubleFeature.find({ 
-		$or: [
-			{ title: regex },
-			{ movie_one_title: regex },
-			{ movie_two_title: regex }
-		]},
-		function(error, doublefeatureData) {
-		if (error) {
-			console.error(error);
-		} else {
-			res.render('searchdoublefeature', {
-				'user': user,
-				'doublefeatureData': doublefeatureData,
-				'searchTerm': searchTerm,
-				'doublefeaturePage': doublefeaturePage
-			});
-		}
-	})
+    try {
+        const doublefeatureData = await DoubleFeature.find({ 
+            $or: [
+                { title: regex },
+                { movie_one_title: regex },
+                { movie_two_title: regex }
+            ]});
+        res.render('searchdoublefeature', {
+            'user': user,
+            'doublefeatureData': doublefeatureData,
+            'searchTerm': searchTerm,
+            'doublefeaturePage': doublefeaturePage
+        });
+    } catch (error) {
+        console.error(error);
+    }
 });
 
 module.exports = router;
