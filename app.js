@@ -11,6 +11,7 @@ const session = require('express-session');
 const rateLimit = require('express-rate-limit');
 const MongoStore = require('connect-mongo')(session);
 const expressLayouts = require('express-ejs-layouts');
+const refererCheck = require('./middleware/refererCheck');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -40,7 +41,7 @@ connectDB();
 
 // Logging
 const morganMiddleware = morgan((tokens, req, res) => {
-    if (req.method === "OPTIONS" || (req.path.includes("eco-freight") && res.statusCode === 429)) {
+    if (req.method === "OPTIONS") {
         return null;
     }
 
@@ -61,7 +62,13 @@ const morganMiddleware = morgan((tokens, req, res) => {
 app.use(morganMiddleware);
 
 // Cross-Origin Resource Sharing
-app.use(cors());
+app.use(cors({
+    origin: ['https://www.doublefeature.watch', 'https://doublefeature.watch', 'http://localhost:5000', 'http://127.0.0.1:5000'],
+    optionsSuccessStatus: 200
+}));
+
+// Referer Check
+app.use(refererCheck);
 
 // EJS
 app.use(expressLayouts);
