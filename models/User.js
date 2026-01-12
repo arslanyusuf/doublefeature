@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
 
 const UserSchema = new mongoose.Schema({
 	username: {
@@ -7,7 +6,6 @@ const UserSchema = new mongoose.Schema({
 		required: true,
 		index: true,
 		unique: true,
-		uniqueCaseInsensitive: true,
 		match: [/^[a-zA-Z0-9\-\_]+$/, 'is invalid']
 	},
 	email: {
@@ -15,7 +13,6 @@ const UserSchema = new mongoose.Schema({
 		required: true,
 		index: true,
 		unique: true,
-		uniqueCaseInsensitive: true,
 		match: [/\S+@\S+\.\S+/, 'is invalid']
 	},
 	password: {
@@ -43,8 +40,6 @@ const UserSchema = new mongoose.Schema({
 		ref: "DoubleFeature"
 	}]
 }, {timestamps: true});
-
-UserSchema.plugin(uniqueValidator, { message: 'is already taken.' });
 
 const User = mongoose.model('User', UserSchema);
 
