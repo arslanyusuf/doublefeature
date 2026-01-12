@@ -1,21 +1,15 @@
 const cors = require('cors');
 const path = require('path');
-const axios = require('axios');
-const crypto = require('crypto');
-const dotenv = require('dotenv');
+const chalk = require("chalk");
 const morgan = require('morgan');
-const bcrypt = require('bcryptjs');
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
 const filter = require('content-filter');
-const nodemailer = require('nodemailer');
 const session = require('express-session');
-const sanitize = require('mongo-sanitize');
 const MongoStore = require('connect-mongo')(session);
 const expressLayouts = require('express-ejs-layouts');
-const uniqueValidator = require('mongoose-unique-validator');
 
 const app = express();
 
@@ -35,9 +29,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 connectDB();
 
 // Logging
-if(process.env.NODE_ENV == 'development') {
-	app.use(morgan('dev'));
-};
+const morganMiddleware = morgan((tokens, req, res) => {
+    if (req.method === "OPTIONS" || (req.path.includes("eco-freight") && res.statusCode === 429)) {
+        return null;
+    }
+
+    const statusCode = tokens.status(req, res);
+    const statusColor = (statusCode >= 200 && statusCode < 300) || statusCode == 304 ? chalk.green.bold : chalk.red.bold;
+
+    return [
+        chalk.magenta.bold(req.ip),
+        chalk.gray("- -"),
+        chalk.cyan(`[${new Date().toUTCString()}]`),
+        chalk.white(`"${tokens.method(req, res)} ${tokens.url(req, res)} ${req.protocol.toUpperCase()}/${req.httpVersion}"`),
+        statusColor(statusCode),
+        chalk.magenta(`[Size: ${req.headers["content-length"] || 0}]`),
+        chalk.yellow(tokens["response-time"](req, res) + " ms")
+    ].join(" ");
+});
+
+app.use(morganMiddleware);
 
 // Cross-Origin Resource Sharing
 app.use(cors());
