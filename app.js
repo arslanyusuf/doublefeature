@@ -8,11 +8,20 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const filter = require('content-filter');
 const session = require('express-session');
+const rateLimit = require('express-rate-limit');
 const MongoStore = require('connect-mongo')(session);
 const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
-app.set('trust proxy', true);
+app.set('trust proxy', 1);
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, 
+	max: 100, 
+	standardHeaders: true, 
+	legacyHeaders: false, 
+});
+app.use(limiter);
 
 // Database Config
 const connectDB = require('./config/db');
