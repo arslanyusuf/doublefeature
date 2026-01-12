@@ -12,6 +12,7 @@ const MongoStore = require('connect-mongo')(session);
 const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
+app.set('trust proxy', true);
 
 // Database Config
 const connectDB = require('./config/db');
