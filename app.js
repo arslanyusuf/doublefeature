@@ -1,21 +1,15 @@
 const cors = require('cors');
 const path = require('path');
-const axios = require('axios');
-const crypto = require('crypto');
-const dotenv = require('dotenv');
+const chalk = require("chalk");
 const morgan = require('morgan');
-const bcrypt = require('bcryptjs');
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
 const filter = require('content-filter');
-const nodemailer = require('nodemailer');
 const session = require('express-session');
-const sanitize = require('mongo-sanitize');
 const MongoStore = require('connect-mongo')(session);
 const expressLayouts = require('express-ejs-layouts');
-const uniqueValidator = require('mongoose-unique-validator');
 
 const app = express();
 
